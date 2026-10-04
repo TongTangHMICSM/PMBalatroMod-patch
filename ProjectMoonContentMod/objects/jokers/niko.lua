@@ -2,8 +2,7 @@ SMODS.Joker {
 	key = 'niko',
 	name = "Niko",
 	pronouns = "he_him",
-	-- h_size is a native Balatro variable. Keep it outside of "extra"
-	config = { h_size = 1, extra = { mult = 0 } }, 
+	config = { extra = { mult = 0, handSize = 1} },
 	eternal_compat = true,
 	perishable_compat = true,
 	blueprint_compat = true,
@@ -21,8 +20,7 @@ SMODS.Joker {
 			current_mult = #G.hand.cards * 3
 		end
 		
-		-- Use card.ability.h_size instead of extra
-		return { vars = { current_mult, card.ability.h_size } }
+		return { vars = { current_mult, card.ability.extra.handSize } }
 	end,
     
 	calculate = function(self, card, context)
@@ -39,5 +37,13 @@ SMODS.Joker {
     
 	set_badges = function(self, card, badges)
 		badges[#badges+1] = create_badge(localize('pmcmod_badge_rosespanner'), HEX('380e21'), HEX('ed2680'), 1.2 )
+	end,
+    
+	add_to_deck = function(self, card, from_debuff)
+		G.hand:change_size(card.ability.extra.handSize)
+	end,
+    
+	remove_from_deck = function(self, card, from_debuff)
+		G.hand:change_size(-card.ability.extra.handSize)
 	end
 }
