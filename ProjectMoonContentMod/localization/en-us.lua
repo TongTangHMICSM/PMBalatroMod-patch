@@ -1446,10 +1446,10 @@ return {
                     "5x Yong -> {C:gold}$1{} at the end of the Scene",
                     "1x Ren -> {C:mult}+1{} Mult"},
                     {"Can have a max of 50 stacks",
-                    "Scored {C:diamonds}Diamonds{]} reduces every stack by 1",
+                    "Scored {C:diamonds}Diamonds{} reduces every stack by 1",
                     "{C:inactive}(Zhi: {C:chips}#1#{C:inactive})",
-                    "{C:inactive}(Yong: {C:gold}#1#{C:inactive})",
-                    "{C:inactive}(Ren: {C:mult}#1#{C:inactive})"},
+                    "{C:inactive}(Yong: {C:gold}#2#{C:inactive})",
+                    "{C:inactive}(Ren: {C:mult}#3#{C:inactive})"},
                 }
             },
             j_pmcmod_hugo = {
