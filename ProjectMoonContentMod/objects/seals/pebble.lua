@@ -9,7 +9,14 @@ SMODS.Seal {
     end,
     calculate = function(self, card, context)
         if context.post_joker or (context.main_scoring and context.cardarea == G.play) then
-            card:set_seal()
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.1,
+                func = function()
+                    card:set_seal(nil, nil, true)
+                    return true
+                end
+            }))
         end
     end
 }

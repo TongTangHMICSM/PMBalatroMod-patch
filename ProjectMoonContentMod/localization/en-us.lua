@@ -2754,36 +2754,37 @@ return {
                     "{X:mult,C:white}X1.2{} Mult",
                 },
             },
-            pmcmod_sinWrath_seal = {
+            pmcmod_sinwrath_seal = {
                 name = "Wrath",
                 text = {
-                    "Gains either Perma {C:mult}Mult{},",
-                    "{C:chips}Chips{} or {C:gold}Money{}",
-                    "after scoring"
+                    "Has a {C:green}70%{} chance to gain {C:chips}1-8{} Perma Chips",
+                    "Has a {C:green}30%{} chance to gain {C:mult}1-4{} Perma Mult",
+                    "Or gives {C:gold}$1{}",
+                    "{C:inactive}(Boosted by Sloth seals)"
                 },
             },
-            pmcmod_sinPride_seal = {
+            pmcmod_sinpride_seal = {
                 name = "Pride",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
                 },
             },
-            pmcmod_sinGluttony_seal = {
+            pmcmod_singluttony_seal = {
                 name = "Gluttony",
                 text = {
-                    "Gains a random {C:chips}Perma Chips{}",
-                    "value if in hand when scoring"
+                    "Gains {C:chips}1-5{} Perma Chips",
+                    "when this card is scored"
                 },
             },
-            pmcmod_sinGloom_seal = {
+            pmcmod_singloom_seal = {
                 name = "Gloom",
                 text = {
-                    "When the Scene ends, gain",
-                    "{C:chips}1{} Chip for every",
-                    "{C:attention}10% above the Encounter Score{}"
+                    "Gains {C:chips}1{} Perma Chip for",
+                    "every {C:attention}10%{} you exceed",
+                    "the Encounter Score by"
                 },
             },
-            pmcmod_sinSloth_seal = {
+            pmcmod_sinsloth_seal = {
                 name = "Sloth",
                 text = {
                     "Passively enhances the effects",
@@ -2791,21 +2792,20 @@ return {
                     "of Sloth seals in the deck"
                 },
             },
-            pmcmod_sinLust_seal = {
+            pmcmod_sinlust_seal = {
                 name = "Lust",
                 text = {
-                    "{C:gold}$1{} for each Lust seal in deck",
-                    "Spreads itself to other",
-                    "seals in the scored hand"
+                    "Earn {C:gold}$1{} for each",
+                    "Lust seal in your deck",
+                    "when this card is scored"
                 },
             },
-            pmcmod_sinEnvy_seal = {
+            pmcmod_sinenvy_seal = {
                 name = "Envy",
                 text = {
-                    "Every time a Keypage scores",
-                    "has a {C:green}#1# in #2#{} chance to",
-                    "gain a Perma Bonus, depending on",
-                    "the Keypage's effect"
+                    "Has a {C:green}#1# in #2#{} chance to",
+                    "gain a random Perma Bonus",
+                    "when scored"
                 },
             },
             pmcmod_gift_seal = {
@@ -3211,6 +3211,13 @@ return {
             pmcmod_markofcain_seal = "Mark of Cain",
             pmcmod_gift_seal = "Gift",
             pmcmod_pebble_seal = "Pebble",
+            pmcmod_sinwrath_seal = "Wrath",
+            pmcmod_sinpride_seal = "Pride",
+            pmcmod_singluttony_seal = "Gluttony",
+            pmcmod_singloom_seal = "Gloom",
+            pmcmod_sinsloth_seal = "Sloth",
+            pmcmod_sinlust_seal = "Lust",
+            pmcmod_sinenvy_seal = "Envy",
             pmcmod_charge="Charge",
         },
         poker_hand_descriptions={},

@@ -10,7 +10,7 @@ SMODS.Seal {
             local slothCount = 0
 
             for _, playing_card in ipairs(G.playing_cards) do
-                if playing_card.seal == "sinSloth" then slothCount = slothCount + 1 end
+                if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
             end
 
             return {

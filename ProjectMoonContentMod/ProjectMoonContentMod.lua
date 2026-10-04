@@ -270,7 +270,6 @@ local organizedSealList = {
     'gift',
     'sinEnvy',
     'sinPride',
-    'sinEnvy',
     'sinGloom',
     'sinGluttony',
     'sinSloth',
