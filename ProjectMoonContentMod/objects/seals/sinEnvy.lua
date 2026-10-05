@@ -6,17 +6,22 @@ SMODS.Seal {
     badge_colour = G.C.RED,
     calculate = function(self, card, context)
         if context.main_scoring and context.cardarea == G.play then
-            if pseudorandom('envy') < G.GAME.probabilities.normal / self.config.extra.odds then
+            local slothCount = 0
+            for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
+            end
+
+            if pseudorandom('envy') < (G.GAME.probabilities.normal + slothCount) / self.config.extra.odds then
                 local rand = math.random(1, 3)
                 if rand == 1 then
-                    card.ability.perma_chips = (card.ability.perma_chips or 0) + 10
-                    return { message = "+10 Chips", colour = G.C.CHIPS }
+                    card.ability.perma_bonus = (card.ability.perma_bonus or 0) + 10 + slothCount * 2
+                    return { message = localize('k_upgrade_ex'), colour = G.C.CHIPS }
                 elseif rand == 2 then
-                    card.ability.perma_mult = (card.ability.perma_mult or 0) + 2
-                    return { message = "+2 Mult", colour = G.C.MULT }
+                    card.ability.perma_mult = (card.ability.perma_mult or 0) + 2 + slothCount
+                    return { message = localize('k_upgrade_ex'), colour = G.C.MULT }
                 else
                     card.ability.perma_p_dollars = (card.ability.perma_p_dollars or 0) + 1
-                    return { message = "+$1", colour = G.C.GOLD }
+                    return { message = localize('k_upgrade_ex'), colour = G.C.GOLD }
                 end
             end
         end

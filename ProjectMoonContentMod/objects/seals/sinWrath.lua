@@ -19,7 +19,7 @@ SMODS.Seal {
             
 
             if randomValue <= 6 then
-                card.ability.perma_chips = (card.ability.perma_chips or 0) + math.random(0, 8) + slothCountChips
+                card.ability.perma_bonus = (card.ability.perma_bonus or 0) + math.random(0, 8) + slothCountChips
                 return {
                     message = localize('k_upgrade_ex'),
                     colour = G.C.CHIPS

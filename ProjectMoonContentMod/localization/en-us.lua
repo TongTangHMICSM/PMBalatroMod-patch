@@ -2757,31 +2757,32 @@ return {
             pmcmod_sinwrath_seal = {
                 name = "Wrath",
                 text = {
-                    "Has a {C:green}70%{} chance to gain {C:chips}1-8{} Perma Chips",
-                    "Has a {C:green}30%{} chance to gain {C:mult}1-4{} Perma Mult",
-                    "Or gives {C:gold}$1{}",
-                    "{C:inactive}(Boosted by Sloth seals)"
+                    "Gains either Perma {C:chips}Chips{},",
+                    "{C:mult}Mult{} or {C:gold}Money{} when scored",
+                    "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
             pmcmod_sinpride_seal = {
                 name = "Pride",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
+                    "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
             pmcmod_singluttony_seal = {
                 name = "Gluttony",
                 text = {
-                    "Gains {C:chips}1-5{} Perma Chips",
-                    "when this card is scored"
+                    "Gains {C:chips}Perma Chips{} when",
+                    "scored or while in hand",
+                    "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
             pmcmod_singloom_seal = {
                 name = "Gloom",
                 text = {
-                    "Gains {C:chips}1{} Perma Chip for",
-                    "every {C:attention}10%{} you exceed",
-                    "the Encounter Score by"
+                    "When the Scene ends, gains {C:chips}1{} Perma Chip",
+                    "for every {C:attention}10%{} above Encounter Score",
+                    "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
             pmcmod_sinsloth_seal = {
@@ -2795,17 +2796,17 @@ return {
             pmcmod_sinlust_seal = {
                 name = "Lust",
                 text = {
-                    "Earn {C:gold}$1{} for each",
-                    "Lust seal in your deck",
-                    "when this card is scored"
+                    "Gains {C:gold}Perma Money{} based on Lust",
+                    "seals in deck and spreads to other",
+                    "cards in scored hand"
                 },
             },
             pmcmod_sinenvy_seal = {
                 name = "Envy",
                 text = {
-                    "Has a {C:green}#1# in #2#{} chance to",
-                    "gain a random Perma Bonus",
-                    "when scored"
+                    "Has a {C:green}#1# in #2#{} chance to gain a",
+                    "random {C:attention}Perma Bonus{} when scored",
+                    "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
             pmcmod_gift_seal = {

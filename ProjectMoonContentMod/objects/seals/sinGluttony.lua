@@ -5,12 +5,18 @@ SMODS.Seal {
     config = { },
     badge_colour = G.C.RED,
     calculate = function(self, card, context)
-        if context.main_scoring and context.cardarea == G.play then
-            local bonus = math.random(1, 5)
-            card.ability.perma_chips = (card.ability.perma_chips or 0) + bonus
+        local slothCount = 0
+        for _, playing_card in ipairs(G.playing_cards) do
+            if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
+        end
+
+        if (context.main_scoring and context.cardarea == G.play) or (context.individual and context.cardarea == G.hand) then
+            local bonus = math.random(1, 5) + slothCount
+            card.ability.perma_bonus = (card.ability.perma_bonus or 0) + bonus
             return {
-                message = '+'..bonus..' Chips!',
-                colour = G.C.CHIPS
+                message = localize('k_upgrade_ex'),
+                colour = G.C.CHIPS,
+                card = card
             }
         end
     end,

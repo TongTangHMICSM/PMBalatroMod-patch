@@ -14,7 +14,7 @@ SMODS.Seal {
             end
 
             return {
-                xmult = card.ability.seal.xmult + (slothCount / 10)
+                x_mult = card.ability.seal.xmult + (slothCount / 10)
             }
         end
     end,
