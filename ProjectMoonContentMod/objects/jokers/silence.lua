@@ -16,14 +16,11 @@ SMODS.Joker {
 		local extra = card.ability.extra
 		local main_end = {
 			{n=G.UIT.T, config={text = localize('pmcmod_elapsedTime')..":", colour = G.C.MULT, scale = 0.32}},
-			-- Bound to a live field (not a snapshot string) so the readout ticks
-			-- while the tooltip is open - DynaText re-reads ref_table[ref_value]
-			-- every frame.
 			{n=G.UIT.O, config={object = DynaText({
 				string = {{ref_table = extra, ref_value = 'display_timer'}},
 				colours = {G.C.RED}, pop_in_rate = 9999999, silent = true,
 				pop_delay = 0.2011, scale = 0.32, min_cycle_time = 0})}},
-			{n=G.UIT.T, config={text = "/ "..extra.total_timer..localize('pmcmod_seconds'), colour = G.C.MULT, scale = 0.32}},
+			{n=G.UIT.T, config={text = localize('pmcmod_seconds'), colour = G.C.MULT, scale = 0.32}},
 		}
 		return {main_end = main_end, vars = { math.floor(extra.current_timer), extra.total_timer }}
 	end,
@@ -31,17 +28,14 @@ SMODS.Joker {
 		local extra = card.ability.extra
 		local in_blind = G.GAME.blind and G.GAME.blind.in_blind
 
-		-- Only the player's own turn counts: while they can actually pick and play
-		-- cards. The blind intro, scoring/cash-out animations, booster packs, the
-		-- shop and the pause menu no longer drain the clock.
+		-- Only counts while the player can act, so the blind intro, scoring
+		-- animations, the shop and the pause menu do not drain the clock.
 		local counting = in_blind
 			and G.STATE == G.STATES.SELECTING_HAND
 			and not (G.SETTINGS and G.SETTINGS.paused)
 
 		if counting then
-			-- G.real_dt is raw wall-clock seconds per frame, so this is independent of
-			-- the Game Speed setting. Clamped so a frame hitch or an alt-tab spike
-			-- can't swallow a chunk of the timer at once.
+			-- G.real_dt is raw wall-clock seconds, so Game Speed cannot change it.
 			extra.current_timer = extra.current_timer + math.min(G.real_dt or 0, 0.1)
 		end
 
