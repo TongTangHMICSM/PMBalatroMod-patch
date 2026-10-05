@@ -30,8 +30,11 @@ SMODS.Joker {
 		end
 
 		if context.setting_blind and #G.jokers.cards > 1 and not card.ability.jokerSelectedFlag and not context.blueprint then
-			for i = 1, #G.jokers.cards do
-				local jkr = G.jokers.cards[i]
+			-- Never consider a Keypage that already has an Edition.
+			-- Uses the same SMODS helper as the other edition-granting jokers in this mod.
+			local editionlessJokers = SMODS.Edition:get_edition_cards(G.jokers, true)
+			for i = 1, #editionlessJokers do
+				local jkr = editionlessJokers[i]
 				if jkr ~= card and not jkr.ability.eternal and not jkr.edition then
 					availableJokers[#availableJokers + 1] = jkr
 				end
