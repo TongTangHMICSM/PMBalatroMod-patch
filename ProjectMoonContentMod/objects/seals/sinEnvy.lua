@@ -1,7 +1,7 @@
 SMODS.Seal {
     key = 'sinEnvy',
     atlas = "ModdedProjectMoonEditions",
-    pos = { x = 5, y = 4 },
+    pos = { x = 1, y = 4 },
     config = { extra = { odds = 4 } },
     badge_colour = G.C.RED,
     calculate = function(self, card, context)
