@@ -2136,7 +2136,8 @@ return {
                 name = 'A Certain Sinclair',
                 text = {
                     "Counts how many times the {C:attention}Keypage to the left{} triggers",
-                    "Retrigger the {C:attention}Keypage to the right{} by that amount"
+                    "Retrigger the {C:attention}Keypage to the right{} by that amount",
+                    "{C:inactive}(Counted so far: {C:attention}#1#{})"
                 },
                 unlock = {
                     "Win a run with the {C:attention}Callisto and{}",
