@@ -31,7 +31,7 @@ SMODS.Joker {
 			end
 		end
 
-		if context.post_trigger and G.jokers.cards[card.ability.extra.currentPosition-1] then
+		if context.post_trigger and not context.blueprint and G.jokers.cards[card.ability.extra.currentPosition-1] then
 
 			if G.jokers.cards[card.ability.extra.currentPosition-1].config.center.key == context.other_card.config.center.key then
 
@@ -48,7 +48,9 @@ SMODS.Joker {
 		end
 
 
-		if context.retrigger_joker_check and #G.jokers.cards > card.ability.extra.currentPosition then
+		-- returning repetitions = 0 makes Steamodded warn ("no assigned repetitions") and retrigger nothing,
+		-- so only answer the check when there is something to retrigger
+		if context.retrigger_joker_check and card.ability.extra.counter > 0 and #G.jokers.cards > card.ability.extra.currentPosition then
 			if context.other_card == G.jokers.cards[card.ability.extra.currentPosition + 1] then
 			--print("Testing trigger")
 				return {

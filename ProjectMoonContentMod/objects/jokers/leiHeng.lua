@@ -35,7 +35,8 @@ SMODS.Joker {
 			if coinToss == 0 then
                 local joker_to_destroy = G.jokers.cards[card.ability.extra.my_pos -1]
 
-                if joker_to_destroy and not (context.blueprint_card or self).getting_sliced then
+                -- `self` here is the SMODS object, not the card, so this check never saw the real flag
+                if joker_to_destroy and not (context.blueprint_card or card).getting_sliced then
                     joker_to_destroy.getting_sliced = true
                     G.E_MANAGER:add_event(Event({func = function()
                         card:juice_up(0.8, 0.8)

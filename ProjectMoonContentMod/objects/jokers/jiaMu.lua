@@ -41,12 +41,20 @@ SMODS.Joker {
 				end
 			end
 		end
-		for i = 1, #G.jokers.cards do
-			if context.retrigger_joker_check and context.other_card == G.jokers.cards[i] and G.GAME.dollars >= 3 then
-				return {
-					repetitions = math.random(0, 2),
-					dollars = -card.ability.extra.moneyLoss
-				} 
+		-- roll once per check: previously this could return repetitions = 0 (Steamodded warning,
+		-- nothing retriggered) while still charging the $ cost
+		if context.retrigger_joker_check and G.GAME.dollars >= 3 then
+			for i = 1, #G.jokers.cards do
+				if context.other_card == G.jokers.cards[i] then
+					local repetitions = math.random(0, 2)
+					if repetitions > 0 then
+						return {
+							repetitions = repetitions,
+							dollars = -card.ability.extra.moneyLoss
+						}
+					end
+					break
+				end
 			end
 		end
     end,
