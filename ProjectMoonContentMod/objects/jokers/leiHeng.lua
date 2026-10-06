@@ -31,21 +31,24 @@ SMODS.Joker {
 		
 		if context.retrigger_joker_check and context.other_card == G.jokers.cards[card.ability.extra.my_pos -1] then
 			local coinToss = pseudorandom('pmcmod_leiHeng_toss', 0, 4)
+			local neighbour = G.jokers.cards[card.ability.extra.my_pos -1]
 
-			if coinToss == 0 then
-                local joker_to_destroy = G.jokers.cards[card.ability.extra.my_pos -1]
+			-- Eternal Keypages cannot be destroyed. SMODS.destroy_cards refuses them on its own
+			-- (src/utils.lua:3064 checks SMODS.is_eternal), and we ask here too so that a protected
+			-- neighbour turns the slice into a retrigger instead of quietly wasting the toss.
+			local can_destroy = neighbour and not SMODS.is_eternal(neighbour, { destroy_cards = true })
 
+			if coinToss == 0 and can_destroy then
                 -- `self` here is the SMODS object, not the card, so this check never saw the real flag
-                if joker_to_destroy and not (context.blueprint_card or card).getting_sliced then
-                    joker_to_destroy.getting_sliced = true
+                if not (context.blueprint_card or card).getting_sliced then
                     G.E_MANAGER:add_event(Event({func = function()
                         card:juice_up(0.8, 0.8)
-                        joker_to_destroy:start_dissolve({G.C.RED}, nil, 1.6)
+                        SMODS.destroy_cards(neighbour, { colours = {G.C.RED}, dissolve_time_fac = 1.6 })
                     return true end }))
                 end
 			else
 				return {
-					repetitions = coinToss
+					repetitions = coinToss == 0 and 1 or coinToss
 				}
 			end
 		end
