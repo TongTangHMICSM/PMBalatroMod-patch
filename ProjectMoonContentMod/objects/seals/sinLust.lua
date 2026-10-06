@@ -6,15 +6,8 @@ SMODS.Seal {
     badge_colour = G.C.RED,
     calculate = function(self, card, context)
         if context.main_scoring and context.cardarea == G.play then
-            local lustCount = 0
-            local slothCount = 0
-            for _, playing_card in ipairs(G.playing_cards) do
-                if playing_card.seal == "pmcmod_sinLust" then lustCount = lustCount + 1 end
-                if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
-            end
-            
-            local gain = math.max(1, lustCount + slothCount)
-            card.ability.perma_p_dollars = (card.ability.perma_p_dollars or 0) + gain
+            -- Flat payout (no longer scaled by Lust/Sloth seals in the deck)
+            card.ability.perma_p_dollars = (card.ability.perma_p_dollars or 0) + 1
 
             -- Spreads itself to other cards in the scored hand
             if context.scoring_hand then

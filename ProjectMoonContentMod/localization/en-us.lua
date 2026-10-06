@@ -2784,8 +2784,10 @@ return {
             pmcmod_singloom_seal = {
                 name = "Gloom",
                 text = {
-                    "When the Scene ends, gains {C:chips}1{} Perma Chip",
-                    "for every {C:attention}10%{} above Encounter Score",
+                    "When this page is {C:attention}scored{}, gains",
+                    "{C:chips}1{} Perma Chip for every {C:attention}1%{} of the",
+                    "Encounter Score above the first",
+                    "{C:attention}10%{} already banked",
                     "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },
@@ -2800,16 +2802,18 @@ return {
             pmcmod_sinlust_seal = {
                 name = "Lust",
                 text = {
-                    "Gains {C:gold}Perma Money{} based on Lust",
-                    "seals in deck and spreads to other",
-                    "cards in scored hand"
+                    "Gains {C:gold}1 Perma Money{} when scored",
+                    "and spreads to the other cards",
+                    "in the scored hand"
                 },
             },
             pmcmod_sinenvy_seal = {
                 name = "Envy",
                 text = {
-                    "Has a {C:green}#1# in #2#{} chance to gain a",
-                    "random {C:attention}Perma Bonus{} when scored",
+                    "Has a {C:green}#1# in #2#{} chance to give this",
+                    "page a random {C:attention}Edition{} when scored",
+                    "{C:inactive}(if already edited, spreads the{}",
+                    "{C:inactive}Envy seal to the scored hand){}",
                     "{C:inactive}(Boosted by Sloth seals){}"
                 },
             },

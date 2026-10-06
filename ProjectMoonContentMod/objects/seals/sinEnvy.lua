@@ -12,16 +12,40 @@ SMODS.Seal {
             end
 
             if pseudorandom('envy') < (G.GAME.probabilities.normal + slothCount) / self.config.extra.odds then
-                local rand = pseudorandom('pmcmod_sinEnvy_reward', 1, 3)
-                if rand == 1 then
-                    card.ability.perma_bonus = (card.ability.perma_bonus or 0) + 10 + slothCount * 2
-                    return { message = localize('k_upgrade_ex'), colour = G.C.CHIPS }
-                elseif rand == 2 then
-                    card.ability.perma_mult = (card.ability.perma_mult or 0) + 2 + slothCount
-                    return { message = localize('k_upgrade_ex'), colour = G.C.MULT }
-                else
-                    card.ability.perma_p_dollars = (card.ability.perma_p_dollars or 0) + 1
-                    return { message = localize('k_upgrade_ex'), colour = G.C.GOLD }
+                -- Already edited: spread the Envy seal through the scored hand instead
+                if card.edition then
+                    if context.scoring_hand then
+                        for _, other_card in ipairs(context.scoring_hand) do
+                            if other_card ~= card and not other_card.seal then
+                                other_card:set_seal("pmcmod_sinEnvy", nil, true)
+                                G.E_MANAGER:add_event(Event({
+                                    func = function()
+                                        other_card:juice_up()
+                                        return true
+                                    end
+                                }))
+                            end
+                        end
+                    end
+                    return {
+                        message = localize('k_upgrade_ex'),
+                        colour = G.C.RED
+                    }
+                end
+
+                -- Not edited yet: hand out a random Edition (never Negative)
+                local edition = SMODS.poll_edition {
+                    key = 'sinEnvy',
+                    guaranteed = true,
+                    no_negative = true,
+                    options = { 'e_foil', 'e_holo', 'e_polychrome', 'e_pmcmod_charge' }
+                }
+                if edition then
+                    card:set_edition(edition, true)
+                    return {
+                        message = localize('k_upgrade_ex'),
+                        colour = G.C.EDITION
+                    }
                 end
             end
         end
