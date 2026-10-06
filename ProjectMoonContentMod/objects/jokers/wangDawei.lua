@@ -22,7 +22,7 @@ SMODS.Joker {
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-            card.ability.extra.counter = card.ability.extra.counter + 1
+            if not context.blueprint then card.ability.extra.counter = card.ability.extra.counter + 1 end
 			if card.ability.extra.counter >= 8 then
 				context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.permaMult_mod
 				context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) +  card.ability.extra.permaChips_mod

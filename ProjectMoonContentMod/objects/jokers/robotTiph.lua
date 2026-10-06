@@ -38,8 +38,8 @@ SMODS.Joker {
 		end
 		if context.joker_type_destroyed and context.card.config.center.key == "j_pmcmod_robotEnoch" then
 --			print("Testing destruction")
-			card.ability.extra.enochDeathCounter = card.ability.extra.enochDeathCounter + 1
-			card.ability.extra.aceMult = card.ability.extra.aceMult + card.ability.extra.aceMult_mod
+			if not context.blueprint then card.ability.extra.enochDeathCounter = card.ability.extra.enochDeathCounter + 1 end
+			if not context.blueprint then card.ability.extra.aceMult = card.ability.extra.aceMult + card.ability.extra.aceMult_mod end
 			return {
 				message = localize('k_upgrade_ex'),
 				colour = G.C.MULT,

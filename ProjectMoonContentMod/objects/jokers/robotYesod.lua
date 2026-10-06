@@ -22,19 +22,19 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Spades") then
-			card.ability.extra.totalSpades = card.ability.extra.totalSpades + 1
+			if not context.blueprint then card.ability.extra.totalSpades = card.ability.extra.totalSpades + 1 end
 		end
 
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Clubs") then
-			card.ability.extra.totalClubs = card.ability.extra.totalClubs + 1
+			if not context.blueprint then card.ability.extra.totalClubs = card.ability.extra.totalClubs + 1 end
 		end
 
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Hearts") then
-			card.ability.extra.totalHearts = card.ability.extra.totalHearts + 1
+			if not context.blueprint then card.ability.extra.totalHearts = card.ability.extra.totalHearts + 1 end
 		end
 
 		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Diamonds") then
-			card.ability.extra.totalDiamonds = card.ability.extra.totalDiamonds + 1
+			if not context.blueprint then card.ability.extra.totalDiamonds = card.ability.extra.totalDiamonds + 1 end
 		end
 
 		card.ability.extra.chips = (card.ability.extra.totalSpades + card.ability.extra.totalClubs)

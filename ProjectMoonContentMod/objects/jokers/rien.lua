@@ -56,10 +56,10 @@ SMODS.Joker {
 					if context.card.prescriptFullfilled then
 						--print("prescript fullfilled")
 						if card.ability.extra.soraPresent then
-							card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * 2)
-							card.ability.extra.soraDeathCounter = card.ability.extra.soraDeathCounter + 1
+							if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult + (card.ability.extra.mult_mod * 2) end
+							if not context.blueprint then card.ability.extra.soraDeathCounter = card.ability.extra.soraDeathCounter + 1 end
 						else
-							card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+							if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod end
 						end
 					else
 						card.getting_sliced = true

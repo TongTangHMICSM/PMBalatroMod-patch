@@ -23,7 +23,7 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play and next(context.poker_hands[card.ability.extra.type]) then
 			if SMODS.pseudorandom_probability(card, 'shanSan', card.ability.extra.baseChance, card.ability.extra.maxChance, 'shanSan') then
-				card.ability.extra.counter = card.ability.extra.counter + 1
+				if not context.blueprint then card.ability.extra.counter = card.ability.extra.counter + 1 end
 				return {
 					dollars = card.ability.extra.dollars
 				}

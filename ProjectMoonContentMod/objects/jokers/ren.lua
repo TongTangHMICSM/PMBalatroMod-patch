@@ -44,7 +44,7 @@ SMODS.Joker {
 		if context.individual and context.cardarea == G.play then
 			if card.ability.extra.shiomiPresent then
 				context.other_card:set_ability("m_pmcmod_poise", nil, true)
-				card.ability.extra.renDeathCounter = card.ability.extra.renDeathCounter + 1
+				if not context.blueprint then card.ability.extra.renDeathCounter = card.ability.extra.renDeathCounter + 1 end
 			else
 				if SMODS.pseudorandom_probability(card, 'ren', card.ability.extra.baseChance, card.ability.extra.maxChance, 'ren') then
 					context.other_card:set_ability("m_pmcmod_poise", nil, true)

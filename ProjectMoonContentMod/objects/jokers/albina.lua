@@ -45,7 +45,7 @@ SMODS.Joker {
 			if context.other_card == context.scoring_hand[1] then
 				if card.ability.extra.callistoPresent then
 					context.other_card:set_ability("m_mult", nil, true)
-					card.ability.extra.albinaDeathCounter = card.ability.extra.albinaDeathCounter + 1
+					if not context.blueprint then card.ability.extra.albinaDeathCounter = card.ability.extra.albinaDeathCounter + 1 end
 				else
 					if SMODS.pseudorandom_probability(card, 'albina', card.ability.extra.baseChance, card.ability.extra.maxChance, 'albina') then
 						context.other_card:set_ability("m_mult", nil, true)
@@ -56,7 +56,7 @@ SMODS.Joker {
 			if context.other_card == context.scoring_hand[2] then
 				if card.ability.extra.callistoPresent then
 					context.other_card:set_ability("m_bonus", nil, true)
-					card.ability.extra.albinaDeathCounter = card.ability.extra.albinaDeathCounter + 1
+					if not context.blueprint then card.ability.extra.albinaDeathCounter = card.ability.extra.albinaDeathCounter + 1 end
 				else
 					if SMODS.pseudorandom_probability(card, 'albina', card.ability.extra.baseChance, card.ability.extra.maxChance, 'albina') then
 						context.other_card:set_ability("m_bonus", nil, true)

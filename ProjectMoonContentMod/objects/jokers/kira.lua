@@ -45,7 +45,7 @@ SMODS.Joker {
 			local multiplier = 1
 			if card.ability.extra.matthiasPresent then
 				multiplier = 2
-				card.ability.extra.kiraDeathCounter = card.ability.extra.kiraDeathCounter + 1
+				if not context.blueprint then card.ability.extra.kiraDeathCounter = card.ability.extra.kiraDeathCounter + 1 end
 			end
 			return {
 				dollars = card.ability.extra.dollars * multiplier,

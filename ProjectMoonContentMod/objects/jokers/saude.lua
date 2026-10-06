@@ -65,7 +65,7 @@ SMODS.Joker {
 			   (card.ability.extra.suit == 'Diamonds' and suits['Diamonds'] > 0) or
 			   (card.ability.extra.suit == 'Spades' and suits['Spades'] > 0) or
 			   (card.ability.extra.suit == 'Clubs' and suits['Clubs'] > 0) then
-				card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_gain
+				if not context.blueprint then card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_gain end
                 return {
                     chips = card.ability.extra.chips,
 					message = 'Nice!'

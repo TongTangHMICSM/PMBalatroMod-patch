@@ -23,7 +23,7 @@ SMODS.Joker {
 		local _poker_hands = {'High Card', 'Pair', 'Three of a Kind'}
 		-- Increments mult if poker hand matches
         if context.joker_main and context.scoring_name == card.ability.extra.poker_hand then
-			card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+			if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain end
             return {
                 mult = card.ability.extra.mult,
 				message = 'Nice!'

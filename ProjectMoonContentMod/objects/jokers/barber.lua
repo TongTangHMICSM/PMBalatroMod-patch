@@ -24,11 +24,11 @@ SMODS.Joker {
 		if context.individual and context.cardarea == G.play then
 			if (SMODS.has_enhancement(context.other_card, 'm_pmcmod_bleed') or context.other_card:is_suit("Hearts")) then		
 
-				card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
+				if not context.blueprint then card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod end
 
 			else
 				if card.ability.extra.chips >= 0 then
-					card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_mod
+					if not context.blueprint then card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_mod end
 				end
 
 				if  card.ability.extra.chips < 0 then

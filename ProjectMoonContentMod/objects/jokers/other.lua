@@ -24,7 +24,7 @@ SMODS.Joker {
 
 		if context.joker_type_destroyed and context.card.config.center.key == "j_pmcmod_ricardo" then
 --			print("Testing Ricardo increment")
-			card.ability.extra.ricardoDefeatCounter = card.ability.extra.ricardoDefeatCounter + 1
+			if not context.blueprint then card.ability.extra.ricardoDefeatCounter = card.ability.extra.ricardoDefeatCounter + 1 end
 			card.ability.extra.canSpawnRicardo = true
 		end
 

@@ -50,7 +50,7 @@ SMODS.Joker {
 		if context.individual and context.cardarea == G.play and (context.other_card == context.scoring_hand[#context.scoring_hand]) and #context.scoring_hand > 2 and card.ability.extra.lucioPresent then
 			context.other_card:set_ability("m_pmcmod_tremor", nil, true)
 
-			card.ability.extra.lucioDeathCounter = card.ability.extra.lucioDeathCounter + 1
+			if not context.blueprint then card.ability.extra.lucioDeathCounter = card.ability.extra.lucioDeathCounter + 1 end
 
 			if card.ability.extra.lucioDeathCounter >= 5 then
 				G.GAME.banned_keys["j_pmcmod_lucio"] = true

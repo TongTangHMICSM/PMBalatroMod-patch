@@ -61,7 +61,7 @@ SMODS.Joker {
 			if card.ability.extra.dollarsBase * burn_tally <= G.GAME.dollars then
 				context.other_card:set_ability("m_pmcmod_burn", nil, true)
 				if card.ability.extra.kiraPresent then
-					card.ability.extra.kiraDeathCounter = card.ability.extra.kiraDeathCounter + 1
+					if not context.blueprint then card.ability.extra.kiraDeathCounter = card.ability.extra.kiraDeathCounter + 1 end
 				else
 					ease_dollars (-card.ability.extra.dollarsBase * burn_tally)
 				end

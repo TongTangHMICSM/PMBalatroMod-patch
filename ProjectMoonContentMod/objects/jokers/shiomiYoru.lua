@@ -44,7 +44,7 @@ SMODS.Joker {
 
 		if context.individual and context.cardarea == G.play and context.other_card.poise_trigger and card.ability.extra.renPresent then
 					
-			card.ability.extra.renDeathCounter = card.ability.extra.renDeathCounter + 1
+			if not context.blueprint then card.ability.extra.renDeathCounter = card.ability.extra.renDeathCounter + 1 end
 		
 				if card.ability.extra.renDeathCounter >= 5 then
 					G.GAME.banned_keys["j_pmcmod_ren"] = true

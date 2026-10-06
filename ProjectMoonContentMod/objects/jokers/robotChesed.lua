@@ -40,7 +40,7 @@ SMODS.Joker {
 
 		if context.individual and context.cardarea == G.play then
             if (pseudorandom('daniel_upgrade') < G.GAME.probabilities.normal / card.ability.extra.odds_upgrade) then
-				card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_mod
+				if not context.blueprint then card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_mod end
 				return {
 						message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.xchips_mod } },
 						colour = G.C.RED

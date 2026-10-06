@@ -23,7 +23,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
 			if SMODS.pseudorandom_probability(card, 'chesed', card.ability.extra.baseChance, card.ability.extra.maxChance, 'chesed') then
-				card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_mod
+				if not context.blueprint then card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_mod end
 				return {
 						message = localize { type = 'variable', key = 'a_xchips', vars = { card.ability.extra.xchips_mod } },
 						colour = G.C.RED

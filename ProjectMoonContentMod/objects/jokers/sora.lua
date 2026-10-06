@@ -102,7 +102,7 @@ SMODS.Joker {
 
 			if card.ability.extra.rienPresent then
 				multiplier = 2
-				card.ability.extra.soraDeathCounter = card.ability.extra.soraDeathCounter + 1
+				if not context.blueprint then card.ability.extra.soraDeathCounter = card.ability.extra.soraDeathCounter + 1 end
 			else
 				multiplier = 1
 			end

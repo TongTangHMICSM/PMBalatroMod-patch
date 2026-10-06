@@ -24,7 +24,7 @@ SMODS.Joker {
 		if context.individual and context.cardarea == G.play then
 			if (SMODS.has_enhancement(context.other_card, 'm_pmcmod_bleed') or context.other_card:is_suit("Hearts")) then		
 
-				card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+				if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod end
 
 				return {
                     message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_mod } },
@@ -33,7 +33,7 @@ SMODS.Joker {
 
 			else
 				if card.ability.extra.mult >= 0 then
-					card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod
+					if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod end
 					
 					return {
 						message = localize { type = 'variable', key = 'a_mult_minus', vars = { card.ability.extra.mult_mod } },
