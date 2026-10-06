@@ -35,7 +35,9 @@ SMODS.Joker {
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_LCAUdjat'), HEX('212121'), HEX('ba8832'), 1.2 )
  	end,
-	-- uniform shop weight inside the rarity (removed: weight*(2^(#G.vouchers.cards + 1)))
+	get_weight = function(self, weight)
+    	return PMCMOD.bonus_weight(weight, #G.vouchers.cards)
+	end,
 	check_for_unlock = function(self, args)
         if #G.vouchers.cards >= 5 then
 			return true

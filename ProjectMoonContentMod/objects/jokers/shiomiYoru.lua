@@ -60,7 +60,17 @@ SMODS.Joker {
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,
-	-- uniform shop weight inside the rarity (removed: weight*(2^(poise_card_tally + 1)))
+	get_weight = function(self, weight)
+		local poise_card_tally = 0
+		if G.GAME.blind then
+			if G.playing_cards then
+				for _, playing_card in ipairs(G.playing_cards) do
+					if SMODS.has_enhancement(playing_card, 'm_pmcmod_poise') then poise_card_tally = poise_card_tally + 1 end
+				end
+			end
+		end
+    	return PMCMOD.bonus_weight(weight, poise_card_tally)
+	end,
 	check_for_unlock = function(self, args)
         for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
             if v.key == "j_flower_pot" then

@@ -51,7 +51,9 @@ SMODS.Joker {
 
 		
     end,
-	-- uniform shop weight inside the rarity (removed: weight*(2^((#SMODS.find_card('j_pmcmod_heathcliff') + #SMODS.find_card('j_hit_the_road'))*G.GAME.round_resets.ante * 2)))
+	get_weight = function(self, weight)
+    	return PMCMOD.bonus_weight(weight, (#SMODS.find_card('j_pmcmod_heathcliff') + #SMODS.find_card('j_hit_the_road'))*G.GAME.round_resets.ante * 2)
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_wuthering'), HEX('3d2920'), HEX('998277'), 1.2 )
  	end

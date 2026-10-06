@@ -42,6 +42,17 @@ function PMCMOD.has_charge_keypage()
     return false
 end
 
+-- Shop weight helper for get_weight(). A rarity draws its members in proportion to their
+-- weight (10 by default), so a multiple makes a joker more likely to be offered. Every joker
+-- starts at x1 - equal with its rarity peers - and only rises when its condition is met.
+-- The multiple is capped (PMCMOD.MAX_SHOP_WEIGHT_MULT) because these exponents count
+-- deck-wide cards: uncapped, a 10-pallid deck gave queequeg 2^11 = x2048 and the shop became
+-- that one joker. Raise or lower the cap to taste; it is the only knob.
+PMCMOD.MAX_SHOP_WEIGHT_MULT = 8
+function PMCMOD.bonus_weight(weight, exponent)
+    return (weight or 10) * math.min(2 ^ math.max(0, exponent or 0), PMCMOD.MAX_SHOP_WEIGHT_MULT)
+end
+
 SMODS.current_mod.optional_features = function()
     return {
         retrigger_joker = true,

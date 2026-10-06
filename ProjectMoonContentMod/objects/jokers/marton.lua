@@ -42,7 +42,17 @@ SMODS.Joker {
 			}
 		end
     end,
-	-- uniform shop weight inside the rarity (removed: weight*(2^(endurance_card_tally + 1)))
+	get_weight = function(self, weight)
+		local endurance_card_tally = 0
+		if G.GAME.blind then
+			if G.playing_cards then
+				for _, playing_card in ipairs(G.playing_cards) do
+					if SMODS.has_enhancement(playing_card, 'm_bonus') then endurance_card_tally = endurance_card_tally + 1 end
+				end
+			end
+		end
+    	return PMCMOD.bonus_weight(weight, endurance_card_tally)
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_limbus'), G.C.BLACK, G.C.RED, 1.2 )
  	end,
