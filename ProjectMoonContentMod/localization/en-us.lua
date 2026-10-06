@@ -144,11 +144,11 @@ return {
             e_pmcmod_charge = {
                 name = "Charge",
                 text = {
-                    "Gains {C:blue}1{} Charge each time this",
-                    "card triggers ({C:inactive}Tiph B doubles it{})",
+                    "Gains {C:blue}1{} Charge per scored Page,",
+                    "and once per hand while on a Keypage",
+                    "{C:inactive}(Tiph B doubles the gain){}",
                     "A Keypage spends {C:blue}5{} Charges to",
-                    "score the first played card twice",
-                    "Shared Charges: {C:blue}#1#{}"
+                    "score a played card twice - Charges: {C:blue}#1#{}"
                 },
             },
         },

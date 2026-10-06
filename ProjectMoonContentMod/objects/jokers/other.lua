@@ -50,7 +50,7 @@ SMODS.Joker {
 	key = 'chargeManager',
 	name = "Charge Manager",
 	pronouns = "it_its",
-	config = { extra = {} },
+	config = { extra = { lastChargeHand = -1, lastSpendHand = -1 } },
 	no_collection = true,
 	unlocked = true,
 	eternal_compat = false,
@@ -64,30 +64,45 @@ SMODS.Joker {
 		return { vars = { PMCMOD.get_charge() } }
 	end,
 	calculate = function(self, card, context)
-		-- Feed the pool: a scored page holding the Charge edition
-		if context.individual and context.cardarea == G.play and not context.blueprint then
-			local scored = context.other_card
-			if scored and scored.edition and scored.edition.key == 'e_pmcmod_charge' then
-				PMCMOD.add_charge(PMCMOD.charge_gain())
-			end
-		end
+		-- Only the per-scored-card context reaches this card. Hand-level contexts
+		-- (joker_main, before, after) are dispatched by the base game straight over
+		-- G.jokers.cards - state_events.lua:905 - so a card in the dummy area never
+		-- sees them. Both timers below are hand-scoped markers instead.
+		if not context.blueprint and context.cardarea == G.play then
+			-- G.GAME.round is the per-blind counter (common_events.lua:236) and
+			-- hands_played resets each blind, so this key is unique per hand.
+			local rr = G.GAME.round_resets or {}
+			local cr = G.GAME.current_round or {}
+			local handKey = (rr.ante or 0) * 10000 + (G.GAME.round or 0) * 100 + (cr.hands_played or 0)
 
-		-- Feed the pool: a Keypage holding the Charge edition, once per hand
-		if context.joker_main and not context.blueprint then
-			local jokers = (G.jokers and G.jokers.cards) or {}
-			for i = 1, #jokers do
-				if jokers[i].edition and jokers[i].edition.key == 'e_pmcmod_charge' then
+			if context.individual then
+				-- a scored Page holding Charge pays out every time it triggers
+				local scored = context.other_card
+				if scored and scored.edition and scored.edition.key == 'e_pmcmod_charge' then
 					PMCMOD.add_charge(PMCMOD.charge_gain())
 				end
-			end
-		end
 
-		-- Spend 5 charges (-5, leftovers carry over) to score the first card twice
-		if not context.blueprint and context.repetition and context.cardarea == G.play
-			and context.scoring_hand and context.other_card == context.scoring_hand[1]
-			and PMCMOD.get_charge() >= 5 and PMCMOD.has_charge_keypage() then
-			PMCMOD.add_charge(-5)
-			return { repetitions = 1 }
+				-- a Keypage holding Charge pays out once per hand
+				if card.ability.extra.lastChargeHand ~= handKey then
+					card.ability.extra.lastChargeHand = handKey
+					local jokers = (G.jokers and G.jokers.cards) or {}
+					for i = 1, #jokers do
+						if jokers[i].edition and jokers[i].edition.key == 'e_pmcmod_charge' then
+							PMCMOD.add_charge(PMCMOD.charge_gain())
+						end
+					end
+				end
+			end
+
+			-- Spend 5 charges (-5, leftovers carry over) to score a played card twice.
+			-- Answers the first card that asks, so a debuffed first card cannot eat the
+			-- payout, and the marker keeps it to one spend per hand.
+			if context.repetition and card.ability.extra.lastSpendHand ~= handKey
+				and PMCMOD.get_charge() >= 5 and PMCMOD.has_charge_keypage() then
+				card.ability.extra.lastSpendHand = handKey
+				PMCMOD.add_charge(-5)
+				return { repetitions = 1 }
+			end
 		end
 	end,
 	in_pool = function(self, args)
