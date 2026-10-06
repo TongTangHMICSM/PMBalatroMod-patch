@@ -159,6 +159,8 @@ return {
                     "Gains {C:red}+1{} Perma Mult for",
                     "every {C:red}Bleed{} card scored in the",
                     "played hand",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Lust Seal{} ({C:green}1 in 10{})"
                 },
             },
             m_pmcmod_burn = {
@@ -166,7 +168,9 @@ return {
                 text = {
                     "Gives {C:chips}0.001%{} of the total Encounter",
                     "score as extra chips",
-                    "Remaining count: #2#"
+                    "Remaining count: #2#",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Wrath Seal{} ({C:green}1 in 10{})"
                 },
             },
             m_pmcmod_poise = {
@@ -174,7 +178,9 @@ return {
                 text = {
                     "Has a {C:green}#3# in #4#{} chance to give {X:red,C:white}X#1#{} Mult",
                     "Chance increase every time the card is scored",
-                    "Chance resets every time the effect triggers"
+                    "Chance resets every time the effect triggers",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Pride Seal{} ({C:green}1 in 10{})"
 
                 },
             },
@@ -184,7 +190,9 @@ return {
                     "Give stacks of Rupture {C:attention}every time the card scores{}",
                     "Non face cards give double stacks",
                     "Give double the amount of stacks as {C:chips}Chips{}",
-                    "{C:inactive}(Current stacks: {C:attention}#1#{})"
+                    "{C:inactive}(Current stacks: {C:attention}#1#{})",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Gluttony Seal{} ({C:green}1 in 10{})"
 
                 },
             },
@@ -192,7 +200,9 @@ return {
                 name = "Tremor Card",
                 text = {
                     "Enhance the effects of select Enhancements",
-                    "when scored together"
+                    "when scored together",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Sloth Seal{} ({C:green}1 in 10{})"
                 },
             },
             m_pmcmod_sinking = {
@@ -200,7 +210,9 @@ return {
                 text = {
                     "Reduces the target score",
                     "by {C:chips}5%{} when this",
-                    "card is scored"
+                    "card is scored",
+                    "When scored without a seal, it can gain",
+                    "the {C:attention}Gloom Seal{} ({C:green}1 in 10{})"
                 },
             },
             m_pmcmod_painted = {
@@ -2773,14 +2785,16 @@ return {
                     "When scored, gains one of:",
                     "{C:chips}+0-8 Perma Chips{}, {C:mult}+0-4 Perma Mult{}",
                     "or {C:gold}+1 Perma Money{}",
-                    "{C:inactive}(+2 Chips and +1 Mult per Sloth seal){}"
+                    "{C:inactive}(+2 Chips and +1 Mult per Sloth seal){}",
+                    "1 in 10 on scored {C:attention}Burn{} cards"
                 },
             },
             pmcmod_sinpride_seal = {
                 name = "Pride",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
-                    "{C:inactive}(+0.1X Mult per Sloth seal){}"
+                    "{C:inactive}(+0.1X Mult per Sloth seal){}",
+                    "1 in 10 on scored {C:attention}Poise{} cards"
                 },
             },
             pmcmod_singluttony_seal = {
@@ -2788,7 +2802,8 @@ return {
                 text = {
                     "When scored or held in hand,",
                     "gains {C:chips}+1-5 Perma Chips{}",
-                    "{C:inactive}(+5 Perma Chips per Sloth seal){}"
+                    "{C:inactive}(+5 Perma Chips per Sloth seal){}",
+                    "1 in 10 on scored {C:attention}Rupture{} cards"
                 },
             },
             pmcmod_singloom_seal = {
@@ -2797,7 +2812,8 @@ return {
                     "When this page is {C:attention}scored{}, gains",
                     "{C:chips}1{} Perma Chip per {C:attention}1%{} of the",
                     "Encounter Score above the first {C:attention}10%{}",
-                    "{C:inactive}(+5 Perma Chips per Sloth seal){}"
+                    "{C:inactive}(+5 Perma Chips per Sloth seal){}",
+                    "1 in 10 on scored {C:attention}Sinking{} cards"
                 },
             },
             pmcmod_sinsloth_seal = {
@@ -2808,7 +2824,8 @@ return {
                     "{C:chips}+2{} Chips and {C:mult}+1{} Mult (Wrath)",
                     "{C:chips}+5{} Perma Chips (Gluttony, Gloom)",
                     "{X:mult,C:white}+0.1X{} Mult (Pride)",
-                    "+1 in 4 chance (Envy), better spread (Lust)"
+                    "+1 in 4 chance (Envy), better spread (Lust)",
+                    "1 in 10 on scored {C:attention}Tremor{} cards"
                 },
             },
             pmcmod_sinlust_seal = {
@@ -2817,7 +2834,8 @@ return {
                     "Gains {C:gold}1 Perma Money{} when scored",
                     "and has a {C:green}1 in 2{} chance to spread",
                     "to the other cards in the scored hand",
-                    "{C:inactive}(1 Sloth seal: 2 in 3){}"
+                    "{C:inactive}(1 Sloth seal: 2 in 3){}",
+                    "1 in 10 on scored {C:attention}Bleed{} cards"
                 },
             },
             pmcmod_sinenvy_seal = {
@@ -2827,7 +2845,9 @@ return {
                     "page a random {C:attention}Edition{} when scored",
                     "{C:inactive}(if already edited, spreads the{}",
                     "{C:inactive}Envy seal to the scored hand){}",
-                    "{C:inactive}(+1 in 4 per Sloth seal){}"
+                    "{C:inactive}(+1 in 4 per Sloth seal){}",
+                    "1 in 60 on an unenhanced card while",
+                    "an {C:attention}Edition{} is in play"
                 },
             },
             pmcmod_gift_seal = {
@@ -2972,7 +2992,9 @@ return {
                 name = "Manifest",
                 text = {
                     "Upgrades an {C:attention}Aspect Keypage{} into",
-                    "their complete version"
+                    "their complete version",
+                    "If that version is still locked it is",
+                    "unlocked and added to the collection"
                 }
             },
         },
