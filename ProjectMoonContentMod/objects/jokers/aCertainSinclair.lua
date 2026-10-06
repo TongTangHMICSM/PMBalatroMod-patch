@@ -17,53 +17,52 @@ SMODS.Joker {
 		["Sinners"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = {  } }
+        return { vars = { card.ability.extra.counter } }
 	end,
 	calculate = function(self, card, context)
-		local cardTriggeredIsToTheLeft = false
 		if context.before then
 			for i = 1, #G.jokers.cards do
 				if G.jokers.cards[i] == card then
 					card.ability.extra.currentPosition = i
-					--print("my_pos is ".. card.ability.extra.currentPosition)
 					break
 				end
 			end
 		end
 
-		if context.post_trigger and not context.blueprint and G.jokers.cards[card.ability.extra.currentPosition-1] then
-
-			if G.jokers.cards[card.ability.extra.currentPosition-1].config.center.key == context.other_card.config.center.key then
-
-				if card.ability.extra.currentPosition > 1 then
-						cardTriggeredIsToTheLeft = true
-						--print("card to the left detected")
-				end
-
-				if cardTriggeredIsToTheLeft == true then
-					card.ability.extra.counter = card.ability.extra.counter + 1
-					--print(card.ability.extra.counter)
-				end
+		-- Count the left neighbour's triggers. A joker only reports a trigger when its calculate
+		-- returns an effect, and Ren does that each time it gives Poise (see ren.lua), so this sees
+		-- every grant the neighbour made.
+		if context.post_trigger and not context.blueprint then
+			local left = G.jokers.cards[card.ability.extra.currentPosition - 1]
+			if card.ability.extra.currentPosition > 1 and left and context.other_card
+				and left.config.center.key == context.other_card.config.center.key then
+				card.ability.extra.counter = card.ability.extra.counter + 1
 			end
 		end
 
+		-- Retrigger the Keypage to the right by that amount, once per hand, which is what
+		-- joker_main is. SMODS's retrigger API cannot target another joker - answering
+		-- retrigger_joker_check only repeats the joker that answers (src/utils.lua:1704-1708
+		-- re-evaluates that card, retrigger_card just tags the context) - so the neighbour's effect
+		-- is re-invoked directly and applied through SMODS.calculate_effect. Per-card effects are
+		-- deliberately not replayed; that would multiply the payout by the cards played.
+		if context.joker_main and not context.blueprint then
+			local right = G.jokers.cards[card.ability.extra.currentPosition + 1]
 
-		-- returning repetitions = 0 makes Steamodded warn ("no assigned repetitions") and retrigger nothing,
-		-- so only answer the check when there is something to retrigger
-		if context.retrigger_joker_check and card.ability.extra.counter > 0 and #G.jokers.cards > card.ability.extra.currentPosition then
-			if context.other_card == G.jokers.cards[card.ability.extra.currentPosition + 1] then
-			--print("Testing trigger")
-				return {
-						repetitions = card.ability.extra.counter
-				}
+			if right and card.ability.extra.counter > 0 then
+				for _ = 1, card.ability.extra.counter do
+					local eff = right:calculate_joker(context)
+					if type(eff) == 'table' and not eff.repetitions and not eff.remove then
+						SMODS.calculate_effect(eff, right)
+					end
+				end
 			end
 		end
 
 		if context.after then
 			card.ability.extra.counter = 0
-			--print("test reset")
 		end
-    end,
+	end,
 	check_for_unlock = function(self, args)
 		local callistoOK = false
 		local albinaOK = false
