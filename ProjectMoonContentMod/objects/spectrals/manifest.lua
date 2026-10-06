@@ -69,6 +69,17 @@ SMODS.Consumable {
 
 		if validCard then
 
+			-- Manifest is the reveal: a True Version that is still locked gets unlocked (and added
+			-- to the collection) instead of the Spectral showing "Locked" and being spent for
+			-- nothing. 18 of these 21 targets start locked. Both helpers save progress and refuse
+			-- to act in seeded or challenge runs (common_events.lua:1630 / 1880), which is why the
+			-- "Locked" fallback below is still reachable there.
+			local trueCenter = G.P_CENTERS[trueCard]
+			if not trueCenter.unlocked then
+				unlock_card(trueCenter)
+				if trueCenter.unlocked then discover_card(trueCenter) end
+			end
+
 			if G.P_CENTERS[trueCard].unlocked then
 				G.E_MANAGER:add_event(Event({
 					trigger = 'after',

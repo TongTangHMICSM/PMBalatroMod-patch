@@ -37,4 +37,5 @@ Shop pool
 Other fixes
 - Lei Heng can no longer destroy an Eternal Keypage; a protected neighbour turns that toss into a retrigger.
 - All gameplay math.random rolls are seeded, so results stay reproducible from the run seed.
+- Manifest now unlocks a still-locked True Version (and adds it to the collection) instead of showing "Locked" and burning the Spectral; 18 of its 21 targets start locked. Seeded and challenge runs still refuse unlocks.
 - Two texture pack badge keys that were referenced but never defined, and a stray brace in pt_BR.
