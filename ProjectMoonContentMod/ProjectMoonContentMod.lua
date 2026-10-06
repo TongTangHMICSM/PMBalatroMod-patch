@@ -53,6 +53,54 @@ function PMCMOD.bonus_weight(weight, exponent)
     return (weight or 10) * math.min(2 ^ math.max(0, exponent or 0), PMCMOD.MAX_SHOP_WEIGHT_MULT)
 end
 
+-- Sin seals can appear on a scored card that does not have a seal yet, when the card carries
+-- the matching enhancement. The seal is permanent once it lands, and it takes effect from the
+-- card's next scoring: SMODS.score_card evaluates the card's own effects before the jokers
+-- (src/utils.lua:2244 vs 2251), so a seal granted during the joker pass cannot fire the same hand.
+-- Odds use G.GAME.probabilities.normal like the rest of the mod, so Oops! All 6s helps.
+PMCMOD.SIN_SEAL_GRANTS = {
+    m_pmcmod_bleed   = { seal = 'pmcmod_sinLust',     odds = 10 },
+    m_pmcmod_poise   = { seal = 'pmcmod_sinPride',    odds = 10 },
+    m_pmcmod_tremor  = { seal = 'pmcmod_sinSloth',    odds = 10 },
+    m_pmcmod_rupture = { seal = 'pmcmod_sinGluttony', odds = 10 },
+    m_pmcmod_burn    = { seal = 'pmcmod_sinWrath',    odds = 10 },
+    m_pmcmod_sinking = { seal = 'pmcmod_sinGloom',    odds = 10 },
+}
+PMCMOD.SIN_ENVY_ODDS = 60
+
+function PMCMOD.try_sin_seal(card)
+    if not card or card.seal or card.debuff then return false end
+    local prob = (G.GAME and G.GAME.probabilities and G.GAME.probabilities.normal) or 1
+
+    for enhancement, grant in pairs(PMCMOD.SIN_SEAL_GRANTS) do
+        if SMODS.has_enhancement(card, enhancement) then
+            if pseudorandom('pmcmod_sinseal_' .. grant.seal) < prob / grant.odds then
+                card:set_seal(grant.seal, nil, true)
+                return grant.seal
+            end
+            return false
+        end
+    end
+
+    -- Envy: a plain card, while an edition is on the card itself or on any Keypage
+    if card.config and card.config.center and card.config.center.key == 'c_base' then
+        local edition_in_play = card.edition ~= nil
+        if not edition_in_play and G.jokers then
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].edition then
+                    edition_in_play = true
+                    break
+                end
+            end
+        end
+        if edition_in_play and pseudorandom('pmcmod_sinseal_envy') < prob / PMCMOD.SIN_ENVY_ODDS then
+            card:set_seal('pmcmod_sinEnvy', nil, true)
+            return 'pmcmod_sinEnvy'
+        end
+    end
+    return false
+end
+
 SMODS.current_mod.optional_features = function()
     return {
         retrigger_joker = true,

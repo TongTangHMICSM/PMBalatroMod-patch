@@ -83,6 +83,10 @@ SMODS.Joker {
 					PMCMOD.add_charge(PMCMOD.charge_gain())
 				end
 
+				-- a scored card can pick up the sin seal matching its enhancement, or the
+				-- Envy seal when it is plain and an edition is in play - see PMCMOD.try_sin_seal
+				PMCMOD.try_sin_seal(scored)
+
 				-- a Keypage holding Charge pays out once per hand
 				if card.ability.extra.lastChargeHand ~= handKey then
 					card.ability.extra.lastChargeHand = handKey
