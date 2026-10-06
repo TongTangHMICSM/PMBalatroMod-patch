@@ -292,7 +292,7 @@ return {
 			        "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 },
                 unlock = {
-                    'Vença uma tentativa com o {C:attention}Baralho da Serpente{}}',
+                    'Vença uma tentativa com o {C:attention}Baralho da Serpente{}',
                     'pelo menos na {C:attention}Aposta Mito Urbano{}',
                 },
             },

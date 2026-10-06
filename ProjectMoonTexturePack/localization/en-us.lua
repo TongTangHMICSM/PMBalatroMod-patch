@@ -3857,6 +3857,8 @@ return {
             badge_claw="The Claw'",
             badge_head="The Head",
             badge_colorFixer="Color Fixer",
+            badge_eye="The Eye",
+            badge_LCorp="Lobotomy Corporation",
 
 
         },
