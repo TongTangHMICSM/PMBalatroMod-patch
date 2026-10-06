@@ -42,12 +42,15 @@ SMODS.Joker {
 		end
 
 		if context.individual and context.cardarea == G.play then
+			local gavePoise = false
 			if card.ability.extra.shiomiPresent then
 				context.other_card:set_ability("m_pmcmod_poise", nil, true)
+				gavePoise = true
 				if not context.blueprint then card.ability.extra.renDeathCounter = card.ability.extra.renDeathCounter + 1 end
 			else
 				if SMODS.pseudorandom_probability(card, 'ren', card.ability.extra.baseChance, card.ability.extra.maxChance, 'ren') then
 					context.other_card:set_ability("m_pmcmod_poise", nil, true)
+					gavePoise = true
 				end
 			end
 
@@ -59,6 +62,13 @@ SMODS.Joker {
 					card:start_dissolve({G.C.RED}, nil, 1.6)
 				return true end }))
 			end
+
+			-- An effect table is how a joker tells the engine it triggered: SMODS only fires the
+			-- post_trigger context when the return is truthy (the patched eval_card tests
+			-- `if jokers or triggered`, and the base Card:calculate_joker never sets that second
+			-- return). {} keeps Ren silent while letting post_trigger fire - `return true` would
+			-- be wrong, the patch rewrites it into { remove = true } and would destroy Ren.
+			if gavePoise and not context.blueprint then return {} end
 		end
 
 		
