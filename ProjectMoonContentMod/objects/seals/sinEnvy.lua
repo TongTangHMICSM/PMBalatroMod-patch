@@ -12,7 +12,7 @@ SMODS.Seal {
             end
 
             if pseudorandom('envy') < (G.GAME.probabilities.normal + slothCount) / self.config.extra.odds then
-                local rand = math.random(1, 3)
+                local rand = pseudorandom('pmcmod_sinEnvy_reward', 1, 3)
                 if rand == 1 then
                     card.ability.perma_bonus = (card.ability.perma_bonus or 0) + 10 + slothCount * 2
                     return { message = localize('k_upgrade_ex'), colour = G.C.CHIPS }

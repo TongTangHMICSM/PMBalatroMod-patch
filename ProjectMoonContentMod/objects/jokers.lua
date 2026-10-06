@@ -169,11 +169,18 @@ function Card:keypage_say_stuff(n, not_first)
     end
 end
 
-function Shuffle(t)
+-- Deterministic Fisher-Yates: `seed` keeps the same run/seed reproducible.
+-- Successive calls with the same seed still differ, because pseudoseed evolves the
+-- per-key state stored in G.GAME.pseudorandom.
+-- The math.random fallback only matters if a card is ever added to a deck outside a
+-- run (G.GAME.pseudorandom is created by Game:init_game_object, game.lua:1894).
+function Shuffle(t, seed)
 	local s = {}
+	seed = seed or 'pmcmod_shuffle'
 	for i = 1, #t do s[i] = t[i] end
+	local seeded = G.GAME and G.GAME.pseudorandom
 	for i = #t, 2, -1 do
-		local j = math.random(i)
+		local j = seeded and pseudorandom(seed .. '_' .. i, 1, i) or math.random(i)
 		s[i], s[j] = s[j], s[i]
 	end
 	return s

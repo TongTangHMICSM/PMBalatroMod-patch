@@ -7,7 +7,7 @@ SMODS.Seal {
     calculate = function(self, card, context)
         if context.main_scoring and context.cardarea == G.play then
 
-            local randomValue = math.random(0, 10)
+            local randomValue = pseudorandom('pmcmod_sinWrath_branch', 0, 10)
 
             local slothCount = 0
 
@@ -19,13 +19,13 @@ SMODS.Seal {
             
 
             if randomValue <= 6 then
-                card.ability.perma_bonus = (card.ability.perma_bonus or 0) + math.random(0, 8) + slothCountChips
+                card.ability.perma_bonus = (card.ability.perma_bonus or 0) + pseudorandom('pmcmod_sinWrath_chips', 0, 8) + slothCountChips
                 return {
                     message = localize('k_upgrade_ex'),
                     colour = G.C.CHIPS
                 }
             elseif randomValue >=7 and randomValue <= 9 then
-                card.ability.perma_mult = (card.ability.perma_mult or 0) + math.random(0, 4) + slothCount
+                card.ability.perma_mult = (card.ability.perma_mult or 0) + pseudorandom('pmcmod_sinWrath_mult', 0, 4) + slothCount
                 return {
                     message = localize('k_upgrade_ex'),
                     colour = G.C.MULT

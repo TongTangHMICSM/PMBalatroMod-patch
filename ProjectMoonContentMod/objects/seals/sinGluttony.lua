@@ -11,7 +11,7 @@ SMODS.Seal {
         end
 
         if (context.main_scoring and context.cardarea == G.play) or (context.individual and context.cardarea == G.hand) then
-            local bonus = math.random(1, 5) + slothCount
+            local bonus = pseudorandom('pmcmod_sinGluttony_bonus', 1, 5) + slothCount
             card.ability.perma_bonus = (card.ability.perma_bonus or 0) + bonus
             return {
                 message = localize('k_upgrade_ex'),

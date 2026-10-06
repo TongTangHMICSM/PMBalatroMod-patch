@@ -23,7 +23,7 @@ SMODS.Joker {
 		
 		-- Shuffles prescripts
         local prescriptListUnshuffled = {"j_pmcmod_prescript1", "j_pmcmod_prescript2", "j_pmcmod_prescript3", "j_pmcmod_prescript4", "j_pmcmod_prescript5", "j_pmcmod_prescript6", "j_pmcmod_prescript7", "j_pmcmod_prescript8", "j_pmcmod_prescript9", "j_pmcmod_prescript10", "j_pmcmod_prescript11"}
-		card.ability.extra.prescriptListShuffled = Shuffle(prescriptListUnshuffled)
+		card.ability.extra.prescriptListShuffled = Shuffle(prescriptListUnshuffled, 'pmcmod_rien_prescripts')
     end,
 	calculate = function(self, card, context)
 
