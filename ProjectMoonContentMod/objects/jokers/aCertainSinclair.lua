@@ -17,7 +17,7 @@ SMODS.Joker {
 		["Sinners"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.counter } }
+        return {vars = {  } }
 	end,
 	calculate = function(self, card, context)
 		local cardTriggeredIsToTheLeft = false
@@ -28,19 +28,6 @@ SMODS.Joker {
 					--print("my_pos is ".. card.ability.extra.currentPosition)
 					break
 				end
-			end
-		end
-
-		-- Count the left neighbour's triggers.
-		-- post_trigger cannot see Ren: SMODS only fires it when a joker's calculate returns an
-		-- effect (the `triggered` second return is never set by the base Card:calculate_joker), and
-		-- Ren returns nothing - it silently enhances the scored card. Ren triggers on exactly
-		-- "a card is being scored", which is this context, so count that while it sits to our left.
-		if context.individual and context.cardarea == G.play and not context.blueprint then
-			local neighbour = G.jokers.cards[card.ability.extra.currentPosition - 1]
-			if card.ability.extra.currentPosition > 1 and neighbour
-				and neighbour.config.center.key == 'j_pmcmod_ren' then
-				card.ability.extra.counter = card.ability.extra.counter + 1
 			end
 		end
 
