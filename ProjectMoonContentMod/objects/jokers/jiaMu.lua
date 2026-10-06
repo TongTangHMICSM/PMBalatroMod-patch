@@ -46,7 +46,7 @@ SMODS.Joker {
 		if context.retrigger_joker_check and G.GAME.dollars >= 3 then
 			for i = 1, #G.jokers.cards do
 				if context.other_card == G.jokers.cards[i] then
-					local repetitions = math.random(0, 2)
+					local repetitions = pseudorandom('pmcmod_jiaMu_reps', 0, 2)
 					if repetitions > 0 then
 						return {
 							repetitions = repetitions,

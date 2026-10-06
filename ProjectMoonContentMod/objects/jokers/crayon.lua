@@ -21,7 +21,7 @@ SMODS.Joker {
 			if SMODS.pseudorandom_probability(card, 'crayon', card.ability.extra.baseChance, card.ability.extra.maxChance, 'crayonChance') or card.ability.extra.pity then
 				card.ability.extra.pity = false
 				if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-					local chosenConsumable = math.random(1, 10)
+					local chosenConsumable = pseudorandom('pmcmod_crayon_pick', 1, 10)
 					if chosenConsumable == 1 then
 						G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
 						G.E_MANAGER:add_event(Event({

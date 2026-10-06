@@ -20,8 +20,8 @@ SMODS.Joker {
         return {vars = {  } }
 	end,
 	calculate = function(self, card, context)
-		local coinFlip = math.random(1,2)
 		if context.setting_blind and not context.blueprint then
+			local coinFlip = pseudorandom('pmcmod_xuePan_flip', 1, 2)
 			if coinFlip == 1 then
 				local editionless_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
 

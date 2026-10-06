@@ -19,9 +19,8 @@ SMODS.Joker {
 		return { vars = { card.ability.chipsValue1, card.ability.chipsValue2, card.ability.chipsValue3, card.ability.chipsValue4, card.ability.chipsValue5, card.ability.chipsValue6 } }
 	end,
 	calculate = function(self, card, context)
-		local choosenValue = math.random(0, 5)
-
 		if context.joker_main then
+			local choosenValue = pseudorandom('pmcmod_aida_pick', 0, 5)
 			if choosenValue == 5 then
 			
 				return {

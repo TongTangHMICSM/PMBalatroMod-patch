@@ -70,7 +70,7 @@ SMODS.Joker {
 			else
 				local cardToSelect = pseudorandom_element(availableJokers, pseudoseed('alan'))
 
-				card.ability.spotSelected = math.random(1, #G.jokers.cards)
+				card.ability.spotSelected = pseudorandom('pmcmod_alan_spot', 1, #G.jokers.cards)
 				card.ability.target_id = cardToSelect.unique_val
 				card.ability.jokerSelectedFlag = true
 				card.ability.jokerFailed = false

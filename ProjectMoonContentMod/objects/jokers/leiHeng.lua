@@ -30,7 +30,7 @@ SMODS.Joker {
 		end
 		
 		if context.retrigger_joker_check and context.other_card == G.jokers.cards[card.ability.extra.my_pos -1] then
-			local coinToss = math.random(0,4)
+			local coinToss = pseudorandom('pmcmod_leiHeng_toss', 0, 4)
 
 			if coinToss == 0 then
                 local joker_to_destroy = G.jokers.cards[card.ability.extra.my_pos -1]

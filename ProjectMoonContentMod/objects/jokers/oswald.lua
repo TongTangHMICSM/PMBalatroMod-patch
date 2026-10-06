@@ -22,30 +22,30 @@ SMODS.Joker {
 		
 		if context.joker_main and not context.blueprint then
 
-			local chosenEffect = math.random(1, 18)
+			local chosenEffect = pseudorandom('pmcmod_oswald_effect', 1, 18)
 
 			if chosenEffect == 1 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect1')
 				return {
-					chips = math.random(1, 100),
+					chips = pseudorandom('pmcmod_oswald_chips', 1, 100),
 				}
 			end
 			if chosenEffect == 2 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect2')
 				return {
-					mult = math.random(1, 100),
+					mult = pseudorandom('pmcmod_oswald_mult', 1, 100),
 				}
 			end
 			if chosenEffect == 3 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect3')
 				return {
-					xmult = math.random(1, 20),
+					xmult = pseudorandom('pmcmod_oswald_xmult', 1, 20),
 				}
 			end
 			if chosenEffect == 4 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect4')
 				return {
-					xmult = math.random(1, 3),
+					xmult = pseudorandom('pmcmod_oswald_xmult_small', 1, 3),
 				}
 			end
 			if chosenEffect == 5 then
@@ -57,37 +57,40 @@ SMODS.Joker {
 			if chosenEffect == 6 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect6')
 				return {
-					xmult = math.random(0.5, 1.0),
+					-- "Divides Mult": must stay between x0.5 and x1.0.
+					-- math.random(0.5, 1.0) returns 0.5 or 1.5 on Lua 5.1/LuaJIT
+					-- (floor(r*(hi-lo+1))+lo), so a plain range could *raise* the mult.
+					xmult = 0.5 + pseudorandom('pmcmod_oswald_divide') * 0.5,
 				}
 			end
 			if chosenEffect == 7 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect7')
 				return {
-					chips = -math.random(1, 100),
+					chips = -pseudorandom('pmcmod_oswald_chips_down', 1, 100),
 				}
 			end
 			if chosenEffect == 8 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect8')
 				return {
-					mult = -math.random(1, 30),
+					mult = -pseudorandom('pmcmod_oswald_mult_down', 1, 30),
 				}
 			end
 			if chosenEffect == 9 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect9')
 				return {
-					dollars = math.random(1, 10)
+					dollars = pseudorandom('pmcmod_oswald_dollars_small', 1, 10)
 				}
 			end
 			if chosenEffect == 10 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect10')
 				return {
-					dollars = math.random(10, 50)
+					dollars = pseudorandom('pmcmod_oswald_dollars_big', 10, 50)
 				}
 			end
 			if chosenEffect == 11 then
 				card.ability.extra.lastEffect = localize('pmcmod_oswaldEffect11')
 				return {
-					dollars = -math.random(1, 20)
+					dollars = -pseudorandom('pmcmod_oswald_dollars_down', 1, 20)
 				}
 			end
 			if chosenEffect == 12 then

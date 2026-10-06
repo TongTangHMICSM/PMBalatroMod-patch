@@ -26,7 +26,7 @@ SMODS.Joker {
 
         if context.joker_main then
             local selectedXMult = 1
-            local coinToss = math.random(1,2)
+            local coinToss = pseudorandom('pmcmod_nightDrifter_flip', 1, 2)
 
             if coinToss == 1 then
                 selectedXMult = card.ability.extra.maxXMult + (card.ability.extra.maxXMult_mod * card.ability.extra.currentConsumableCount)
