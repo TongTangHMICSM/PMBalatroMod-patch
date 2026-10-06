@@ -14,7 +14,7 @@ SMODS.Joker {
 	attributes = {'position', 'retrigger'},
     pools =
 	{
-		["Sinner"] = true,
+		["Sinners"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
         return {vars = {  } }

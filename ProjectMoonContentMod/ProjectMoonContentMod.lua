@@ -753,7 +753,7 @@ SMODS.ObjectType({
 --Demian's Group
 SMODS.ObjectType({
 	key = "DemiansGroup",
-	default = "pmcmod_j_demian",
+	default = "j_pmcmod_demian",
 	cards = {
  	},
 	inject = function(self)
@@ -764,7 +764,7 @@ SMODS.ObjectType({
 --Hell's Kitchen
 SMODS.ObjectType({
 	key = "HellsKitchen",
-	default = "pmcmod_j_chickenA",
+	default = "j_pmcmod_chickenA",
 	cards = {
  	},
 	inject = function(self)
@@ -790,7 +790,7 @@ SMODS.ObjectType({
 -- New League of Nine
 SMODS.ObjectType({
 	key = "NewLeagueOfNine",
-	default = "pmcmod_j_sonya",
+	default = "j_pmcmod_sonya",
 	cards = {
  	},
 	inject = function(self)
@@ -801,7 +801,7 @@ SMODS.ObjectType({
 -- N Corp
 SMODS.ObjectType({
 	key = "NCorp",
-	default = "pmcmod_j_kromer",
+	default = "j_pmcmod_kromer",
 	cards = {
  	},
 	inject = function(self)
@@ -814,7 +814,7 @@ SMODS.ObjectType({
 -- K Corp
 SMODS.ObjectType({
 	key = "KCorp",
-	default = "pmcmod_j_dongrang",
+	default = "j_pmcmod_dongrang",
 	cards = {
  	},
 	inject = function(self)
@@ -825,7 +825,7 @@ SMODS.ObjectType({
 -- Puppets
 SMODS.ObjectType({
 	key = "Puppets",
-	default = "pmcmod_j_joker",
+	default = "j_pmcmod_puppetA",
 	cards = {
  	},
 	inject = function(self)
@@ -874,7 +874,7 @@ SMODS.ObjectType({
 		["j_pmcmod_boris"] = true,
 		["j_pmcmod_esther"] = true,
 		["j_pmcmod_gloria"] = true,
-		["j_pmcmod_rubert"] = true,
+		["j_pmcmod_hubert"] = true,
 		["j_pmcmod_angelica"] = true,
 		["j_pmcmod_puppeteer"] = true,
 		["j_pmcmod_nikolai"] = true,
@@ -887,6 +887,83 @@ SMODS.ObjectType({
 	inject = function(self)
 		SMODS.ObjectType.inject(self)
 
+	end,
+})
+
+-- R Corp
+SMODS.ObjectType({
+	key = "RCorp",
+	default = "j_pmcmod_maxim",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- Ring
+SMODS.ObjectType({
+	key = "Ring",
+	default = "j_pmcmod_albina",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- Index
+SMODS.ObjectType({
+	key = "Index",
+	default = "j_pmcmod_angelica",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- Middle
+SMODS.ObjectType({
+	key = "Middle",
+	default = "j_pmcmod_kira",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- Pinky
+SMODS.ObjectType({
+	key = "Pinky",
+	default = "j_pmcmod_ren",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- L Corp
+SMODS.ObjectType({
+	key = "LCorp",
+	default = "j_pmcmod_jamila",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
+	end,
+})
+
+-- Limbus Company
+SMODS.ObjectType({
+	key = "Limbus",
+	default = "j_pmcmod_ravi",
+	cards = {
+ 	},
+	inject = function(self)
+		SMODS.ObjectType.inject(self)
 	end,
 })
 

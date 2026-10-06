@@ -264,7 +264,8 @@ SMODS.Joker {
 		end
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
@@ -397,7 +398,8 @@ SMODS.Joker {
 		end
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
@@ -530,7 +532,8 @@ SMODS.Joker {
 		end
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )

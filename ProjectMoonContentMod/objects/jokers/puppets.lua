@@ -15,7 +15,7 @@ SMODS.Joker {
 	attributes = {'mult', 'destroy_itself'},
 	pools =
 	{
-        ["Puppet"] = true,
+        ["Puppets"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
     	return {vars = { card.ability.extra.mult, card.ability.extra.counter }}
@@ -55,7 +55,8 @@ SMODS.Joker {
 		end
 	end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_puppets'), HEX('bd0d19'), HEX('4f3d2d'), 1.2 )
@@ -79,7 +80,7 @@ SMODS.Joker {
 	attributes = {'mult', 'destroy_itself'},
 	pools =
 	{
-        ["Puppet"] = true,
+        ["Puppets"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
     	return {vars = { card.ability.extra.mult, card.ability.extra.counter }}
@@ -119,7 +120,8 @@ SMODS.Joker {
 		end
 	end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_puppets'), HEX('bd0d19'), HEX('4f3d2d'), 1.2 )
@@ -144,7 +146,7 @@ SMODS.Joker {
 --	no_collection = true,
 	pools =
 	{
-        ["Puppet"] = true,
+        ["Puppets"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
     	return {vars = { card.ability.extra.mult, card.ability.extra.counter }}
@@ -184,7 +186,8 @@ SMODS.Joker {
 		end
 	end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_puppets'), HEX('bd0d19'), HEX('4f3d2d'), 1.2 )
@@ -208,7 +211,7 @@ SMODS.Joker {
 	attributes = {'mult', 'destroy_itself'},
 	pools =
 	{
-        ["Puppet"] = true,
+        ["Puppets"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
     	return {vars = { self.config.extra.mult }}
@@ -222,7 +225,8 @@ SMODS.Joker {
 		end
 	end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_puppets'), HEX('bd0d19'), HEX('4f3d2d'), 1.2 )

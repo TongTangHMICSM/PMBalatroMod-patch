@@ -14,7 +14,7 @@ SMODS.Joker {
 	attributes = {'charge'},
 	pools =
 	{
-        ["R Corp"] = true,
+        ["RCorp"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_CENTERS.e_pmcmod_charge

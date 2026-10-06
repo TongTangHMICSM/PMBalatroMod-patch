@@ -14,7 +14,7 @@ SMODS.Joker {
 	attributes = {'mult', 'scaling'},
 	pools =
 	{
-        ["R Corp"] = true,
+        ["RCorp"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
 

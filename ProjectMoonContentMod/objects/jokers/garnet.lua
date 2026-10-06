@@ -21,7 +21,7 @@ SMODS.Joker {
 		["Bloodfiends"] = true,
 		["LCorp"] = true,
 		["Limbus"] = true,
-		["Sinner"] = true,
+		["Sinners"] = true,
 	},
 
 	loc_vars = function(self, info_queue, card)

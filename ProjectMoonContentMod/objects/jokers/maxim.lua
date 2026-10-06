@@ -14,7 +14,7 @@ SMODS.Joker {
 	attributes = {'economy', 'retrigger'},
 	pools =
 	{
-        ["R Corp"] = true,
+        ["RCorp"] = true,
  	},
 	loc_vars = function (self, info_queue, card)
     	return {vars = { card.ability.extra.chargeCount, card.ability.extra.dollars, card.ability.extra.charge_mod, card.ability.extra.maxCharge }}

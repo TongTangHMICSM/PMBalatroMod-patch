@@ -98,7 +98,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -201,7 +202,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -304,7 +306,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -393,7 +396,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -489,7 +493,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -585,7 +590,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -678,7 +684,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -769,7 +776,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -861,7 +869,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -954,7 +963,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
@@ -1087,7 +1097,8 @@ SMODS.Joker {
 		
     end,
 	in_pool = function(self, args)
-        return G.GAME.pool_flags.fake_robot_flag
+        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
+        return false
     end,
 }
 
