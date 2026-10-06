@@ -88,9 +88,7 @@ SMODS.Joker {
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,
-	get_weight = function(self, weight)
-    	return weight*(2^(#SMODS.find_card('j_pmcmod_kira')*G.GAME.round_resets.ante))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(#SMODS.find_card('j_pmcmod_kira')*G.GAME.round_resets.ante)))
 	check_for_unlock = function(self, args)
         for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
             if v.key == "j_flower_pot" then

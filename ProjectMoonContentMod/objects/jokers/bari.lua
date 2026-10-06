@@ -39,17 +39,7 @@ SMODS.Joker {
             end
         end
     end,
-	get_weight = function(self, weight)
-		local steel_card_tally = 0
-		if G.GAME.blind then
-			if G.playing_cards then
-				for _, playing_card in ipairs(G.playing_cards) do
-					if SMODS.has_enhancement(playing_card, 'm_steel') then steel_card_tally = steel_card_tally + 1 end
-				end
-			end
-		end
-    	return weight*(2^(steel_card_tally + 1))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(steel_card_tally + 1)))
 	in_pool = function(self, args)
         for _, playing_card in ipairs(G.playing_cards or {}) do
             if SMODS.has_enhancement(playing_card, 'm_steel') then

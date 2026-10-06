@@ -61,17 +61,7 @@ SMODS.Joker {
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_limbus'), HEX('63160e'), HEX('eba313'), 1.2 )
  	end,
-	get_weight = function(self, weight)
-		local joker_count = 0
-		for i = 1, #G.jokers.cards do
-			if G.jokers.cards[i].edition then
-				if G.jokers.cards[i].ability.set == 'Joker' and G.jokers.cards[i].edition.key == "e_negative" then
-					joker_count = joker_count + 1
-				end
-			end
-		end
-    	return weight*(2^(#SMODS.find_card('j_pmcmod_catherine')*G.GAME.round_resets.ante * joker_count))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(#SMODS.find_card('j_pmcmod_catherine')*G.GAME.round_resets.ante * joker_count)))
 	check_for_unlock = function(self, args)
         for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
             if v.key == "j_hit_the_road" then

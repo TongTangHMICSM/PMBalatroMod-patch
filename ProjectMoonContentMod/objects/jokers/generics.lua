@@ -26,9 +26,7 @@ SMODS.Joker {
 			}
 		end
 	end,
-	get_weight = function(self, weight)
-    	return weight*(2^(#SMODS.find_card('j_pmcmod_romero')*G.GAME.round_resets.ante))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(#SMODS.find_card('j_pmcmod_romero')*G.GAME.round_resets.ante)))
 	in_pool = function(self, args)
 		if SMODS.find_card('j_pmcmod_romero') then
 			return true
@@ -68,9 +66,7 @@ SMODS.Joker {
 			}
 		end
 	end,
-	get_weight = function(self, weight)
-    	return weight*(2^(#SMODS.find_card('j_pmcmod_kromer')*G.GAME.round_resets.ante))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(#SMODS.find_card('j_pmcmod_kromer')*G.GAME.round_resets.ante)))
 	in_pool = function(self, args)
 		if SMODS.find_card('j_pmcmod_kromer') then
 			return true

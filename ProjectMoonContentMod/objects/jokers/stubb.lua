@@ -37,17 +37,7 @@ SMODS.Joker {
         end
         return false
     end,
-	get_weight = function(self, weight)
-		local pallid_card_tally = 0
-		if G.GAME.blind then
-			if G.playing_cards then
-				for _, playing_card in ipairs(G.playing_cards) do
-					if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then pallid_card_tally = pallid_card_tally + 1 end
-				end
-			end
-		end
-    	return weight*(2^(pallid_card_tally + 1))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(pallid_card_tally + 1)))
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_pequod'), HEX('c9c9c9'), HEX('c20a0a'), 1.2 )
  	end,

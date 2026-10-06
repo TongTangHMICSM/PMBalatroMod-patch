@@ -89,17 +89,7 @@ SMODS.Joker {
         end
         return false
     end,
-	get_weight = function(self, weight)
-		local pallid_card_tally = 0
-		if G.GAME.blind then
-			if G.playing_cards then
-				for _, playing_card in ipairs(G.playing_cards) do
-					if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then pallid_card_tally = pallid_card_tally + 1 end
-				end
-			end
-		end
-    	return weight*(2^(pallid_card_tally + 1))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(pallid_card_tally + 1)))
 	check_for_unlock = function(self, args)
         for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
             if v.key == "j_midas_mask" then

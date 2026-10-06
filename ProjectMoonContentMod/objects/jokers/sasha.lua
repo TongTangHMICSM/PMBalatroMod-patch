@@ -36,17 +36,7 @@ SMODS.Joker {
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_multicrack'), HEX('ccc49d'), HEX('c706b0'), 1.2 )
  	end,
-	get_weight = function(self, weight)
-		local bleed_card_tally = 0
-		if G.GAME.blind then
-			if G.playing_cards then
-				for _, playing_card in ipairs(G.playing_cards) do
-					if SMODS.has_enhancement(playing_card, 'm_pmcmod_bleed') then bleed_card_tally = bleed_card_tally + 1 end
-				end
-			end
-		end
-    	return weight*(2^(bleed_card_tally + 1))
-	end,
+	-- uniform shop weight inside the rarity (removed: weight*(2^(bleed_card_tally + 1)))
     check_for_unlock = function(self, args) -- equivalent to `unlock_condition = { type = 'modify_jokers', extra = { polychrome = true, count = 2 } }`
         if args.type == 'modify_deck' then
             local count = 0
