@@ -11,7 +11,7 @@ SMODS.Joker {
 	cost = 8,
     atlas = 'ModdedProjectMoon',
 	pos = { x = 6, y = 14 },
-	attributes = {'chance', 'seals', 'mult', 'tags'},
+	attributes = {'chance', 'seals', 'mult', 'tag'},
     pools =
 	{
 

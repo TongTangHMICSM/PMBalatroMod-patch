@@ -13,7 +13,7 @@ SMODS.Joker {
 	cost = 0,
 	atlas = 'ModdedProjectMoon',
 	pos = { x = 0, y = 14 },
-	attributes = {'summon', 'destroy_itself'},
+	attributes = {'summoning', 'destroy_itself'},
 	pools =
 	{
         ["HellsKitchen"] = true,
@@ -66,7 +66,7 @@ SMODS.Joker {
 	cost = 0,
 	atlas = 'ModdedProjectMoon',
 	pos = { x = 1, y = 14 },
-	attributes = {'summon', 'destroy_itself'},
+	attributes = {'summoning', 'destroy_itself'},
 	pools =
 	{
         ["HellsKitchen"] = true,
@@ -118,7 +118,7 @@ SMODS.Joker {
 	cost = 0,
 	atlas = 'ModdedProjectMoon',
 	pos = { x = 2, y = 14 },
-	attributes = {'summon', 'destroy_itself'},
+	attributes = {'summoning', 'destroy_itself'},
 	pools =
 	{
         ["HellsKitchen"] = true,
@@ -171,7 +171,7 @@ SMODS.Joker {
 	cost = 0,
 	atlas = 'ModdedProjectMoon',
 	pos = { x = 3, y = 14 },
-	attributes = {'summon', 'destroy_itself'},
+	attributes = {'summoning', 'destroy_itself'},
 	pools =
 	{
         ["HellsKitchen"] = true,

@@ -11,7 +11,7 @@ SMODS.Joker {
 	cost = 8,
     atlas = 'ModdedProjectMoon2',
 	pos = { x =7, y = 5 },
-	attributes = {'chips', 'mult', 'enhancement', 'destroy_card', 'scaling', 'modify_card', 'position'},
+	attributes = {'chips', 'mult', 'enhancements', 'destroy_card', 'scaling', 'modify_card', 'position'},
     pools =
 	{
 		["Ring"] = true,

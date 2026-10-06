@@ -47,10 +47,6 @@ SMODS.Attribute{
 }
 
 SMODS.Attribute{
-	key = "erasing",
-}
-
-SMODS.Attribute{
 	key = "negative",
 }
 
@@ -63,15 +59,7 @@ SMODS.Attribute{
 }
 
 SMODS.Attribute{
-	key = "consumable",
-}
-
-SMODS.Attribute{
 	key = "destroy_itself",
-}
-
-SMODS.Attribute{
-	key = "position",
 }
 
 SMODS.Attribute{
@@ -91,10 +79,6 @@ SMODS.Attribute{
 }
 
 SMODS.Attribute{
-	key = "debuff",
-}
-
-SMODS.Attribute{
 	key = "game_over",
 }
 
@@ -102,9 +86,30 @@ SMODS.Attribute{
 	key = "gimmick",
 }
 
+-- NOTE: do not re-register an attribute that Steamodded already defines
+-- (`consumable`, `debuff`, `position`, `retrigger`, `economy`, `chance`, `tag`,
+-- `editions`, `enhancements`, `spectral`, `hands`, `hand_size`, ...). Creating a
+-- second SMODS.Attribute with the same key *replaces* the built-in one, which wipes
+-- its object list and breaks attribute-based polling for vanilla objects.
+-- Jokers below may safely declare `attributes = {'position', ...}`: the built-in
+-- registration already exists, so the declaration just adds this mod's keys to it.
+
 SMODS.Attribute{
 	key = "obfuscation",
 }
+
+-- Attributes used by this mod that Steamodded does not define.
+-- Without a registration here the declaration is silently ignored.
+SMODS.Attribute{ key = "meltdown" }
+SMODS.Attribute{ key = "singleton" }
+SMODS.Attribute{ key = "transform" }
+SMODS.Attribute{ key = "tremor" }
+SMODS.Attribute{ key = "timer" }
+SMODS.Attribute{ key = "prescript" }
+SMODS.Attribute{ key = "generic" }
+SMODS.Attribute{ key = "prices" }
+SMODS.Attribute{ key = "hands_left" }
+SMODS.Attribute{ key = "blind" }
 
 
 function Card:keypage_add_speech_bubble(text_key, align, loc_vars)

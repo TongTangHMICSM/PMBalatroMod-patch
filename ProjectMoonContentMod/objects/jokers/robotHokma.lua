@@ -11,7 +11,7 @@ SMODS.Joker {
     cost = 8,
 	atlas = 'ModdedProjectMoon',
 	pos = { x = 0, y = 12 },
-	attributes = {'xmult', 'spectrals', 'tarot', 'scaling'},
+	attributes = {'xmult', 'spectral', 'tarot', 'scaling'},
     pools = 
 	{
  		["Heretics"] = true,

@@ -11,7 +11,7 @@ SMODS.Joker {
 	cost = 6,
 	atlas = 'ModdedProjectMoon2',
 	pos = { x = 5, y = 7 },
-	attributes = {'edition', 'painted'},
+	attributes = {'editions', 'painted'},
 	pools = {},
 
 	loc_vars = function(self, info_queue, card)
