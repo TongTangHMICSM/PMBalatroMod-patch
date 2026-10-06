@@ -248,7 +248,7 @@ jd_def["j_pmcmod_angelaLoR"] = {
         text_config = { colour = G.C.CHIPS }
 }
 
-jd_def["j_pmcmod_yiSang"] = {
+jd_def["j_pmcmod_yisang"] = {
     text = {
             {
                 border_nodes = {
