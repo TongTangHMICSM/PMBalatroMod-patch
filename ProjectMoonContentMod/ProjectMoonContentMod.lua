@@ -4,6 +4,44 @@ ProjectMoonMod = {}
 
 PMCMOD = SMODS.current_mod
 
+-------------------------------------------------------------------------------
+-- Shared Charge pool (the Charge edition)
+--
+-- Steamodded 26.1002.0 never calls an Edition's `calculate`: the only call site is
+-- commented out in src/overrides.lua, and Card:calculate_edition has no callers.
+-- So the Charge edition cannot drive itself. A hidden manager card in the dummy
+-- joker area (objects/jokers/other.lua, key 'chargeManager') feeds and spends this
+-- pool instead.
+-------------------------------------------------------------------------------
+
+function PMCMOD.get_charge()
+    return (G.GAME and G.GAME.pmcmod_charge_pool) or 0
+end
+
+function PMCMOD.add_charge(amount)
+    if not G.GAME then return end
+    G.GAME.pmcmod_charge_pool = math.max(0, (G.GAME.pmcmod_charge_pool or 0) + (amount or 1))
+end
+
+-- Charges gained per trigger: 2 while Tiph B (robotEnoch) is in play
+function PMCMOD.charge_gain()
+    local jokers = (G.jokers and G.jokers.cards) or {}
+    for i = 1, #jokers do
+        local key = jokers[i].config and jokers[i].config.center and jokers[i].config.center.key
+        if key == 'j_pmcmod_robotEnoch' then return 2 end
+    end
+    return 1
+end
+
+-- Only a Keypage holding the Charge edition may spend the pool
+function PMCMOD.has_charge_keypage()
+    local jokers = (G.jokers and G.jokers.cards) or {}
+    for i = 1, #jokers do
+        if jokers[i].edition and jokers[i].edition.key == 'e_pmcmod_charge' then return true end
+    end
+    return false
+end
+
 SMODS.current_mod.optional_features = function()
     return {
         retrigger_joker = true,
@@ -1117,3 +1155,19 @@ SMODS.DrawStep {
         end
     end
 }
+-- CHARGE MANAGER
+-- Hidden helper card that drives the shared Charge pool (helpers near the top of this
+-- file). It lives in the dummy joker area, which this mod's Lovely patch adds to the
+-- joker evaluation lists, so it receives the same contexts a normal Keypage does.
+local game_start_run_ref = Game.start_run
+function Game:start_run(args)
+    game_start_run_ref(self, args)
+
+    local area = ProjectMoonMod.dummyJoker
+    if not area then return end
+
+    for _, c in ipairs(area.cards) do
+        if c.config.center.key == 'j_pmcmod_chargeManager' then return end
+    end
+    SMODS.add_card({ key = 'j_pmcmod_chargeManager', area = area })
+end

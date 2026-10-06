@@ -21,12 +21,18 @@ SMODS.Joker {
 	end,
 	calculate = function(self, card, context)
 		if context.setting_blind then
-			for i=1, #ProjectMoonMod.dummyJoker.cards do
-				if ProjectMoonMod.dummyJoker.cards[1].config.center.key == "j_pmcmod_dummyRicardo" then
-					card.ability.extra.canSpawnDummy = false
-					card.ability.extra.mult = card.ability.extra.multBase + ProjectMoonMod.dummyJoker.cards[i].ability.extra.ricardoDefeatCounter * card.ability.extra.mult_mod
+			-- scan the whole dummy area: it can also hold the Charge manager card,
+			-- so the dummy is not guaranteed to sit at index 1
+			local dummy = nil
+			for i = 1, #ProjectMoonMod.dummyJoker.cards do
+				if ProjectMoonMod.dummyJoker.cards[i].config.center.key == "j_pmcmod_dummyRicardo" then
+					dummy = ProjectMoonMod.dummyJoker.cards[i]
 					break
 				end
+			end
+			if dummy then
+				card.ability.extra.canSpawnDummy = false
+				card.ability.extra.mult = card.ability.extra.multBase + dummy.ability.extra.ricardoDefeatCounter * card.ability.extra.mult_mod
 			end
 			if ProjectMoonMod.dummyJoker and card.ability.extra.canSpawnDummy  == true then
 				SMODS.add_card({ key = "j_pmcmod_dummyRicardo", area = ProjectMoonMod.dummyJoker })

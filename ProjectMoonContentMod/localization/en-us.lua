@@ -144,9 +144,11 @@ return {
             e_pmcmod_charge = {
                 name = "Charge",
                 text = {
-                    "Retriggers Keypage once",
-                    "Count reaches {C:blue}4",
-                    "Count: {C:blue}#1#{}"
+                    "Gains {C:blue}1{} Charge each time this",
+                    "card triggers ({C:inactive}Tiph B doubles it{})",
+                    "A Keypage spends {C:blue}5{} Charges to",
+                    "score the first played card twice",
+                    "Shared Charges: {C:blue}#1#{}"
                 },
             },
         },
@@ -2510,6 +2512,13 @@ return {
                     "Can spawn: {C:red}#2#",
                 },
             },
+            j_pmcmod_chargeManager = {
+                name = 'Charge Manager',
+                text = {
+                    "Hidden helper for the {C:attention}Charge{} edition",
+                    "Shared Charges: {C:blue}#1#",
+                },
+            },
             j_pmcmod_puppetA = {
                 name = "Puppet",
                 text = {
@@ -2761,50 +2770,54 @@ return {
             pmcmod_sinwrath_seal = {
                 name = "Wrath",
                 text = {
-                    "Gains either Perma {C:chips}Chips{},",
-                    "{C:mult}Mult{} or {C:gold}Money{} when scored",
-                    "{C:inactive}(Boosted by Sloth seals){}"
+                    "When scored, gains one of:",
+                    "{C:chips}+0-8 Perma Chips{}, {C:mult}+0-4 Perma Mult{}",
+                    "or {C:gold}+1 Perma Money{}",
+                    "{C:inactive}(+2 Chips and +1 Mult per Sloth seal){}"
                 },
             },
             pmcmod_sinpride_seal = {
                 name = "Pride",
                 text = {
                     "{X:mult,C:white}X#1#{} Mult",
-                    "{C:inactive}(Boosted by Sloth seals){}"
+                    "{C:inactive}(+0.1X Mult per Sloth seal){}"
                 },
             },
             pmcmod_singluttony_seal = {
                 name = "Gluttony",
                 text = {
-                    "Gains {C:chips}Perma Chips{} when",
-                    "scored or while in hand",
-                    "{C:inactive}(Boosted by Sloth seals){}"
+                    "When scored or held in hand,",
+                    "gains {C:chips}+1-5 Perma Chips{}",
+                    "{C:inactive}(+5 Perma Chips per Sloth seal){}"
                 },
             },
             pmcmod_singloom_seal = {
                 name = "Gloom",
                 text = {
                     "When this page is {C:attention}scored{}, gains",
-                    "{C:chips}1{} Perma Chip for every {C:attention}1%{} of the",
-                    "Encounter Score above the first",
-                    "{C:attention}10%{} already banked",
-                    "{C:inactive}(Boosted by Sloth seals){}"
+                    "{C:chips}1{} Perma Chip per {C:attention}1%{} of the",
+                    "Encounter Score above the first {C:attention}10%{}",
+                    "{C:inactive}(+5 Perma Chips per Sloth seal){}"
                 },
             },
             pmcmod_sinsloth_seal = {
                 name = "Sloth",
                 text = {
-                    "Passively enhances the effects",
-                    "of other sins based on the amount",
-                    "of Sloth seals in the deck"
+                    "Passively enhances every other sin.",
+                    "Each Sloth seal in the deck adds:",
+                    "{C:chips}+2{} Chips and {C:mult}+1{} Mult (Wrath)",
+                    "{C:chips}+5{} Perma Chips (Gluttony, Gloom)",
+                    "{X:mult,C:white}+0.1X{} Mult (Pride)",
+                    "+1 in 4 chance (Envy), better spread (Lust)"
                 },
             },
             pmcmod_sinlust_seal = {
                 name = "Lust",
                 text = {
                     "Gains {C:gold}1 Perma Money{} when scored",
-                    "and spreads to the other cards",
-                    "in the scored hand"
+                    "and has a {C:green}1 in 2{} chance to spread",
+                    "to the other cards in the scored hand",
+                    "{C:inactive}(1 Sloth seal: 2 in 3){}"
                 },
             },
             pmcmod_sinenvy_seal = {
@@ -2814,7 +2827,7 @@ return {
                     "page a random {C:attention}Edition{} when scored",
                     "{C:inactive}(if already edited, spreads the{}",
                     "{C:inactive}Envy seal to the scored hand){}",
-                    "{C:inactive}(Boosted by Sloth seals){}"
+                    "{C:inactive}(+1 in 4 per Sloth seal){}"
                 },
             },
             pmcmod_gift_seal = {

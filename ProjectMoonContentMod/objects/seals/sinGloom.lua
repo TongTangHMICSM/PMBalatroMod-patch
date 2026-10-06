@@ -18,7 +18,7 @@ SMODS.Seal {
                     if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
                 end
 
-                chip_gain = chip_gain + slothCount
+                chip_gain = chip_gain + slothCount * 5
                 card.ability.perma_bonus = (card.ability.perma_bonus or 0) + chip_gain
                 return {
                     message = localize('k_upgrade_ex'),

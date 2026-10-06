@@ -1,43 +1,20 @@
+-- The Charge edition has no `calculate` on purpose: Steamodded 26.1002.0 never calls
+-- an Edition's calculate (the only call site is commented out in src/overrides.lua,
+-- and Card:calculate_edition has no callers). Its shared charge pool is driven by the
+-- hidden `chargeManager` joker in objects/jokers/other.lua - see PMCMOD.get_charge,
+-- PMCMOD.add_charge and PMCMOD.charge_gain in ProjectMoonContentMod.lua.
 SMODS.Edition {
     key = 'charge',
     shader = 'pmcmod_charge',
-    config = { count = 0 },
+    config = {},
     in_shop = true,
     weight = 3,
     extra_cost = 5,
     sound = { sound = "negative", per = 1.5, vol = 0.4 },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.edition.count } }
+        return { vars = { PMCMOD.get_charge and PMCMOD.get_charge() or 0 } }
     end,
     get_weight = function(self)
         return self.weight
     end,
-    calculate = function(self, card, context)
---        if context.repetition and context.cardarea == G.play and context.other_card == context.scoring_hand[1] then
-
-        if context.retrigger_joker_check and context.other_card == card and card.edition.count >= 4 then
-            return {
-                repetitions = 1
-            }
-        end
-        if context.post_joker then
-
-            local rudolphPresent = false
-
-            for i=1, #G.jokers.cards do
-                if G.jokers.cards[i].config.center.key == "j_pmcmod_robotEnoch" then
-                    rudolphPresent = true
-                    break
-                end
-            end
-
-            card.edition.count = card.edition.count + 1
-                if rudolphPresent then 
-                    card.edition.count = card.edition.count + 1
-                end
-            if card.edition.count >= 5 then
-                card.edition.count = 0
-            end
-        end
-    end
 }
