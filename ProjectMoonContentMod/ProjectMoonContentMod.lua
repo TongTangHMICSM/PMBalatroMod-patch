@@ -111,29 +111,24 @@ end
 -- keypages scale off Negative cards). The game's slot check adds +1 to the limit for a Negative
 -- card (button_callbacks.lua:2396), so granting +1 here is the same thing without the edition.
 -- The flag lives on the card and travels with the save; the credit is returned when it leaves play.
--- Both places move together. G.jokers is created with card_limit =
--- G.GAME.starting_params.joker_slots (game.lua:2245), so carrying the credit on starting_params too
--- means it survives a load whether the area is restored from the save or rebuilt from the base.
+-- SMODS computes the joker area's slots itself: CardArea:handle_card_limit()
+-- (src/utils.lua:3936) sums card.ability.card_limit over the area as extra_slots, adds the base, and
+-- the counter draws display_slots; it is called from CardArea:update() via card_limit.toml:168-182,
+-- and card_limit.toml:152-166 even deletes vanilla's Negative limit tweak. Editing
+-- G.jokers.config.card_limit by hand is therefore overwritten on the next area update - the native
+-- way to grant a slot is card.ability.card_limit on the card, which also travels with the save.
 function PMCMOD.claim_slot(card)
     if not card or not card.ability or card.ability.pmcmod_free_slot then return end
     card.ability.pmcmod_free_slot = true
-    if G.jokers and G.jokers.config then
-        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
-    end
-    if G.GAME and G.GAME.starting_params then
-        G.GAME.starting_params.joker_slots = (G.GAME.starting_params.joker_slots or 5) + 1
-    end
+    card.ability.card_limit = (card.ability.card_limit or 0) + 1
+    if G.jokers and G.jokers.handle_card_limit then G.jokers:handle_card_limit() end
 end
 
 function PMCMOD.release_slot(card)
     if not card or not card.ability or not card.ability.pmcmod_free_slot then return end
     card.ability.pmcmod_free_slot = nil
-    if G.jokers and G.jokers.config then
-        G.jokers.config.card_limit = math.max(1, G.jokers.config.card_limit - 1)
-    end
-    if G.GAME and G.GAME.starting_params then
-        G.GAME.starting_params.joker_slots = math.max(1, (G.GAME.starting_params.joker_slots or 5) - 1)
-    end
+    card.ability.card_limit = math.max(0, (card.ability.card_limit or 1) - 1)
+    if G.jokers and G.jokers.handle_card_limit then G.jokers:handle_card_limit() end
 end
 
 PMCMOD.TRIGGER_CONTEXT = 'pmcmod_trigger'
