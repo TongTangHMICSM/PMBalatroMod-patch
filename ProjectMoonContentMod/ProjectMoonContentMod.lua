@@ -101,6 +101,50 @@ function PMCMOD.try_sin_seal(card)
     return false
 end
 
+-- aCertainSinclair counts how often the Keypage on its left triggers. SMODS exposes that through
+-- context.post_trigger, but that only fires when the neighbour's calculate RETURNS an effect - so a
+-- keypage that works by changing state (Ren granting Poise, for instance) is invisible to it - and
+-- only if the mod's "post_trigger" optional feature was picked up.
+-- This reports the same thing directly, without the flag: after any joker returns an effect for a
+-- real context, every joker is offered a pmcmod_trigger context carrying that joker in other_card.
+PMCMOD.TRIGGER_CONTEXT = 'pmcmod_trigger'
+
+-- The broadcast costs one extra context evaluation per trigger, so it only runs while a Sinclair is
+-- on the board.
+function PMCMOD.sinclair_in_play()
+    local jokers = G.jokers and G.jokers.cards
+    if not jokers then return false end
+    for i = 1, #jokers do
+        local c = jokers[i]
+        if c.config and c.config.center and c.config.center.key == 'j_pmcmod_aCertainSinclair' then
+            return true
+        end
+    end
+    return false
+end
+
+function PMCMOD.install_trigger_reporter()
+    if PMCMOD._trigger_reporter then return end
+    local original = Card and Card.calculate_joker
+    if not original then return end
+    PMCMOD._trigger_reporter = original
+
+    function Card:calculate_joker(context)
+        local ret = original(self, context)
+        if ret and self.ability and self.ability.set == 'Joker' and not self.debuff
+            and context and not context.pmcmod_trigger and not context.blueprint
+            and SMODS.can_context_post_trigger(context) and PMCMOD.sinclair_in_play() then
+            SMODS.calculate_context({
+                pmcmod_trigger = true,
+                other_card = self,
+                other_context = context,
+            })
+        end
+        return ret
+    end
+end
+PMCMOD.install_trigger_reporter()
+
 SMODS.current_mod.optional_features = function()
     return {
         retrigger_joker = true,

@@ -29,10 +29,10 @@ SMODS.Joker {
 			end
 		end
 
-		-- Count the left neighbour's triggers. A joker only reports a trigger when its calculate
-		-- returns an effect, and Ren does that each time it gives Poise (see ren.lua), so this sees
-		-- every grant the neighbour made.
-		if context.post_trigger and not context.blueprint then
+		-- Count the left neighbour's triggers, reported by PMCMOD's trigger reporter in the main
+		-- file: every joker that returns an effect for a real context is broadcast with
+		-- context.other_card, so silent keypages only need to return something (see ren.lua).
+		if context.pmcmod_trigger and not context.blueprint then
 			local left = G.jokers.cards[card.ability.extra.currentPosition - 1]
 			if card.ability.extra.currentPosition > 1 and left and context.other_card
 				and left.config.center.key == context.other_card.config.center.key then
