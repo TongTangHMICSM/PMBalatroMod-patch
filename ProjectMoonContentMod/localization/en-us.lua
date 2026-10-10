@@ -975,7 +975,7 @@ return {
                 name = 'Papa Bongy',
                 text = {
                     {"When an {C:attention}Encounter{} starts,",
-                    "spawn in up to 4 random Bongys"},
+                    "spawn one of each Bongy"},
                     {"For every Bongys defeated, Papa Bongy",
                     "gets a different bonus:",
                     "Bongy (Soy Sauce): {C:chips}+10{} Chips",

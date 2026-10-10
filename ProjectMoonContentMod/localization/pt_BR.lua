@@ -461,7 +461,7 @@ return {
             j_pmcmod_papaBongy = {
                 name = 'Papa Bongy',
                 text = {
-                    "Quando um {C:attention}Encontro{} começar, invoque até 4 Bongys aleatórios,",
+                    "Quando um {C:attention}Encontro{} começar, invoque um de cada Bongy,",
                     "Para cada Bongy derrotado, Papa Bongy ganha um dos seguinte efeitos:",
                     "Bongy (Molho de Soja): {C:chips}10{} Fichas",
                     "Bongy (Molho Vermelho): {C:mult}5{} Multi",
