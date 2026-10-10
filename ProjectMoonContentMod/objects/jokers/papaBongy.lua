@@ -34,11 +34,13 @@ SMODS.Joker {
         end
 
 		if G.jokers and chickenPresent == false then
-			-- At most 3 per spawn, and only while no chicken is on the board (chickenPresent above).
+			-- Up to 4 chickens per spawn, scaled by how many joker slots are free: 1 when one slot
+			-- is open, 4 when there are four or more. Still only fires while no chicken is on the
+			-- board (chickenPresent above), so it refills once they are gone.
 			-- Chickens come in Negative and Eternal: they cost no joker slot and cannot be sold or
-			-- destroyed, so the board never loses one.
-			local room = G.jokers.config.card_limit - #G.jokers.cards
-			local toSpawn = math.min(room, 3)
+			-- destroyed.
+			local room = math.max(0, G.jokers.config.card_limit - #G.jokers.cards)
+			local toSpawn = math.min(room, 4)
 			for _ = 1, toSpawn do
 				SMODS.add_card({
 					key = pseudorandom_element(possibleSpawns, 'bongy'),
