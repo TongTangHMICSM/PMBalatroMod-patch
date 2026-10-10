@@ -57,8 +57,8 @@ return {
                 text = {
                     "영구적인",
                     "{C:attention,T:j_pmcmod_silence}침묵의 대가{} 책장을 가지고 시작.",
-                    "{C:blue}+2 핸드{}",
-                    "{C:red}+2 버리기{}",
+                    "{C:blue}+1 핸드{}",
+                    "{C:red}+1 버리기{}",
                     "{C:inactive}+1 책장 슬롯{}",
                 },
                 unlock = {

@@ -16,6 +16,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Improve Alan logic
 - Improve Garnet logic
 - Flowing time nerf *Questionable
+- Fix kongsihui
 
 # Table of Change (patch pass)
 Every item below is one commit; the reasoning and the source references are in the git log.
@@ -39,3 +40,5 @@ Other fixes
 - All gameplay math.random rolls are seeded, so results stay reproducible from the run seed.
 - Manifest now unlocks a still-locked True Version (and adds it to the collection) instead of showing "Locked" and burning the Spectral; 18 of its 21 targets start locked. Seeded and challenge runs still refuse unlocks.
 - Two texture pack badge keys that were referenced but never defined, and a stray brace in pt_BR.
+- Silent Deck gives +1 hand and +1 discard instead of +2/+2, and Kong Sihui pays $5 instead of $2. The deck change had to be applied to objects/backs/silent.lua: the loader only reads objects/backs/, so objects/decks/ is a dead duplicate of all 11 decks.
+

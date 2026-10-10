@@ -46,8 +46,8 @@ return {
                 text = {
                     "Começa com a Página Chave",
                     "{C:attention,T:j_pmcmod_silence}Tempo em Fluxo{} Eterna.",
-                    "{C:blue}+2 mãos{}",
-                    "{C:red}+2 descartes{}",
+                    "{C:blue}+1 mão{}",
+                    "{C:red}+1 descarte{}",
                     "{C:inactive}+1 espaço para Página Chave{}",
                 },
                 unlock = {

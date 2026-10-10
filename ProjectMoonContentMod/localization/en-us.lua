@@ -57,8 +57,8 @@ return {
                 text = {
                     "Starts with an Eternal",
                     "{C:attention,T:j_pmcmod_silence}Time Flowing{} page",
-                    "{C:blue}+2 hands{}",
-                    "{C:red}+2 discards{}",
+                    "{C:blue}+1 hand{}",
+                    "{C:red}+1 discard{}",
                     "{C:inactive}+1 Keypage slot{}",
                 },
                 unlock = {

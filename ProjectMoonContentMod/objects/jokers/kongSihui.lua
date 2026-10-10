@@ -2,7 +2,7 @@ SMODS.Joker {
 	key = 'kongSihui',
 	name = "Kong Sihui",
 	pronouns = "she_her",
-	config = { extra = { dollars = 2, baseChanceTrigger = 1, maxChanceTrigger = 5, baseChanceDeath = 1, maxChanceDeath = 20 } },
+	config = { extra = { dollars = 5, baseChanceTrigger = 1, maxChanceTrigger = 5, baseChanceDeath = 1, maxChanceDeath = 20 } },
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,

@@ -1,7 +1,7 @@
 SMODS.Back {
     key = "silenceDeck",
 	name = "Silent Deck",
-    config = { hands = 2, discards = 2, joker_slot = 2},
+    config = { hands = 1, discards = 1, joker_slot = 2},
     unlocked = false,
     atlas = 'ModdedProjectMoonEditions',
     pos = { x = 1, y = 0 },
