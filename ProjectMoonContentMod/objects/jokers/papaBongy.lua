@@ -34,28 +34,19 @@ SMODS.Joker {
         end
 
 		if G.jokers and chickenPresent == false then
-			local totalChickensThatCanSpawn = G.jokers.config.card_limit - #G.jokers.cards
-			if totalChickensThatCanSpawn == 1 then 
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
+			-- At most 3 per spawn, and only while no chicken is on the board (chickenPresent above).
+			-- Chickens come in Negative and Eternal: they cost no joker slot and cannot be sold or
+			-- destroyed, so the board never loses one.
+			local room = G.jokers.config.card_limit - #G.jokers.cards
+			local toSpawn = math.min(room, 3)
+			for _ = 1, toSpawn do
+				SMODS.add_card({
+					key = pseudorandom_element(possibleSpawns, 'bongy'),
+					edition = 'e_negative',
+					stickers = { 'eternal' },
+					force_stickers = true,
+				})
 				card.ability.extra.totalChickensSpawned = card.ability.extra.totalChickensSpawned + 1
-			end
-			if totalChickensThatCanSpawn == 2 then 
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				card.ability.extra.totalChickensSpawned = card.ability.extra.totalChickensSpawned + 2
-			end
-			if totalChickensThatCanSpawn == 3 then 
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				card.ability.extra.totalChickensSpawned = card.ability.extra.totalChickensSpawned + 3
-			end
-			if totalChickensThatCanSpawn == 4 then 
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				SMODS.add_card({ key = pseudorandom_element(possibleSpawns, 'bongy'), edition = 'e_negative' })
-				card.ability.extra.totalChickensSpawned = card.ability.extra.totalChickensSpawned + 4
 			end
 				return true
 			end

@@ -10,6 +10,18 @@ SMODS.Consumable {
     end,
     use = function(self, card, area, copier)
 
+        -- Keypages that came with a deck or sleeve are not erased; anything else is fair game,
+        -- Eternal included. All seven are summon-only (in_pool = false), so the key identifies them.
+        local deck_starters = {
+            j_pmcmod_shylook = true,
+            j_pmcmod_silence = true,
+            j_pmcmod_censored = true,
+            j_pmcmod_laetitia = true,
+            j_pmcmod_voiceOfTheCity = true,
+            j_pmcmod_queenOfHatred = true,
+            j_pmcmod_childrenOfTheGalaxy = true,
+        }
+
         local my_pos = nil
         for i = 1, #G.jokers.cards do
             if G.jokers.cards[i] == G.jokers.highlighted[1] then
@@ -20,10 +32,7 @@ SMODS.Consumable {
 
         for i = 0, my_pos-1 do
             local target = G.jokers.cards[my_pos-i]
-            -- Eternal Keypages are immune: that is what the sticker promises, and it covers every
-            -- deck and sleeve starter (they are all granted with stickers = {"eternal"}). Same
-            -- check SMODS.destroy_cards uses at src/utils.lua:3064.
-            if target and not SMODS.is_eternal(target, { destroy_cards = true }) then
+            if target and not deck_starters[target.config.center.key] then
                 G.GAME.banned_keys[target.config.center.key] = true
                 G.E_MANAGER:add_event(Event({func = function()
                     target:start_dissolve({G.C.RED}, nil, 1.6)
