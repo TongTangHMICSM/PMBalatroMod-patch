@@ -2,7 +2,7 @@ SMODS.Joker {
 	key = 'werner',
 	name = "Werner",
 	pronouns = "he_him",
-	config = { extra = {chips = 0, chips_mod = 15 } },
+	config = { extra = {chips = 30, chips_mod = 15 } },
 	unlocked = true,
 	perishable_compat = true,
 	eternal_compat = true,
@@ -35,10 +35,11 @@ SMODS.Joker {
 			}
 		end
     end,
-	in_pool = function(self, args)
-        -- never in the random pool: summon/transform-only (was G.GAME.pool_flags.fake_robot_flag)
-        return false
-    end,
+	-- Pool chance rises with each Ricardo on the team (x2 each, capped at x8 by the mod's helper).
+	-- Without one it is an ordinary uncommon, the same weight as its peers.
+	get_weight = function(self, weight)
+		return PMCMOD.bonus_weight(weight, #SMODS.find_card('j_pmcmod_ricardo'))
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_middle'), HEX('5b0b75'), HEX('e3a81e'), 1.2 )
  	end,
