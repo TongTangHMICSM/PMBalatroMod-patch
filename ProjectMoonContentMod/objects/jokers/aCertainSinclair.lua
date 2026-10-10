@@ -49,10 +49,21 @@ SMODS.Joker {
 		if context.joker_main and not context.blueprint then
 			local right = G.jokers.cards[card.ability.extra.currentPosition + 1]
 
-			if right and card.ability.extra.counter > 0 then
+			if right and right.calculate_joker and card.ability.extra.counter > 0 then
 				for _ = 1, card.ability.extra.counter do
-					local eff = right:calculate_joker(context)
-					if type(eff) == 'table' and not eff.repetitions and not eff.remove then
+					-- Hand the neighbour a copy: jokers write into the context they are given
+					-- (Blueprint sets context.blueprint / blueprint_card), and those writes must not
+					-- leak into the engine's live context - other Keypages read it, and e.g. jiaXichun
+					-- guards every increment with `if not context.blueprint then`.
+					local copy = {}
+					for k, v in pairs(context) do copy[k] = v end
+					-- pcall: a neighbour that errors must not abort the rest of the hand
+					local ok, eff = pcall(right.calculate_joker, right, copy)
+					if not ok then
+						local who = right.config and right.config.center and right.config.center.key
+						print("pmcmod aCertainSinclair: retriggering " .. tostring(who) .. " failed: " .. tostring(eff))
+					end
+					if ok and type(eff) == 'table' and not eff.repetitions and not eff.remove then
 						SMODS.calculate_effect(eff, right)
 					end
 				end
