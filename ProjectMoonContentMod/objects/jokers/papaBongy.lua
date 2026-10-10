@@ -40,12 +40,13 @@ SMODS.Joker {
 			-- cards still count towards #G.jokers.cards.
 			-- Still only fires while no chicken is on the board (chickenPresent above).
 			for _, bongy in ipairs(possibleSpawns) do
-				SMODS.add_card({
+				local spawned = SMODS.add_card({
 					key = bongy,
-					edition = 'e_negative',
 					stickers = { 'eternal' },
 					force_stickers = true,
 				})
+				-- no Negative edition, but it costs no joker slot either
+				PMCMOD.claim_slot(spawned)
 				card.ability.extra.totalChickensSpawned = card.ability.extra.totalChickensSpawned + 1
 			end
 				return true

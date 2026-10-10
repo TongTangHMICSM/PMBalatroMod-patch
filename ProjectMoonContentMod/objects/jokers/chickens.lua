@@ -28,7 +28,8 @@ SMODS.Joker {
 		end
 
 		if context.end_of_round and card.ability.extra.roundsCompleted >= 3 then
-			card.getting_sliced = true
+			PMCMOD.release_slot(card)
+				card.getting_sliced = true
 			G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 			G.E_MANAGER:add_event(Event({
 							trigger = 'after',
@@ -81,7 +82,8 @@ SMODS.Joker {
 		end
 
 		if context.end_of_round and card.ability.extra.handsUsed >= 5 then
-			card.getting_sliced = true
+			PMCMOD.release_slot(card)
+				card.getting_sliced = true
 			G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 			G.E_MANAGER:add_event(Event({
 							trigger = 'after',
@@ -135,7 +137,8 @@ SMODS.Joker {
 		end
 
 		if context.end_of_round and card.ability.extra.discardsUsed >= 20 then
-			card.getting_sliced = true
+			PMCMOD.release_slot(card)
+				card.getting_sliced = true
 			G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 			G.E_MANAGER:add_event(Event({
 							trigger = 'after',
@@ -189,7 +192,8 @@ SMODS.Joker {
 		end
 
 		if context.end_of_round and card.ability.extra.boostersOpened >= 3 then
-			card.getting_sliced = true
+			PMCMOD.release_slot(card)
+				card.getting_sliced = true
 			G.GAME.joker_buffer = G.GAME.joker_buffer - 1
 			G.E_MANAGER:add_event(Event({
 							trigger = 'after',

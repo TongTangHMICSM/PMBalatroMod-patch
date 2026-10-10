@@ -107,6 +107,35 @@ end
 -- only if the mod's "post_trigger" optional feature was picked up.
 -- This reports the same thing directly, without the flag: after any joker returns an effect for a
 -- real context, every joker is offered a pmcmod_trigger context carrying that joker in other_card.
+-- Summoned keypages that should not cost a joker slot but must not be Negative either (several
+-- keypages scale off Negative cards). The game's slot check adds +1 to the limit for a Negative
+-- card (button_callbacks.lua:2396), so granting +1 here is the same thing without the edition.
+-- The flag lives on the card and travels with the save; the credit is returned when it leaves play.
+-- Both places move together. G.jokers is created with card_limit =
+-- G.GAME.starting_params.joker_slots (game.lua:2245), so carrying the credit on starting_params too
+-- means it survives a load whether the area is restored from the save or rebuilt from the base.
+function PMCMOD.claim_slot(card)
+    if not card or not card.ability or card.ability.pmcmod_free_slot then return end
+    card.ability.pmcmod_free_slot = true
+    if G.jokers and G.jokers.config then
+        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+    end
+    if G.GAME and G.GAME.starting_params then
+        G.GAME.starting_params.joker_slots = (G.GAME.starting_params.joker_slots or 5) + 1
+    end
+end
+
+function PMCMOD.release_slot(card)
+    if not card or not card.ability or not card.ability.pmcmod_free_slot then return end
+    card.ability.pmcmod_free_slot = nil
+    if G.jokers and G.jokers.config then
+        G.jokers.config.card_limit = math.max(1, G.jokers.config.card_limit - 1)
+    end
+    if G.GAME and G.GAME.starting_params then
+        G.GAME.starting_params.joker_slots = math.max(1, (G.GAME.starting_params.joker_slots or 5) - 1)
+    end
+end
+
 PMCMOD.TRIGGER_CONTEXT = 'pmcmod_trigger'
 
 -- The broadcast costs one extra context evaluation per trigger, so it only runs while a Sinclair is

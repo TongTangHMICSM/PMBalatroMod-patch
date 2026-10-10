@@ -33,6 +33,7 @@ SMODS.Consumable {
         for i = 0, my_pos-1 do
             local target = G.jokers.cards[my_pos-i]
             if target and not deck_starters[target.config.center.key] then
+                PMCMOD.release_slot(target)
                 G.GAME.banned_keys[target.config.center.key] = true
                 G.E_MANAGER:add_event(Event({func = function()
                     target:start_dissolve({G.C.RED}, nil, 1.6)
