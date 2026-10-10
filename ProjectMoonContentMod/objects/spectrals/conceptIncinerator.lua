@@ -19,11 +19,16 @@ SMODS.Consumable {
         end
 
         for i = 0, my_pos-1 do
-            G.GAME.banned_keys[G.jokers.cards[my_pos-i].config.center.key] = true
-            --G.jokers.cards[i].getting_sliced = true
-            G.E_MANAGER:add_event(Event({func = function()
-                G.jokers.cards[my_pos-i]:start_dissolve({G.C.RED}, nil, 1.6)
-            return true end }))
+            local target = G.jokers.cards[my_pos-i]
+            -- Eternal Keypages are immune: that is what the sticker promises, and it covers every
+            -- deck and sleeve starter (they are all granted with stickers = {"eternal"}). Same
+            -- check SMODS.destroy_cards uses at src/utils.lua:3064.
+            if target and not SMODS.is_eternal(target, { destroy_cards = true }) then
+                G.GAME.banned_keys[target.config.center.key] = true
+                G.E_MANAGER:add_event(Event({func = function()
+                    target:start_dissolve({G.C.RED}, nil, 1.6)
+                return true end }))
+            end
         end
     end,
     can_use = function(self, card)
