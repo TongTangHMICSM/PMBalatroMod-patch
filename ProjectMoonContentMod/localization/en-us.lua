@@ -2740,7 +2740,7 @@ return {
                 text={
                     "Cards that are ",
                     "{C:attention}unique{} in the deck",
-                    "(only one of its rank)",
+                    "(the only card of that rank and colour)",
                 },
             },
             effect_meltdown={

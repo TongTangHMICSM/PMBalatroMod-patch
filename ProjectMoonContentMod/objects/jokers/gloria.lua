@@ -23,13 +23,19 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 		
 		if context.individual and context.cardarea == G.play and not context.blueprint then
-			local singletonCounter = 0 -- make this into a function
+			local singletonCounter = 0
 			local singletonSuit = context.other_card.base.suit
 			local singletonRank = context.other_card:get_id()
+			-- Singleton now means no other card is *exactly* like this one: same rank and the same
+			-- colour (Hearts/Diamonds vs Spades/Clubs). Comparing rank alone, as this did, made a
+			-- second card of any suit break it. The suit variable was always computed - this uses it.
+			local singletonIsRed = singletonSuit == 'Hearts' or singletonSuit == 'Diamonds'
 
 			if G.playing_cards then
 				for _, playing_card in ipairs(G.playing_cards) do
-					if playing_card:get_id() == singletonRank then 
+					local cardSuit = playing_card.base.suit
+					local cardIsRed = cardSuit == 'Hearts' or cardSuit == 'Diamonds'
+					if playing_card:get_id() == singletonRank and cardIsRed == singletonIsRed then
 						singletonCounter = singletonCounter + 1
 					end
 				end
