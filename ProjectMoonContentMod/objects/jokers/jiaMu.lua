@@ -24,10 +24,18 @@ SMODS.Joker {
 
 		
 
+		-- Selling this keypage lifts the debuff it placed: the debuff is sourced to us and
+		-- nothing else removes it once we are gone.
+		if context.selling_self and not context.blueprint then
+			for i = 1, #G.jokers.cards do
+				SMODS.debuff_card(G.jokers.cards[i], nil, "jiaMu")
+			end
+		end
+
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
 			for i = 1, #G.jokers.cards do
 				if G.jokers.cards[i] ~= card then
-					SMODS.debuff_card(G.jokers.cards[i], "reset", "jiaMu")
+					SMODS.debuff_card(G.jokers.cards[i], nil, "jiaMu")
 				end
 			end
 		end

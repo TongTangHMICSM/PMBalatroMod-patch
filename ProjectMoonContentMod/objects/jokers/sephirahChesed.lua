@@ -34,7 +34,7 @@ SMODS.Joker {
 		if context.joker_main then
 			return {
 				message = localize { type = 'variable', key = 'a_xchips', vars = { card.ability.extra.xchips } },
-				xchips = card.ability.xchips
+				xchips = card.ability.extra.xchips
 			}
 		end
     end,

@@ -86,6 +86,18 @@ SMODS.Joker {
             end
         end
 
+        -- Selling this keypage re-enables the keypage it disabled. It marks its victim with
+        -- pmcmod_qoh_disabled, because it debuffs with set_debuff rather than a source.
+        if context.selling_self and not context.blueprint then
+            for i = 1, #G.jokers.cards do
+                local j = G.jokers.cards[i]
+                if j.ability and j.ability.pmcmod_qoh_disabled then
+                    j.ability.pmcmod_qoh_disabled = nil
+                    j:set_debuff(false)
+                end
+            end
+        end
+
         -- Retrigger all jokers if diff < 4
         if context.retrigger_joker_check and not context.blueprint then
             if card.ability.extra.transformTime == 0 and diff < 4 then

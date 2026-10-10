@@ -75,7 +75,7 @@ SMODS.Joker {
                         card:juice_up(0.8, 0.8)
                         joker_to_destroy:start_dissolve({G.C.RED}, nil, 1.6)
                     return true end }))
-					card_eval_status_text((context.blueprint_card or card), 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.xmult}}})
+					card_eval_status_text((context.blueprint_card or card), 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.xmult}}})
                 end
 			end
 		end

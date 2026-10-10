@@ -48,7 +48,7 @@ SMODS.Joker {
 		end
 		
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-			SMODS.debuff_card(card, "reset", "ravi")
+			SMODS.debuff_card(card, nil, "ravi")
 		end
 
 		
