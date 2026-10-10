@@ -462,7 +462,6 @@ return {
                 name = 'Papa Bongy',
                 text = {
                     "Quando um {C:attention}Encontro{} começar, invoque até 4 Bongys aleatórios,",
-                    "até um total de 20 Bongys por toda a tentativa",
                     "Para cada Bongy derrotado, Papa Bongy ganha um dos seguinte efeitos:",
                     "Bongy (Molho de Soja): {C:chips}10{} Fichas",
                     "Bongy (Molho Vermelho): {C:mult}5{} Multi",
