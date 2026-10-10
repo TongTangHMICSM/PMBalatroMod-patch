@@ -2219,21 +2219,17 @@ return {
             j_pmcmod_alan = {
                 name = 'Alan',
                 text = {
-                    {"At the {C:attention}start of the Scene{}, choose",
-                    "a random spot and a random Keypage"},
-                    {"If the selected Keypage is in the selected",
-                    "spot for 5 Hands, give it a random {C:dark_edition}Edition{}"},
-                    {"After an Edition is given, the Counter resets to",
-                    "{C:red}0{} and a {C:attention}new Keypage and spot are chosen{}"},
-                    {"If any Hand is played while the Keypage",
-                    "is in the wrong spot, {C:red}destroy it{}"},
-                    {"Never chooses a Keypage that already",
-                    "has an {C:dark_edition}Edition{}"},
-                    {"Only one Keypage and spot is selected at a time",
-                    "{C:attention}Destroys itself if there's no more Keypages to upgrade{}",
-                    "{C:inactive}(Position: {C:attention}#1#{C:inactive})",
-                    "{C:inactive}(Keypage: {C:blue}#2#{C:inactive})",
-                    "{C:inactive}(Counter: {C:red}#3#{C:inactive})"}
+                    {"At the start of each {C:attention}Scene{}, picks a",
+                    "random spot and a random Keypage"},
+                    {"Hold that Keypage in that spot for",
+                    "{C:attention}5 Hands{} to give it a random {C:dark_edition}Edition{},",
+                    "then a new target is chosen"},
+                    {"Hand played with it in the wrong spot:",
+                    "{C:red}destroys it{}"},
+                    {"Skips Keypages that already have an",
+                    "{C:dark_edition}Edition{}, and removes itself when none are left"},
+                    {"{C:inactive}(Spot: {C:attention}#1#{C:inactive}, Keypage: {C:blue}#2#{C:inactive})",
+                    "{C:inactive}(Counter: {C:red}#3#{C:inactive}/5)"}
                 }
             },
             j_pmcmod_vermillionCross = {

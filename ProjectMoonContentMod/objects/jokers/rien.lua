@@ -120,7 +120,7 @@ SMODS.Joker {
 
 		-- Spawn the next prescript
 		if context.ending_shop and card.ability.extra.prescriptActive == false and card.ability.extra.allowPrescriptCheck and card.ability.extra.currentPrescript <= 11 then
-			SMODS.add_card({ key = card.ability.extra.prescriptListShuffled[card.ability.extra.currentPrescript], stickers = {"eternal"}, force_stickers = true })
+			SMODS.add_card({ key = card.ability.extra.prescriptListShuffled[card.ability.extra.currentPrescript], stickers = {"eternal"}, force_stickers = true, edition = 'e_negative' })
 			card.ability.extra.prescriptActive = true
 		end
 

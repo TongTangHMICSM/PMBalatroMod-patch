@@ -96,7 +96,12 @@ SMODS.Joker {
 				
 				-- Fire the edition event if counter hits 5
 				if card.ability.counter >= 5 then
-					selectedJoker:set_edition(pseudorandom_element(possible_editions, pseudoseed('alan')), nil, true)
+					-- Another source (an Envy seal, for instance) may have given the target an Edition
+					-- while we were counting, so check again before spending the payout - set_edition
+					-- would otherwise replace what is already there.
+					if not selectedJoker.edition then
+						selectedJoker:set_edition(pseudorandom_element(possible_editions, pseudoseed('alan')), nil, true)
+					end
 					card.ability.jokerSelectedFlag = false
 					card.ability.target_id = nil
 					card.ability.spotSelected = nil

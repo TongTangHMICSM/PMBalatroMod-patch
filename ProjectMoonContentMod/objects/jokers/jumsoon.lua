@@ -56,6 +56,15 @@ SMODS.Joker {
 						end
 					}))
 				end
+
+				-- flip it back: without this the Keypage stays face-down until the Scene ends
+				G.E_MANAGER:add_event(Event({
+					delay = 0.15,
+					func = function()
+						G.jokers.cards[i]:flip()
+						return true
+					end
+				}))
 			
 			end
 		end
