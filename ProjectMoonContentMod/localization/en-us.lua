@@ -719,7 +719,7 @@ return {
                     "{C:attention}gain another chance",
                     "{C:inactive}(Witnessed Enoch's death {C:mult}#1#{C:inactive} times)",
                     "{C:inactive}({C:red}#4#{C:inactive} Acts survived)"},
-                    
+
                 },
                 unlock = {
                     'Win a run with {C:attention}L Corp Deck{}',
@@ -1324,7 +1324,7 @@ return {
                     "up to {C:mult}+30{} Mult",
                     "Resets this value after every Reception",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
-                },  
+                },
                 unlock = {
                     'Win a run with the {C:attention}Mika Keypage{}',
                 },
@@ -2001,19 +2001,23 @@ return {
             j_pmcmod_matthias = {
                 name = 'Matthias',
                 text = {
-                    {"{C:blue}-#1#{} Hand.  {C:attention}Laevateinn: #2#{} counters left",
-                    "{C:inactive}(Burn Cards are {C:attention}x#4#{} stronger now){}"},
-                    {"First hand scoring {C:attention}under 4{} cards: unburnt cards gain",
-                    "{C:red}Burn{} for {C:gold}$#3#{}, the price rising {C:gold}$1{} each time but never",
-                    "{C:gold}below $0{} unless you hold {C:attention}Credit Card{}. {C:attention}Kira{} to",
-                    "{C:attention}his right{} waives the price and stops it climbing"},
-                    {"{C:inactive}Once the price outruns your purse:{} destroy the unburnt card for",
-                    "{C:gold}$20{}, or a random {C:attention}non-Eternal{} Keypage if 4+ cards scored",
-                    "{C:inactive}(once per hand, and it takes a counter each time){}"},
-                    {"{C:inactive}Broke at the last counter takes {C:attention}Kira{} and bans her.",
-                    "{C:inactive}At none, every scored card rolls {C:attention}1 in 5{} for Burn,",
-                    "{C:inactive}destroying it if it already burns{}"},
-                },
+                    {"{C:blue}-#1#{} Hand.  {C:diamonds}Laevateinn:{} {C:attention}#2#{} counters left",
+                    "{C:inactive}(Each spent counter multiplies Burn by x10, currently {C:attention}x#4#{}){}",
+                    "At 0 {C:diamonds}Laevateinn{}, every scored card has a {C:attention}1 in 5{} chance",
+                    "to gain {C:red}Burn{}, destroy it if it already is{}"
+                    },
+                    
+                    {"{C:attention}First hand of the scene with {C:diamonds}Laevateinn{}:{}",
+                    "{C:attention}-4 cards:{} spend {C:money}$#3#{} to turn each scored cards into {C:red}Burn{} and rise by {C:money}$1{}.",
+                    
+                    "If the price is too high: use{C:diamonds} Laevateinn{}, destroy the card and gain {C:money}$20{}.", 
+                    "{C:attention}4+ cards:{} use{C:diamonds} Laevateinn{} to destroy a random Keypage and gain {C:money}$20{}."},
+                    
+
+                    {"If {C:diamonds}Kira{} is to the right of this keypage, disable card burning cost.",
+                    "Using the last {C:diamonds}Laevateinn{} destroys and bans {C:diamonds}Kira{} {C:inactive}from the pool{}.",
+                    "{C:attention}#5#{} lets you pay in debt.",}
+                },              
                 unlock = {
                     'Win a run with the {C:attention}Ryoshu Keypage{}',
                     'in at least {C:attention}The City Stake{}',
@@ -2088,9 +2092,9 @@ return {
             j_pmcmod_kira = {
                 name = 'Kira',
                 text = {
-                    {"Burn Card gives {C:gold}$#2#{}"},
-                    {"Dies after {C:attention}3{} hands of Burn Cards, is banned",
-                    "{C:inactive}from the pool{} and spends a {C:attention}Laevateinn{} counter",
+                    {"{C:red}Burn{} Cards give {C:gold}$#2#{}"},
+                    {"Dies after Matthias burns {C:attention}3{} hands, is banned",
+                    "{C:inactive}from the pool{} and spends a {C:hearts}Laevateinn{} counter",
                     "{C:inactive}(Total triggers: {C:red}#1#{C:inactive}){}"},
                 },
                 unlock = {
@@ -2563,7 +2567,7 @@ return {
                     "GIGIGIGIIIGIIGGGGIGII",
                     "GIIGIGIGI{C:red}#1#{}MultGIIGGI",
                     "{C:inactive}(Counter: {C:attention}#2#{C:inactive})"
-                    
+
                 },
             },
             j_pmcmod_puppetC = {
@@ -2613,35 +2617,35 @@ return {
                 name = 'Prescript',
                 text = {
                     "{C:red}Discard{} 5 Face cards in a single hand",
-                    
+
                 },
             },
             j_pmcmod_prescript2 = {
                 name = 'Prescript',
                 text = {
                     "Sell the {C:red}#2#{} Keypage",
-                    
+
                 },
             },
             j_pmcmod_prescript3 = {
                 name = 'Prescript',
                 text = {
                     "Must not play {C:attention}#2#{} cards",
-                    
+
                 },
             },
             j_pmcmod_prescript4 = {
                 name = 'Prescript',
                 text = {
                     "Finish 1 Scene with {C:attention}game speed{} set to 1",
-                    
+
                 },
             },
             j_pmcmod_prescript5 = {
                 name = 'Prescript',
                 text = {
                     "Must not use any {C:red}Discards",
-                    
+
                 },
             },
             j_pmcmod_prescript6 = {
@@ -2656,7 +2660,7 @@ return {
                 name = 'Prescript',
                 text = {
                     "Sell a Keypage of at least {C:blue}Hardcover{} rarity",
-                    
+
                 },
             },
             j_pmcmod_prescript8 = {
@@ -2684,7 +2688,7 @@ return {
                 name = 'Prescript',
                 text = {
                     "Play the first 5 digits of e",
-                    
+
                 },
             },
         },
@@ -3028,7 +3032,7 @@ return {
 			        "Gains no money from remaining",
                     "{C:red}discards{}, {C:blue}hands{} or {C:money}interest{}",
                     "Higher chance to find",
-                    "Keypages with {C:dark_edition}Editions{}",   
+                    "Keypages with {C:dark_edition}Editions{}",
                 },
                 unlock = {
                     'Win a run with {C:attention}Thumb Deck{}',
@@ -3090,7 +3094,7 @@ return {
                 name = "Shy Sleeve",
                 text = {
                     "Starts with an eternal",
-			        "{C:attention,T:j_pmcmod_shylook}Today's Shy Look{} page",         
+			        "{C:attention,T:j_pmcmod_shylook}Today's Shy Look{} page",
                 },
                 unlock = {
                     'Win a run with {C:attention}Shy Deck{}',
@@ -3349,7 +3353,7 @@ pmcmod_sinWrath_spread="Wrath: Spread"
                 "have to accept it."
             },
             pmcmod_tiph_win={
-                "It was obvious we’d win.", 
+                "It was obvious we’d win.",
                 "Thought we couldn’t handle this much?"
             },
             pmcmod_tiph_loss={

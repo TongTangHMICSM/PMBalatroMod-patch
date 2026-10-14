@@ -3,7 +3,7 @@ SMODS.Joker {
 	name = "Matthias",
 	pronouns = "he_him",
 	config = { extra = { hands = 1, laevateinn = 3, price = 2, brokeHand = -1, keypageHand = -1,
-		kiraPresent = false, currentPosition = 1 } },
+		kiraPresent = false, currentPosition = 1, current_money = 0 } }, 
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,
@@ -18,9 +18,14 @@ SMODS.Joker {
 		["Middle"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue+1] = G.P_CENTERS.m_pmcmod_burn
-        return {vars = { card.ability.extra.hands, card.ability.extra.laevateinn, card.ability.extra.price,
-			PMCMOD.laevateinn_scale() } }
+    info_queue[#info_queue+1] = G.P_CENTERS.m_pmcmod_burn
+    return {vars = { 
+        card.ability.extra.hands, 
+        card.ability.extra.laevateinn, 
+        card.ability.extra.price,
+        PMCMOD.laevateinn_scale(),
+        localize({ type = 'name_text', set = 'Joker', key = 'j_credit_card' }) -- pulls "Lenny" from pm texture mod
+    } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
@@ -29,7 +34,10 @@ SMODS.Joker {
 		if context.setting_blind and not context.blueprint then
 			ex.kiraPresent = PMCMOD.pair_linked(card)
 		end
+		
+		-- We reset the money tracker at the start of the hand so it doesn't carry over
 		if context.before and not context.blueprint then
+			ex.current_money = G.GAME.dollars
 			for i = 1, #G.jokers.cards do
 				if G.jokers.cards[i] == card then
 					ex.currentPosition = i
@@ -63,18 +71,17 @@ SMODS.Joker {
 			local linked = PMCMOD.pair_linked(card)
 
 			if #scored < 4 then
-				-- A short first hand: Burn is bought at the going price, which climbs by $1 each
-				-- time. Kira to his right waives it entirely. Money never goes below $0 unless a
-				-- Credit Card is held, and only then can the price be paid while short.
 				if linked then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
-				elseif ex.price <= G.GAME.dollars then
+				elseif ex.price <= ex.current_money then -- Uses persistent tracker
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
 					ease_dollars(-ex.price)
+					ex.current_money = ex.current_money - ex.price -- Deducts from persistent tracker
 					ex.price = ex.price + 1
 				elseif PMCMOD.credit_card_in_play() then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
 					ease_dollars(-ex.price)
+					ex.current_money = ex.current_money - ex.price -- Deducts from persistent tracker
 					ex.price = ex.price + 1
 				elseif ex.brokeHand ~= handKey then
 					-- Broke. At the last counter the seal takes Kira and bans her from the pool;
@@ -89,6 +96,8 @@ SMODS.Joker {
 					if ex.laevateinn <= 0 and kira then
 						G.GAME.banned_keys['j_pmcmod_kira'] = true
 						kira.getting_sliced = true
+						ease_dollars(20) -- Money reward for Kira
+						ex.current_money = ex.current_money + 20 -- FIX: Update tracker with gained money
 						G.E_MANAGER:add_event(Event({func = function()
 							card:juice_up(0.8, 0.8)
 							kira:start_dissolve({G.C.RED}, nil, 1.6)
@@ -96,6 +105,7 @@ SMODS.Joker {
 					else
 						SMODS.destroy_cards(context.other_card)
 						ease_dollars(20)
+						ex.current_money = ex.current_money + 20 -- FIX: Update tracker with gained money
 					end
 					card_eval_status_text(card, 'extra', nil, nil, nil, {
 						message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
@@ -118,6 +128,7 @@ SMODS.Joker {
 					local target = pseudorandom_element(pool, pseudoseed('pmcmod_laevateinn'))
 					ex.laevateinn = ex.laevateinn - 1
 					ease_dollars(20)
+					ex.current_money = ex.current_money + 20 -- FIX: Update tracker with gained money
 					target.getting_sliced = true
 					G.E_MANAGER:add_event(Event({func = function()
 						card:juice_up(0.8, 0.8)
