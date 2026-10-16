@@ -69,13 +69,14 @@ SMODS.Joker {
 				-- the only way to pay below it.
 				if linked then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
-				elseif ex.price <= G.GAME.dollars then
+				elseif to_big(ex.price) <= to_big(G.GAME.dollars) then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
-					ease_dollars(-ex.price)
+					-- paid instantly so every later check of the hand sees the real purse
+					ease_dollars(-ex.price, true)
 					ex.price = ex.price + 1
 				elseif PMCMOD.credit_card_in_play() then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
-					ease_dollars(-ex.price)
+					ease_dollars(-ex.price, true)
 					ex.price = ex.price + 1
 				else
 					-- The price outruns the purse, so the buy is refused and the seal takes a
