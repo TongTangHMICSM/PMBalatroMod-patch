@@ -2,7 +2,7 @@ SMODS.Joker {
 	key = 'matthias',
 	name = "Matthias",
 	pronouns = "he_him",
-	config = { extra = { hands = 1, laevateinn = 3, price = 2, brokeHand = -1, keypageHand = -1,
+	config = { extra = { hands = 1, laevateinn = 3, price = 2, brokeHand = -1,
 		kiraPresent = false, currentPosition = 1 } },
 	unlocked = true,
 	eternal_compat = true,
@@ -62,10 +62,11 @@ SMODS.Joker {
 
 			local linked = PMCMOD.pair_linked(card)
 
-			if #scored < 4 and ex.brokeHand ~= handKey then
-				-- A short first hand: Burn is bought at the going price, which climbs by $1 each
-				-- time. Kira to his right waives it entirely. Money never goes below $0 unless a
-				-- Credit Card is held, and only then can the price be paid while short.
+			if ex.brokeHand ~= handKey then
+				-- A first hand: Burn is bought at the going price, which climbs by $1 each
+				-- time. Kira to his right waives it entirely. Nothing is ever spent while
+				-- short: the buy only happens at or above the price, and a Credit Card is
+				-- the only way to pay below it.
 				if linked then
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
 				elseif ex.price <= G.GAME.dollars then
@@ -77,66 +78,64 @@ SMODS.Joker {
 					ease_dollars(-ex.price)
 					ex.price = ex.price + 1
 				else
-					-- Broke. At the last counter the seal takes Kira and bans her from the pool;
-					-- otherwise the buying stops and the seal consumes every unburnt card left
-					-- in the scored hand at once.
-					ex.brokeHand = handKey
-					ex.laevateinn = ex.laevateinn - 1
-					local kira = nil
-					local jokers = G.jokers.cards or {}
-					for i = 1, #jokers do
-						if PMCMOD.bare_key(jokers[i].config.center.key) == 'kira' then kira = jokers[i] end
-					end
-					if ex.laevateinn <= 0 and kira then
-						G.GAME.banned_keys['j_pmcmod_kira'] = true
-						kira.getting_sliced = true
-						G.E_MANAGER:add_event(Event({func = function()
-							card:juice_up(0.8, 0.8)
-							kira:start_dissolve({G.C.RED}, nil, 1.6)
-							return true end }))
-					else
-						local doomed = {}
-						for i = 1, #scored do
-							if not SMODS.has_enhancement(scored[i], 'm_pmcmod_burn') then
-								doomed[#doomed + 1] = scored[i]
+					-- The price outruns the purse, so the buy is refused and the seal takes a
+					-- counter instead, once per hand. The toll follows the counters left: the
+					-- first seal wipes the scored hand, the second takes a random Keypage (it
+					-- needs a destroyable one), the third takes Kira (it needs her in play).
+					local took = false
+					if ex.laevateinn >= 3 then
+						ex.laevateinn = ex.laevateinn - 1
+						ex.brokeHand = handKey
+						SMODS.destroy_cards(scored)
+						ease_dollars(20)
+						took = true
+					elseif ex.laevateinn == 2 then
+						local pool = {}
+						local jokers = G.jokers.cards or {}
+						for i = 1, #jokers do
+							local other = jokers[i]
+							local otherKey = PMCMOD.bare_key(other.config.center.key)
+							if other ~= card and otherKey ~= 'kira'
+								and not SMODS.is_eternal(other, { destroy_cards = true }) then
+								pool[#pool + 1] = other
 							end
 						end
-						if #doomed > 0 then
-							SMODS.destroy_cards(doomed)
+						if #pool > 0 then
+							local target = pseudorandom_element(pool, pseudoseed('pmcmod_laevateinn'))
+							ex.laevateinn = ex.laevateinn - 1
+							ex.brokeHand = handKey
+							ease_dollars(20)
+							target.getting_sliced = true
+							G.E_MANAGER:add_event(Event({func = function()
+								card:juice_up(0.8, 0.8)
+								target:start_dissolve({G.C.RED}, nil, 1.6)
+								return true end }))
+							took = true
 						end
-						ease_dollars(20)
+					elseif ex.laevateinn == 1 then
+						local kira = nil
+						local jokers = G.jokers.cards or {}
+						for i = 1, #jokers do
+							if PMCMOD.bare_key(jokers[i].config.center.key) == 'kira' then kira = jokers[i] end
+						end
+						if kira then
+							ex.laevateinn = ex.laevateinn - 1
+							ex.brokeHand = handKey
+							ease_dollars(20)
+							G.GAME.banned_keys['j_pmcmod_kira'] = true
+							kira.getting_sliced = true
+							G.E_MANAGER:add_event(Event({func = function()
+								card:juice_up(0.8, 0.8)
+								kira:start_dissolve({G.C.RED}, nil, 1.6)
+								return true end }))
+							took = true
+						end
 					end
-					card_eval_status_text(card, 'extra', nil, nil, nil, {
-						message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
-					})
-				end
-			elseif #scored >= 4 and not linked and ex.price > G.GAME.dollars
-				and not PMCMOD.credit_card_in_play() and ex.keypageHand ~= handKey then
-				-- a long first hand only moves the seal once the price outruns the purse:
-				-- the Laevateinn takes a Keypage instead
-				ex.keypageHand = handKey
-				local pool = {}
-				local jokers = G.jokers.cards or {}
-				for i = 1, #jokers do
-					local other = jokers[i]
-					local otherKey = PMCMOD.bare_key(other.config.center.key)
-					if other ~= card and otherKey ~= 'kira'
-						and not SMODS.is_eternal(other, { destroy_cards = true }) then
-						pool[#pool + 1] = other
+					if took then
+						card_eval_status_text(card, 'extra', nil, nil, nil, {
+							message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
+						})
 					end
-				end
-				if #pool > 0 then
-					local target = pseudorandom_element(pool, pseudoseed('pmcmod_laevateinn'))
-					ex.laevateinn = ex.laevateinn - 1
-					ease_dollars(20)
-					target.getting_sliced = true
-					G.E_MANAGER:add_event(Event({func = function()
-						card:juice_up(0.8, 0.8)
-						target:start_dissolve({G.C.RED}, nil, 1.6)
-						return true end }))
-					card_eval_status_text(card, 'extra', nil, nil, nil, {
-						message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
-					})
 				end
 			end
 		end

@@ -18,7 +18,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Flowing time nerf *Questionable
 - Fix kongsihui
 - Fix Ahab's X Mult to match its description (gains X0.05 per scored Pallid card, no longer a static deck-count formula)
-- Rework Matthias' unseal: broke on a short first hand wipes every unburnt card in the scored hand for $20 and stops the buying, and a 4+ hand only takes a Keypage once the price actually outruns the purse
+- Rework Matthias' unseal: when the price outruns the purse the buy is refused and the seal takes one counter per hand in order - the first seal destroys every card in the scored hand for $20, the second a random non-Eternal Keypage (if any), the third Kira and bans her (if she is in play)
 - Fix Burn Card payout to be a true 0.001% of the Encounter (was 0.1%, so at the Laevateinn's x1000 every Burn card hit the 9999 cap on ordinary blinds)
 
 # Fixes
@@ -46,7 +46,7 @@ Keypages and effects
 - Manifest unlocks a still-locked True Version instead of showing "Locked" and burning the Spectral; 18 of its 21 targets start locked. Seeded and challenge runs still refuse unlocks.
 - Two texture pack badge keys that were referenced but never defined, and a stray brace in pt_BR.
 - Silent Deck's change had to be applied to `objects/backs/silent.lua`: the loader only reads `objects/backs/`, so `objects/decks/` is a dead duplicate of all 11 decks.
-- Matthias: the long-first-hand penalty fired on every 4+ card hand regardless of the purse, and the broke penalty only destroyed the triggering card while the rest of the unburnt hand kept buying with the $20 it had just paid out. The seal now only takes a Keypage once the price outruns the purse, and going broke on a short hand stops the buying and wipes every unburnt card in the scored hand at once.
+- Matthias: the long-first-hand penalty fired on every 4+ card hand regardless of the purse, and the broke penalty only destroyed the triggering card while the rest of the unburnt hand kept buying with the $20 it had just paid out. The buy is now refused outright whenever the price outruns the purse, the hand stops, and the seal takes one counter per hand in a fixed order: the first wipes every card in the scored hand, the second a random non-Eternal Keypage (if one exists), the third Kira and bans her (if she is in play).
 - Burn Cards paid 0.1% of the Encounter instead of the described 0.001%. At the Laevateinn's x1000 that is the whole blind, so every Burn card maxed out the 9999 chip cap. The payout multiplier is now a true 0.001% (1% of the Encounter at x1000).
 
 Pairs
@@ -87,8 +87,8 @@ The four pairs
 - Kira pays $4 per scored Burn Card, counts one trigger per hand rather than per card, and dies after 3 hands.
 
 Matthias, Burn and the sin seals
-- Matthias carries 3 Laevateinn counters and -1 Hand. On the first hand of a Scene scoring under 4 cards, each unburnt card gains Burn for the going price, which starts at $2 and rises by $1 per purchase. The purse never goes below $0 unless Credit Card is held, and Kira exactly to his right waives the price entirely and stops it climbing.
-- Once the price outruns the purse, the seal destroys instead: every unburnt card in the scored hand for $20, or a random non-Eternal Keypage (Kira excluded) if 4 or more cards scored. Each takes a counter, once per hand, and going broke stops the buying for the rest of the hand. At the last counter it takes Kira and bans her from the pool.
+- Matthias carries 3 Laevateinn counters and -1 Hand. On the first hand of a Scene, each unburnt card gains Burn for the going price, which starts at $2 and rises by $1 per purchase. Nothing is spent while short - the buy only happens at or above the price, the purse never goes below $0 unless Credit Card is held, and Kira exactly to his right waives the price entirely and stops it climbing.
+- Once the price outruns the purse, the buy is refused and the seal takes a counter instead, once per hand, in a fixed order: the first seal destroys every card in the scored hand for $20, the second a random non-Eternal Keypage (Kira excluded, and only if one exists), and the third Kira, banning her from the pool (only if she is in play). Going broke stops the buying for the rest of the hand.
 - With no counters left nothing is bought: every scored card rolls 1 in 5 to gain Burn, and a hit on a card that already burns destroys it.
 - Burn Cards have no use limit and pay chips - 0.001% of the Encounter Score, multiplied by x10 for every Laevateinn counter spent, capped at 9999.
 - The Wrath seal is now purely Burn-driven: 1.2 per Sloth seal in 10 to become a Burn Card, and in 20 to spread Burn to a card that lacks it. Its old perma Chips, Mult and Money gains are gone.
