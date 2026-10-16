@@ -17,6 +17,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Improve Garnet logic
 - Flowing time nerf *Questionable
 - Fix kongsihui
+- Fix Ahab's X Mult to match its description (gains X0.05 per scored Pallid card, no longer a static deck-count formula)
 
 # Fixes
 
@@ -34,6 +35,7 @@ Crashes
 - Three reads of `ability.extra` assumed a table. Five jokers write `config = {extra = 0.5, ...}` with a plain number (kromer, michelle, sephirahHod, siegfried, wolf), so indexing it threw.
 
 Keypages and effects
+- Ahab's X Mult was a static `1 + 0.05` per Pallid card in the deck, contradicting the description's "gains X Mult every time a Pallid card is scored". He now gains X0.05 for each scored Pallid card (saved on the card) and pays out the running total, and `loc_vars` shows the stored value instead of recomputing from the deck.
 - aCertainSinclair counted only left neighbours that returned an effect, and it wrote into the live context other Keypages read - it now counts any left neighbour's trigger and works on a copy.
 - Ren reports a trigger when it gives Poise.
 - Lei Heng can no longer destroy an Eternal Keypage; a protected neighbour turns that toss into a retrigger.

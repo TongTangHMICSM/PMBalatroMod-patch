@@ -34,13 +34,7 @@ SMODS.Joker {
 		
 		info_queue[#info_queue + 1] = G.P_CENTERS.c_pmcmod_hunt
 
-        local pallid_card_tally = 0
-        if G.playing_cards then
-            for _, playing_card in ipairs(G.playing_cards) do
-                if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then pallid_card_tally = pallid_card_tally + 1 end
-            end
-        end
-        return { vars = { card.ability.extra.xmult_mod, 1 + (card.ability.extra.xmult_mod * pallid_card_tally), key = tempKey } }
+        return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, key = tempKey } }
     end,
     calculate = function(self, card, context)
 		if context.setting_blind and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
@@ -66,15 +60,19 @@ SMODS.Joker {
             return nil, true
         end
 
+        if context.individual and context.cardarea == G.play and not context.blueprint then
+            if SMODS.has_enhancement(context.other_card, 'm_pmcmod_pallid') then
+                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
+                return {
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } },
+                }
+            end
+        end
+
         if context.joker_main then
-            local pallid_card_tally = 0
-			if G.playing_cards then
-				for _, playing_card in ipairs(G.playing_cards) do
-					if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then pallid_card_tally = pallid_card_tally + 1 end
-				end
-			end
             return {
-                Xmult = 1 + (card.ability.extra.xmult_mod * pallid_card_tally),
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.xmult } },
+                Xmult = card.ability.extra.xmult,
             }
         end
     end,
