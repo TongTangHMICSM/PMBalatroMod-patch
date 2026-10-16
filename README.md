@@ -19,6 +19,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Fix kongsihui
 - Fix Ahab's X Mult to match its description (gains X0.05 per scored Pallid card, no longer a static deck-count formula)
 - Rework Matthias' unseal: broke on a short first hand wipes every unburnt card in the scored hand for $20 and stops the buying, and a 4+ hand only takes a Keypage once the price actually outruns the purse
+- Fix Burn Card payout to be a true 0.001% of the Encounter (was 0.1%, so at the Laevateinn's x1000 every Burn card hit the 9999 cap on ordinary blinds)
 
 # Fixes
 
@@ -46,6 +47,7 @@ Keypages and effects
 - Two texture pack badge keys that were referenced but never defined, and a stray brace in pt_BR.
 - Silent Deck's change had to be applied to `objects/backs/silent.lua`: the loader only reads `objects/backs/`, so `objects/decks/` is a dead duplicate of all 11 decks.
 - Matthias: the long-first-hand penalty fired on every 4+ card hand regardless of the purse, and the broke penalty only destroyed the triggering card while the rest of the unburnt hand kept buying with the $20 it had just paid out. The seal now only takes a Keypage once the price outruns the purse, and going broke on a short hand stops the buying and wipes every unburnt card in the scored hand at once.
+- Burn Cards paid 0.1% of the Encounter instead of the described 0.001%. At the Laevateinn's x1000 that is the whole blind, so every Burn card maxed out the 9999 chip cap. The payout multiplier is now a true 0.001% (1% of the Encounter at x1000).
 
 Pairs
 - Every pair lookup missed. `card.config.center.key` is `j_pmcmod_ren` while the pair table uses bare keys, so no apprentice ever found its father.

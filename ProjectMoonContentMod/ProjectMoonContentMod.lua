@@ -309,11 +309,11 @@ function PMCMOD.prescript_driver()
     PMCMOD.claim_slot(spawned)
 end
 
--- What a Burn Card pays: 0.001% of the Encounter, grown by the Laevateinn's remaining counters
--- and bounded at 9999 the way it always was.
+-- What a Burn Card pays: 0.001% of the Encounter (0.00001), grown by the Laevateinn's
+-- remaining counters and bounded at 9999 the way it always was.
 function PMCMOD.burn_chips()
     local encounter = (G.GAME and G.GAME.blind and G.GAME.blind.chips) or 0
-    local value = encounter * 0.001 * PMCMOD.laevateinn_scale()
+    local value = encounter * 0.00001 * PMCMOD.laevateinn_scale()
     if to_big(value) >= to_big(9999) then value = 9999 end
     return value
 end
