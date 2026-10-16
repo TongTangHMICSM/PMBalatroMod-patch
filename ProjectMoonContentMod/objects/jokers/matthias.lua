@@ -62,7 +62,7 @@ SMODS.Joker {
 
 			local linked = PMCMOD.pair_linked(card)
 
-			if #scored < 4 then
+			if #scored < 4 and ex.brokeHand ~= handKey then
 				-- A short first hand: Burn is bought at the going price, which climbs by $1 each
 				-- time. Kira to his right waives it entirely. Money never goes below $0 unless a
 				-- Credit Card is held, and only then can the price be paid while short.
@@ -76,9 +76,10 @@ SMODS.Joker {
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
 					ease_dollars(-ex.price)
 					ex.price = ex.price + 1
-				elseif ex.brokeHand ~= handKey then
+				else
 					-- Broke. At the last counter the seal takes Kira and bans her from the pool;
-					-- otherwise it takes the unburnt card itself.
+					-- otherwise the buying stops and the seal consumes every unburnt card left
+					-- in the scored hand at once.
 					ex.brokeHand = handKey
 					ex.laevateinn = ex.laevateinn - 1
 					local kira = nil
@@ -94,15 +95,25 @@ SMODS.Joker {
 							kira:start_dissolve({G.C.RED}, nil, 1.6)
 							return true end }))
 					else
-						SMODS.destroy_cards(context.other_card)
+						local doomed = {}
+						for i = 1, #scored do
+							if not SMODS.has_enhancement(scored[i], 'm_pmcmod_burn') then
+								doomed[#doomed + 1] = scored[i]
+							end
+						end
+						if #doomed > 0 then
+							SMODS.destroy_cards(doomed)
+						end
 						ease_dollars(20)
 					end
 					card_eval_status_text(card, 'extra', nil, nil, nil, {
 						message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
 					})
 				end
-			elseif ex.keypageHand ~= handKey then
-				-- a long first hand: the Laevateinn takes a Keypage instead
+			elseif #scored >= 4 and not linked and ex.price > G.GAME.dollars
+				and not PMCMOD.credit_card_in_play() and ex.keypageHand ~= handKey then
+				-- a long first hand only moves the seal once the price outruns the purse:
+				-- the Laevateinn takes a Keypage instead
 				ex.keypageHand = handKey
 				local pool = {}
 				local jokers = G.jokers.cards or {}
