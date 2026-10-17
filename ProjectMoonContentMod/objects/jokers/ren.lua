@@ -3,7 +3,8 @@ SMODS.Joker {
 	no_pool_flag = 'ren_extinct',
 	name = "Ren",
 	pronouns = "he_him",
-	config = { extra = { shiomiPresent = false, shiomiPos = nil, renDeathCounter = 0, baseChance = 1, maxChance = 2} },
+	config = { extra = { shiomiPresent = false, shiomiPos = nil, baseChance = 1, maxChance = 2,
+		blade = 0 } },
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,
@@ -19,7 +20,7 @@ SMODS.Joker {
  	},
 	loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, card.ability.extra.baseChance, card.ability.extra.maxChance, 'ren')
-        return {vars = { PMCMOD.pair_trigger_display(card), new_numerator, new_denominator } } 
+        return {vars = { PMCMOD.pair_trigger_display(card), new_numerator, new_denominator, card.ability.extra.blade or 0 } }
 	end,
 	calculate = function(self, card, context)
 		-- the pairing is locked in at the start of the Scene and held for it
@@ -56,6 +57,12 @@ SMODS.Joker {
 				end
 			end
 
+			-- every poise crit charges his Blade
+			if context.other_card.poise_trigger and not context.blueprint then
+				card.ability.extra.blade = (card.ability.extra.blade or 0)
+					+ pseudorandom('pmcmod_moonlitBlade', 1, 3)
+			end
+
 			if PMCMOD.pair_triggers(card) >= 5 then
 				
 				card.getting_sliced = true
@@ -78,6 +85,9 @@ SMODS.Joker {
 	add_to_deck = function(self, card, from_debuff)
 		-- obtainable once, like the mod's other unique Keypages
 		if G.GAME then G.GAME.pool_flags.ren_extinct = true end
+	end,
+	update = function(self, card, dt)
+		PMCMOD.update_use_button(card, (card.ability.extra.blade or 0) >= 20, 'pmcmod_ren_blade')
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )

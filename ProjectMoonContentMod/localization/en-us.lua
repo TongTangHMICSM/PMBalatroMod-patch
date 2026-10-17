@@ -2051,6 +2051,9 @@ return {
                     "the chance becomes a guarantee",
                     "Ren dies after this effect is triggered 5 times",
                     "{C:inactive}(Total triggers: {C:red}#1#{C:inactive})"},
+                    {"{C:inactive}Each {C:red}Poise{} crit charges the {C:attention}Dihui Star's Blade{}",
+                    "{C:inactive}by {C:attention}2-5{} - {C:attention}#2#{} held. At {C:attention}50{} the card",
+                    "{C:inactive}offers {C:attention}Use{} to halve what this encounter asks for{}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Ryoshu Keypage{}',
@@ -2131,6 +2134,9 @@ return {
                     "chance becomes guaranteed",
                     "Ren dies after triggering this effect 5 times",
                     "{C:inactive}(Total triggers: {C:red}#1#{C:inactive})"},
+                    {"{C:inactive}Each {C:red}Poise{} crit charges the {C:attention}Moonlit Azure Blade{}",
+                    "{C:inactive}by {C:attention}1-3{} - {C:attention}#4#{} held. At {C:attention}20{} the card",
+                    "{C:inactive}offers {C:attention}Use{} for {C:attention}+1 Hand{} this encounter{}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Shiomi Yoru Keypage{}'
@@ -3286,7 +3292,10 @@ pmcmod_sinWrath_burn="Wrath: Burn",
 pmcmod_sinWrath_spread="Wrath: Spread",
 pmcmod_valencinaDestroyed="Destroyed",
 pmcmod_valencinaTremor="Tremor Bonus",
-pmcmod_valencinaSave="Survived"
+pmcmod_valencinaSave="Survived",
+pmcmod_use="Use",
+pmcmod_yoruUsed="Star's Blade",
+pmcmod_renUsed="Azure Blade"
         },
         high_scores={},
         labels={

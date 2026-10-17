@@ -3,7 +3,7 @@ SMODS.Joker {
 	no_pool_flag = 'shiomiYoru_extinct',
 	name = "Shiomi Yoru",
 	pronouns = "she_her",
-	config = { extra = {renDeathCounter = 0, renPos = nil } },
+	config = { extra = { blade = 0 } },
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,
@@ -18,7 +18,7 @@ SMODS.Joker {
 		["Pinky"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = { PMCMOD.pair_trigger_display(card) } }
+        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.blade or 0 } }
 	end,
 	calculate = function(self, card, context)
 		-- the pairing is locked in at the start of the Scene and held for it
@@ -58,11 +58,19 @@ SMODS.Joker {
 			
 		end
 
-		-- the per-card raise and kill moved to the encounter start, matching Valencina
+		-- every poise crit charges her Blade
+		if context.individual and context.cardarea == G.play and context.other_card.poise_trigger
+			and not context.blueprint then
+			card.ability.extra.blade = (card.ability.extra.blade or 0)
+				+ pseudorandom('pmcmod_dihuiBlade', 2, 5)
+		end
     end,
 	add_to_deck = function(self, card, from_debuff)
 		-- obtainable once, like the mod's other unique Keypages
 		if G.GAME then G.GAME.pool_flags.shiomiYoru_extinct = true end
+	end,
+	update = function(self, card, dt)
+		PMCMOD.update_use_button(card, (card.ability.extra.blade or 0) >= 50, 'pmcmod_yoru_blade')
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )

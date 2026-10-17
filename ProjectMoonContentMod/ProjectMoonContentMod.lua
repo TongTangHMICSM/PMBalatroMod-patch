@@ -427,6 +427,53 @@ function PMCMOD.install_sell_reporter()
     end
 end
 
+-- A small Use button drawn on a Keypage, shown only while its Blade is charged. Created from the
+-- card's update, removed when the charge is spent, so there is never more than one.
+function PMCMOD.update_use_button(card, charged, handler)
+    if charged and not card.children.pmcmod_use then
+        card.children.pmcmod_use = UIBox{
+            definition = { n = G.UIT.ROOT, config = { align = 'cm', colour = G.C.CLEAR }, nodes = {
+                { n = G.UIT.C, config = { align = 'cm', padding = 0.04, r = 0.1, colour = G.C.RED,
+                    button = handler, hover = true, shadow = true }, nodes = {
+                    { n = G.UIT.T, config = { text = localize('pmcmod_use'), scale = 0.28, colour = G.C.WHITE } },
+                } },
+            } },
+            config = { align = 'bm', offset = { x = 0, y = 0.08 }, parent = card },
+        }
+    elseif not charged and card.children.pmcmod_use then
+        card.children.pmcmod_use:remove()
+        card.children.pmcmod_use = nil
+    end
+end
+
+-- Yoru: 50 Blade halves what this encounter asks for.
+G.FUNCS.pmcmod_yoru_blade = function(e)
+    local found = SMODS.find_card('j_pmcmod_shiomiYoru')
+    local card = found and found[1]
+    if not (card and card.ability and card.ability.extra) then return end
+    local ex = card.ability.extra
+    if (ex.blade or 0) < 50 or not (G.GAME.blind and G.GAME.blind.chips) then return end
+    ex.blade = ex.blade - 50
+    G.GAME.blind.chips = math.max(1, math.floor(G.GAME.blind.chips / 2))
+    card_eval_status_text(card, 'extra', nil, nil, nil, {
+        message = localize('pmcmod_yoruUsed'), colour = G.C.RED,
+    })
+end
+
+-- Ren: 20 Blade buys one more hand this encounter.
+G.FUNCS.pmcmod_ren_blade = function(e)
+    local found = SMODS.find_card('j_pmcmod_ren')
+    local card = found and found[1]
+    if not (card and card.ability and card.ability.extra) then return end
+    local ex = card.ability.extra
+    if (ex.blade or 0) < 20 then return end
+    ex.blade = ex.blade - 20
+    G.GAME.round_resets.hands = G.GAME.round_resets.hands + 1
+    card_eval_status_text(card, 'extra', nil, nil, nil, {
+        message = localize('pmcmod_renUsed'), colour = G.C.BLUE,
+    })
+end
+
 -- Mr. Bones' save, for Valencina: once per run she survives a lost encounter. The engine decides
 -- that in G.FUNCS.evaluate_round rather than in a joker's calculate, so the score is topped up to the
 -- requirement just before the original runs. Strictly stronger than Mr. Bones: the encounter is
