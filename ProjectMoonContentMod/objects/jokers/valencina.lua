@@ -51,7 +51,12 @@ SMODS.Joker {
 			and (G.GAME.pmcmod_discardSize or 0) == 1
 			and ex.lastDiscardId ~= (G.GAME.pmcmod_discardId or 0) then
 			ex.lastDiscardId = G.GAME.pmcmod_discardId
-			SMODS.destroy_cards(context.other_card)
+			-- deferred: the discard loop is still iterating this card
+			local victim = context.other_card
+			G.E_MANAGER:add_event(Event({ trigger = 'immediate', func = function()
+				SMODS.destroy_cards(victim)
+				return true
+			end }))
 			ex.discardXchips = 2
 			ex.destroyedHere = (ex.destroyedHere or 0) + 1
 			G.GAME.pmcmod_valencina_destroyed = (G.GAME.pmcmod_valencina_destroyed or 0) + 1

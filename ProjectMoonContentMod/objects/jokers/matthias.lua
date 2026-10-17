@@ -46,7 +46,12 @@ SMODS.Joker {
 			and ex.laevateinn <= 0 then
 			if SMODS.pseudorandom_probability(card, 'matthias_seal', 1, 5, 'matthias_seal') then
 				if SMODS.has_enhancement(context.other_card, 'm_pmcmod_burn') then
-					SMODS.destroy_cards(context.other_card)
+					-- deferred: the scoring pass is still iterating this card
+					local doomed = context.other_card
+					G.E_MANAGER:add_event(Event({ trigger = 'immediate', func = function()
+						SMODS.destroy_cards(doomed)
+						return true
+					end }))
 				else
 					context.other_card:set_ability('m_pmcmod_burn', nil, true)
 				end
@@ -91,7 +96,11 @@ SMODS.Joker {
 						ex.laevateinn = math.max(0, ex.laevateinn - 1)
 						ex.brokeHand = handKey
 						ex.tollWipe = true
-						SMODS.destroy_cards(scored)
+						-- deferred: the scoring pass is still iterating these cards
+						G.E_MANAGER:add_event(Event({ trigger = 'immediate', func = function()
+							SMODS.destroy_cards(scored)
+							return true
+						end }))
 						ease_dollars(20)
 						took = true
 					elseif not ex.tollKeypage then
