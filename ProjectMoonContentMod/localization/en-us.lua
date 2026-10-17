@@ -3293,6 +3293,7 @@ pmcmod_valencinaRead="I'm reading you like an open book.",
 pmcmod_valencinaHate="Yeah, I hate you all! The damn Famiglia, you, and Ticket, too!",
 pmcmod_valencinaOverheat="Overheated",
 pmcmod_valencinaCool="Cooled",
+pmcmod_valencinaBonus="Read",
 pmcmod_use="Use",
 pmcmod_yoruUsed="Star's Blade",
 pmcmod_renUsed="Azure Blade"

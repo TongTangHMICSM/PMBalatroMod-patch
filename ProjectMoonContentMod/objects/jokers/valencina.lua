@@ -84,6 +84,9 @@ SMODS.Joker {
 				if bonus and context.other_card == scored[1] then
 					-- free, and only while the pairing holds
 					context.other_card:set_ability('m_pmcmod_tremor', nil, true)
+					card_eval_status_text(card, 'extra', nil, nil, nil, {
+						message = localize('pmcmod_valencinaBonus'), colour = G.C.BLUE,
+					})
 				end
 			end
 		end
