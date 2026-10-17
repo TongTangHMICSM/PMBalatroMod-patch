@@ -80,37 +80,30 @@ SMODS.Joker {
 					ease_dollars(-ex.price, true)
 					ex.price = ex.price + 1
 				else
-					-- The price outruns the purse, so the buy is refused and the seal takes a
-					-- counter instead, once per hand. The tolls have a preferred order - the
-					-- scored hand, then a random non-Eternal Keypage, then Kira - but the order
-					-- is swappable: the seal takes the first toll it can actually collect right
-					-- now, a toll it cannot collect stays pending for a later hand, and once
-					-- nothing is left to collect the seal burns out into the spreading seal.
+					-- The price outruns the purse, so the buy is refused and the seal takes its toll
+					-- instead, once per hand. The tolls are strictly ordered - the scored hand, then a
+					-- random non-Eternal Keypage, then Kira - and each is collected at most once. A toll
+					-- that cannot be collected right now waits for a later hand; a later toll never
+					-- jumps the queue.
 					local took = false
 					if not ex.tollWipe then
-						-- the scored hand is always collectable, so it is always the first toll
 						ex.laevateinn = math.max(0, ex.laevateinn - 1)
 						ex.brokeHand = handKey
 						ex.tollWipe = true
 						SMODS.destroy_cards(scored)
 						ease_dollars(20)
 						took = true
-					else
+					elseif not ex.tollKeypage then
 						local pool = {}
-						local kiraInPlay = nil
 						local jokers = G.jokers.cards or {}
 						for i = 1, #jokers do
 							local other = jokers[i]
-							local otherKey = PMCMOD.bare_key(other.config.center.key)
-							if otherKey == 'kira' then
-								kiraInPlay = other
-							elseif other ~= card
+							if other ~= card and PMCMOD.bare_key(other.config.center.key) ~= 'kira'
 								and not SMODS.is_eternal(other, { destroy_cards = true }) then
 								pool[#pool + 1] = other
 							end
 						end
-						if not ex.tollKeypage and #pool > 0 then
-							-- a Keypage exists: it is preferred, so it is the next toll
+						if #pool > 0 then
 							local target = pseudorandom_element(pool, pseudoseed('pmcmod_laevateinn'))
 							ex.laevateinn = math.max(0, ex.laevateinn - 1)
 							ex.brokeHand = handKey
@@ -122,8 +115,16 @@ SMODS.Joker {
 								target:start_dissolve({G.C.RED}, nil, 1.6)
 								return true end }))
 							took = true
-						elseif not ex.tollKira and kiraInPlay then
-							-- no Keypage to take right now: Kira swaps ahead of it
+						end
+					elseif not ex.tollKira then
+						local kiraInPlay = nil
+						local jokers = G.jokers.cards or {}
+						for i = 1, #jokers do
+							if PMCMOD.bare_key(jokers[i].config.center.key) == 'kira' then
+								kiraInPlay = jokers[i]
+							end
+						end
+						if kiraInPlay then
 							ex.laevateinn = math.max(0, ex.laevateinn - 1)
 							ex.brokeHand = handKey
 							ex.tollKira = true
@@ -135,18 +136,9 @@ SMODS.Joker {
 								kiraInPlay:start_dissolve({G.C.RED}, nil, 1.6)
 								return true end }))
 							took = true
-						else
-							-- nothing was collectable: tolls that can still be collected (a future
-							-- Keypage, an unbanned Kira) stay pending, but once the only things left
-							-- are impossible the seal burns out
-							local kiraBanned = (G.GAME.banned_keys or {})['j_pmcmod_kira']
-							if ex.tollKeypage and (ex.tollKira or kiraBanned) then
-								ex.laevateinn = 0
-								ex.brokeHand = handKey
-							end
 						end
 					end
-if took then
+					if took then
 						card_eval_status_text(card, 'extra', nil, nil, nil, {
 							message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
 						})

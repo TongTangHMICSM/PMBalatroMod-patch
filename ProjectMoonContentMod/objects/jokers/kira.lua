@@ -56,10 +56,23 @@ SMODS.Joker {
 
 		if context.after and not card.ability.extra.banned and PMCMOD.pair_triggers(card) >= 3 then
 			card.ability.extra.banned = true
-			-- Dying this way bans her from the pool, the same as Matthias's seal taking her,
-			-- but it no longer spends a Laevateinn counter: his tolls are swappable, so a dead
-			-- Kira just makes her toll uncollectable and the seal takes something else.
+			-- Dying this way bans her from the pool, the same as Matthias's seal taking her, and a
+			-- ban of any kind counts as his Kira toll: it triggers the unseal, so it spends a
+			-- counter and marks that toll collected.
 			G.GAME.banned_keys['j_pmcmod_kira'] = true
+			local matthias = SMODS.find_card('j_pmcmod_matthias')
+			if matthias and #matthias > 0 then
+				local his = matthias[1].ability and matthias[1].ability.extra
+				if type(his) == 'table' then
+					his.tollKira = true
+					if type(his.laevateinn) == 'number' then
+						his.laevateinn = math.max(0, his.laevateinn - 1)
+					end
+					card_eval_status_text(matthias[1], 'extra', nil, nil, nil, {
+						message = localize('pmcmod_laevateinnSpent'), colour = G.C.RED,
+					})
+				end
+			end
 			card.getting_sliced = true
 			G.E_MANAGER:add_event(Event({func = function()
 				card:start_dissolve({G.C.RED}, nil, 1.6)
