@@ -20,7 +20,7 @@ SMODS.Joker {
 		["Thumb"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = { PMCMOD.pair_trigger_display(card) } }
+        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.destroyedHere or 0 } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
@@ -48,7 +48,9 @@ SMODS.Joker {
 		-- A discard of exactly one card destroys it: Trading Card's rule without the first-discard
 		-- limit. The size comes from PMCMOD.install_discard_reporter.
 		if context.discard and not context.blueprint and context.other_card
-			and (G.GAME.pmcmod_discardSize or 0) == 1 then
+			and (G.GAME.pmcmod_discardSize or 0) == 1
+			and ex.lastDiscardId ~= (G.GAME.pmcmod_discardId or 0) then
+			ex.lastDiscardId = G.GAME.pmcmod_discardId
 			SMODS.destroy_cards(context.other_card)
 			ex.discardXchips = 2
 			ex.destroyedHere = (ex.destroyedHere or 0) + 1

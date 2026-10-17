@@ -1981,7 +1981,7 @@ return {
                     {"{C:inactive}Each change can also grant the new Tremor card{}",
                     "{C:inactive}0.001% of the Encounter per Burn Card, at a{}",
                     "{C:inactive}chance equal to this encounter's destroyed count in 10{}"},
-                    {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
+                    {"{C:inactive}(Count: {C:red}#1#{}  {C:inactive}Destroyed this encounter: {C:red}#2#{}){}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Ryoshu Keypage{}',
@@ -2065,7 +2065,7 @@ return {
                     "He dies and is banned once the count reaches {C:attention}3{}"},
                     {"Winning an encounter: {X:mult,C:white}+0.1X{} Mult per card she has",
                     "destroyed; at {X:mult,C:white}X3{} he also gives {C:chips}X2{} Chips"},
-                    {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
+                    {"{C:inactive}(Count: {C:red}#1#{}  {C:inactive}XMult {X:mult,C:white}#4#{}{}  {C:inactive}X2 Chips {C:attention}#5#{}){}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Valencina Keypage{}'

@@ -19,7 +19,7 @@ SMODS.Joker {
 		["Thumb"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.dollars, card.ability.extra.bonusDollars} }
+        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.dollars, card.ability.extra.bonusDollars, card.ability.extra.xmultGain or 1, card.ability.extra.chipBonus } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra

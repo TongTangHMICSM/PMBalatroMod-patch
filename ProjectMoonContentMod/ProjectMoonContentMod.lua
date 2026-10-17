@@ -464,7 +464,13 @@ function PMCMOD.install_discard_reporter()
     local original = G.FUNCS.discard_cards_from_highlighted
     PMCMOD._discard_reporter = original
     G.FUNCS.discard_cards_from_highlighted = function(e, hook)
-        G.GAME.pmcmod_discardSize = #(((G.hand or {}).highlighted) or {})
+        -- measured the way the game itself measures it (state_events.lua:389), including the
+        -- discard's own card_limit clamp
+        local highlighted = ((G.hand or {}).highlighted) or {}
+        local limit = (G.discard and G.discard.config and G.discard.config.card_limit) or 99
+        local play = (G.play and #G.play.cards) or 0
+        G.GAME.pmcmod_discardSize = math.min(#highlighted, limit - play)
+        G.GAME.pmcmod_discardId = (G.GAME.pmcmod_discardId or 0) + 1
         return original(e, hook)
     end
 end
