@@ -27,7 +27,9 @@ SMODS.Enhancement {
             end
 
         --if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_pmcmod_bleed') then
-            card.ability.perma_mult = (card.ability.perma_mult or 0) + (bleedCounting * (1 + tremorCounting))
+            -- ability.mult is what Card:get_chip_mult reads; perma_mult is never applied to a
+            -- playing card, so the old field silently did nothing
+            card.ability.mult = (card.ability.mult or 0) + (bleedCounting * (1 + tremorCounting))
 
             return {
                 message = localize('k_upgrade_ex'),
@@ -49,7 +51,7 @@ SMODS.Enhancement {
           text_width = 15,
           text_height = 10,
           ref_table = card.ability,
-          ref_value = "perma_mult",
+          ref_value = "mult",
           text = "?"
         }
         return true
