@@ -26,6 +26,10 @@ SMODS.Joker {
 		-- the pairing is locked in at the start of the Scene and held for it
 		if context.setting_blind and not context.blueprint then
 			card.ability.extra.shiomiPresent = PMCMOD.pair_linked(card)
+			-- one step per encounter while linked
+			if card.ability.extra.shiomiPresent then
+				PMCMOD.add_pair_trigger(card, 1)
+			end
 		end
 		if context.before then
 			for i = 1, #G.jokers.cards do
@@ -49,7 +53,6 @@ SMODS.Joker {
 			elseif card.ability.extra.shiomiPresent then
 				context.other_card:set_ability("m_pmcmod_poise", nil, true)
 				gavePoise = true
-				if not context.blueprint then PMCMOD.add_pair_trigger(card, 1) end
 			else
 				if SMODS.pseudorandom_probability(card, 'ren', card.ability.extra.baseChance, card.ability.extra.maxChance, 'ren') then
 					context.other_card:set_ability("m_pmcmod_poise", nil, true)
