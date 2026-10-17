@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'heathcliff',
+	no_pool_flag = 'heathcliff_extinct',
 	name = "Heathcliff",
 	pronouns = "he_him",
 	config = { extra = { cardsDestroyed = 0, joker_slots = 0, extraJokerSlot = 1 } },
@@ -57,6 +58,10 @@ SMODS.Joker {
 	end,
 	remove_from_deck = function(self, card, from_debuff)
 		G.jokers:change_size(-card.ability.extra.joker_slots)
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: its shop weight scales with the other, so copies would compound
+		if G.GAME then G.GAME.pool_flags.heathcliff_extinct = true end
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_limbus'), HEX('63160e'), HEX('eba313'), 1.2 )

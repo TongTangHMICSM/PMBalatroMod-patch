@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'catherine',
+	no_pool_flag = 'catherine_extinct',
 	name = "Catherine",
 	pronouns = "she_her",
 	config = {},
@@ -53,6 +54,10 @@ SMODS.Joker {
     end,
 	get_weight = function(self, weight)
     	return PMCMOD.bonus_weight(weight, (#SMODS.find_card('j_pmcmod_heathcliff') + #SMODS.find_card('j_hit_the_road'))*G.GAME.round_resets.ante * 2)
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: its shop weight scales with the other, so copies would compound
+		if G.GAME then G.GAME.pool_flags.catherine_extinct = true end
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_wuthering'), HEX('3d2920'), HEX('998277'), 1.2 )
