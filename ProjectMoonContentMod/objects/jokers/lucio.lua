@@ -19,7 +19,7 @@ SMODS.Joker {
 		["Thumb"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        local destroyed = (G.GAME and G.GAME.pmcmod_valencina_destroyed) or 0
+        local destroyed = (G.GAME and G.GAME.pmcmod_cards_destroyed) or 0
         return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.dollars,
             card.ability.extra.bonusDollars, 1 + 0.2 * destroyed } }
 	end,
@@ -62,7 +62,7 @@ SMODS.Joker {
 
 		-- XMult grows with every card she has destroyed, for the rest of the run
 		if context.joker_main and not context.blueprint then
-			local destroyed = G.GAME.pmcmod_valencina_destroyed or 0
+			local destroyed = G.GAME.pmcmod_cards_destroyed or 0
 			local xm = 1 + 0.2 * destroyed
 			local ret = {}
 			if xm > 1 then ret.xmult = xm end

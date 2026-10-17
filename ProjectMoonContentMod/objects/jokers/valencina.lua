@@ -102,7 +102,6 @@ SMODS.Joker {
 				SMODS.destroy_cards(victim)
 				return true
 			end }))
-			G.GAME.pmcmod_valencina_destroyed = (G.GAME.pmcmod_valencina_destroyed or 0) + 1
 			card_eval_status_text(card, 'extra', nil, nil, nil, {
 				message = localize('pmcmod_valencinaDestroyed'), colour = G.C.RED,
 			})

@@ -521,11 +521,32 @@ end
 
 -- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
 -- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
+-- Every destroyed playing card, counted once, whatever destroyed it. Lucio's XMult reads this; the
+-- counter Valencina used to keep herself was removed so her own destroys are not double counted.
+function PMCMOD.install_destroy_counter()
+    if PMCMOD._destroy_counter or not (SMODS and SMODS.destroy_cards) then return end
+    local original = SMODS.destroy_cards
+    PMCMOD._destroy_counter = original
+    SMODS.destroy_cards = function(cards, ...)
+        local list = cards
+        if list and not list[1] and list.ability then list = { list } end
+        local n = 0
+        for _, c in ipairs(list or {}) do
+            if c and c.playing_card then n = n + 1 end
+        end
+        if n > 0 and G.GAME then
+            G.GAME.pmcmod_cards_destroyed = (G.GAME.pmcmod_cards_destroyed or 0) + n
+        end
+        return original(cards, ...)
+    end
+end
+
 -- Tremor adds to a Gold Card's round-end money. The cash-out pass (state_events.lua:221) pays
 -- effects[ii].h_dollars, and those come from this per-card getter, so the getter is wrapped additively
 -- and the vanilla payout still happens exactly once. If the method is named differently in this build
 -- the installer does nothing.
 function PMCMOD.install_gold_tremor()
+PMCMOD.install_destroy_counter()
     if PMCMOD._gold_tremor or not (Card and Card.get_end_of_round_effect) then return end
     local original = Card.get_end_of_round_effect
     PMCMOD._gold_tremor = original

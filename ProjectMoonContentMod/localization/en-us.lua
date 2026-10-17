@@ -2066,7 +2066,7 @@ return {
                 text = {
                     {"Scored {C:red}Tremor{} cards give {C:gold}$#2#{}, or {C:gold}$#3#{} with",
                     "{C:attention}Valencina{} exactly to his left"},
-                    {"{X:mult,C:white}X0.2{} Mult per card she has destroyed, for the run",
+                    {"{X:mult,C:white}X0.2{} Mult for every card destroyed, for the run",
                     "({X:mult,C:white}X#4#{} now). At {X:mult,C:white}X3{} he also gives",
                     "{C:chips}X2{} Chips"},
                     {"{C:inactive}(Count: {C:red}#1#{} of {C:attention}5{}: then he dies and is banned){}"},
