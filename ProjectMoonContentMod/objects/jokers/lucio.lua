@@ -32,7 +32,7 @@ SMODS.Joker {
 			if ex.valencinaPresent then
 				PMCMOD.add_pair_trigger(card, 1)
 			end
-			if PMCMOD.pair_triggers(card) >= 3 and not card.ability.extra.banned then
+			if PMCMOD.pair_triggers(card) >= 5 and not card.ability.extra.banned then
 				card.ability.extra.banned = true
 				G.GAME.banned_keys['j_pmcmod_lucio'] = true
 				local valencina = SMODS.find_card('j_pmcmod_valencina')

@@ -2064,7 +2064,7 @@ return {
                     {"{X:mult,C:white}X0.2{} Mult per card she has destroyed, for the run",
                     "({X:mult,C:white}X#4#{} now). At {X:mult,C:white}X3{} he also gives",
                     "{C:chips}X2{} Chips"},
-                    {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
+                    {"{C:inactive}(Count: {C:red}#1#{} of {C:attention}5{}: then he dies and is banned){}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Valencina Keypage{}'

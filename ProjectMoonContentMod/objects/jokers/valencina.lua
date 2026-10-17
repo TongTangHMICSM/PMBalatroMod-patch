@@ -62,8 +62,8 @@ SMODS.Joker {
 			end
 		end
 
-		-- the pairing's bonus needs Lucio to her right and five counters
-		local bonus = ex.lucioPresent and PMCMOD.pair_triggers(card) >= 5
+		-- the pairing's bonus needs only Lucio exactly to her right
+		local bonus = ex.lucioPresent
 
 		-- ------------------------------------------------------------------ scoring more than two
 		if context.individual and context.cardarea == G.play and not context.blueprint then
