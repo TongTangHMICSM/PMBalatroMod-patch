@@ -31,14 +31,25 @@ SMODS.Joker {
 		if context.setting_blind and not context.blueprint then
 			ex.lucioPresent = PMCMOD.pair_linked(card)
 
-			if not ex.overheated and (ex.precognition or 0) > 10
-				and G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
-				-- read the boss open
-				ex.precognition = ex.precognition - 10
-				G.GAME.blind:disable()
-				card_eval_status_text(card, 'extra', nil, nil, nil, {
-					message = localize('pmcmod_valencinaRead'), colour = G.C.BLUE,
-				})
+			if not ex.overheated and G.GAME.blind and G.GAME.blind.boss
+				and not G.GAME.blind.disabled then
+				if (ex.precognition or 0) > 10 then
+					-- read the boss open entirely
+					ex.precognition = ex.precognition - 10
+					G.GAME.blind:disable()
+					card_eval_status_text(card, 'extra', nil, nil, nil, {
+						message = localize('pmcmod_valencinaRead'), colour = G.C.BLUE,
+					})
+				elseif (ex.precognition or 0) > 0 then
+					-- not enough to read it outright: spend what is left, 5% off per stack
+					local spend = math.min(10, ex.precognition)
+					ex.precognition = ex.precognition - spend
+					G.GAME.blind.chips = math.max(1,
+						math.floor(G.GAME.blind.chips * (1 - spend * 0.05)))
+					card_eval_status_text(card, 'extra', nil, nil, nil, {
+						message = localize('pmcmod_valencinaRead'), colour = G.C.BLUE,
+					})
+				end
 			end
 
 			if ex.overheated and (ex.overheat or 0) > 0
