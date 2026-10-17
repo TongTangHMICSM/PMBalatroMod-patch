@@ -64,8 +64,10 @@ SMODS.Enhancement {
                 card.ability.counter = card.ability.counter + (1 * (1 + tremorCounting))
             end
 
-            if SMODS.pseudorandom_probability(card, 'poise', card.ability.counter, card.ability.maxChance, 'poise') then
-                ret.xmult = card.ability.extra.xmult
+            ensure_ability(card)
+            if SMODS.pseudorandom_probability(card, 'poise', card.ability.counter,
+                card.ability.maxChance or 10, 'poise') then
+                ret.xmult = (card.ability.extra and card.ability.extra.xmult) or 2
                 card.poise_trigger = true
                 -- halve on a trigger rather than dropping back to 1
                 card.ability.counter = math.max(1, math.floor(card.ability.counter / 2))
