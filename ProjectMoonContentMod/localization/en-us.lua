@@ -1968,12 +1968,12 @@ return {
             j_pmcmod_valencina = {
                 name = 'Valencina',
                 text = {
-                    {"When hand is played, if it has more than 2 scored cards,",
-                    "turn the last card into a {C:gold}Tremor{} card"},
-                    {"{C:attention}Bonus effect: {}If Lucio is present and to the right, also",
-                    "changes the first card into {C:gold}Tremor{}",
-                    "Lucio dies after this effect triggers 5 times",
-                    "{C:inactive}(Total triggers: {C:red}#1#{C:inactive})"},
+                    {"Changes the {C:attention}last{} scored card of a hand of 2 or more",
+                    "into a {C:red}Tremor{} card"},
+                    {"{C:attention}Lucio{} exactly to her right also counts each change;",
+                    "at {C:attention}5{} he dies and is banned from the pool, and she",
+                    "keeps {X:mult,C:white}X3{} Mult from then on"},
+                    {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Ryoshu Keypage{}',
@@ -2052,11 +2052,12 @@ return {
             j_pmcmod_lucio = {
                 name = 'Lucio',
                 text = {
-                    {"Scored Tremor cards give {C:gold}$#2#{}"},
-                    {"{C:attention}Bonus effect: {}If Valencina is exactly to the left,",
-                    "Tremor cards now give {C:gold}$#3#{}",
-                    "Lucio dies after triggering 3 Tremor cards",
-                    "{C:inactive}(Total triggers: {C:red}#1#{C:inactive})"},
+                    {"Gives {C:gold}$#2#{} per scored {C:red}Tremor{} card"},
+                    {"{C:attention}Valencina{} exactly to his left gives {C:gold}$#3#{} instead.",
+                    "He dies and is banned once the count reaches {C:attention}3{}"},
+                    {"Winning an encounter: {X:mult,C:white}+0.1X{} Mult per card she has",
+                    "destroyed; at {X:mult,C:white}X3{} he also gives {C:chips}X2{} Chips"},
+                    {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Valencina Keypage{}'
