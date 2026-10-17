@@ -496,6 +496,7 @@ end
 -- requirement just before the original runs. Strictly stronger than Mr. Bones: the encounter is
 -- credited rather than merely survived.
 function PMCMOD.install_death_saver()
+PMCMOD.install_lucky_tremor()
     if PMCMOD._death_saver or not (G and G.FUNCS and G.FUNCS.evaluate_round) then return end
     local original = G.FUNCS.evaluate_round
     PMCMOD._death_saver = original
@@ -521,6 +522,29 @@ end
 
 -- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
 -- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
+-- Tremor raises a Lucky Card's odds. Card:get_chip_mult is a small pure getter (card.lua:984) and
+-- the whole Lucky roll is inside it, so it is replaced rather than patched around; every other card
+-- delegates to the original.
+function PMCMOD.install_lucky_tremor()
+    if PMCMOD._lucky_tremor or not (Card and Card.get_chip_mult) then return end
+    local original = Card.get_chip_mult
+    PMCMOD._lucky_tremor = original
+    function Card:get_chip_mult()
+        local tremor = 0
+        if self.ability and self.ability.effect == "Lucky Card" and not self.debuff
+            and self.ability.set ~= 'Joker' then
+            tremor = PMCMOD.tremor_count()
+        end
+        if tremor <= 0 then return original(self) end
+        local normal = (G.GAME and G.GAME.probabilities and G.GAME.probabilities.normal) or 1
+        if pseudorandom('lucky_mult') < normal * (1 / 5 + 0.2 * tremor) then
+            self.lucky_trigger = true
+            return self.ability.mult
+        end
+        return 0
+    end
+end
+
 function PMCMOD.install_discard_reporter()
     if PMCMOD._discard_reporter or not (G and G.FUNCS and G.FUNCS.discard_cards_from_highlighted) then
         return
