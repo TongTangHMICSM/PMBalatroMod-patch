@@ -433,12 +433,13 @@ function PMCMOD.update_use_button(card, charged, handler)
     if charged and not card.children.pmcmod_use then
         card.children.pmcmod_use = UIBox{
             definition = { n = G.UIT.ROOT, config = { align = 'cm', colour = G.C.CLEAR }, nodes = {
-                { n = G.UIT.C, config = { align = 'cm', padding = 0.04, r = 0.1, colour = G.C.RED,
+                { n = G.UIT.C, config = { align = 'cm', padding = 0.06, r = 0.2, colour = G.C.BLUE,
                     button = handler, hover = true, shadow = true }, nodes = {
-                    { n = G.UIT.T, config = { text = localize('pmcmod_use'), scale = 0.28, colour = G.C.WHITE } },
+                    { n = G.UIT.T, config = { text = localize('pmcmod_use'), scale = 0.5,
+                        colour = G.C.WHITE, shadow = true } },
                 } },
             } },
-            config = { align = 'bm', offset = { x = 0, y = 0.08 }, parent = card },
+            config = { align = 'bm', offset = { x = 0, y = 0.1 }, parent = card },
         }
     elseif not charged and card.children.pmcmod_use then
         card.children.pmcmod_use:remove()
@@ -452,7 +453,9 @@ G.FUNCS.pmcmod_yoru_blade = function(e)
     local card = found and found[1]
     if not (card and card.ability and card.ability.extra) then return end
     local ex = card.ability.extra
-    if (ex.blade or 0) < 50 or not (G.GAME.blind and G.GAME.blind.chips) then return end
+    -- only during an encounter
+    if not (G.GAME.blind and G.GAME.blind.chips and G.GAME.blind.in_blind) then return end
+    if (ex.blade or 0) < 50 then return end
     ex.blade = ex.blade - 50
     G.GAME.blind.chips = math.max(1, math.floor(G.GAME.blind.chips / 2))
     card_eval_status_text(card, 'extra', nil, nil, nil, {
@@ -466,9 +469,13 @@ G.FUNCS.pmcmod_ren_blade = function(e)
     local card = found and found[1]
     if not (card and card.ability and card.ability.extra) then return end
     local ex = card.ability.extra
+    -- only during an encounter
+    if not (G.GAME.blind and G.GAME.blind.in_blind) then return end
     if (ex.blade or 0) < 20 then return end
     ex.blade = ex.blade - 20
-    G.GAME.round_resets.hands = G.GAME.round_resets.hands + 1
+    -- round_resets.hands is only read when a round starts, and ease_hands_played consumes a hand
+    -- rather than granting one, so the live counter is raised directly
+    G.GAME.current_round.hands_left = (G.GAME.current_round.hands_left or 0) + 1
     card_eval_status_text(card, 'extra', nil, nil, nil, {
         message = localize('pmcmod_renUsed'), colour = G.C.BLUE,
     })

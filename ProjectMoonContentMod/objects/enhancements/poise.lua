@@ -85,9 +85,11 @@ SMODS.Enhancement {
                     G.GAME.pmcmod_poise_stack = math.max(1, math.floor(shared(0) / 2))
                 end
 
+                -- played here rather than from a queued event: the mod's other sounds are all
+                -- triggered inline, and a sound queued mid-scoring can be dropped
+                play_sound('pmcmod_poiseTrigger', 1.0, 0.9)
                 G.E_MANAGER:add_event(Event {
                 func = function()
-                    play_sound('pmcmod_poiseTrigger', 0.9, 0.9)
                     card.poise_trigger = false
                     return true
                 end
