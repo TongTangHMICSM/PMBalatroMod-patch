@@ -198,8 +198,13 @@ return {
             m_pmcmod_tremor = {
                 name = "Tremor Card",
                 text = {
-                    "Enhance the effects of select Enhancements",
-                    "when scored together",
+                    "Passively amplifies every other enhanced card, once",
+                    "for each {C:attention}Tremor{} card in the deck:",
+                    "{C:inactive}Endurance {C:chips}+5{}, Strength {C:mult}+1{}, Stone {C:chips}+10{},",
+                    "{C:inactive}Steel {X:mult,C:white}+0.1X{}, Bleed {C:mult}+1{} Mult,",
+                    "{C:inactive}Rupture {C:attention}+0.1{}, Sinking {C:attention}+1%{},",
+                    "{C:inactive}Burn {C:attention}x1{}, Poise and Lucky {C:green}+0.2{} odds,",
+                    "{C:inactive}Gold {C:gold}+$1{}",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Sloth Seal{} ({C:green}1 in 10{})"
                 },
