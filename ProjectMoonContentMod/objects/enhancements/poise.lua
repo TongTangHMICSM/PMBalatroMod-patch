@@ -13,6 +13,16 @@ local function ensure_ability(card)
     end
 end
 
+-- One stack for the whole board, not one per card.
+local function shared(delta)
+    if not G.GAME then return 0 end
+    G.GAME.pmcmod_poise_stack = G.GAME.pmcmod_poise_stack or 0
+    if delta then
+        G.GAME.pmcmod_poise_stack = math.max(0, G.GAME.pmcmod_poise_stack + delta)
+    end
+    return G.GAME.pmcmod_poise_stack
+end
+
 SMODS.Enhancement {
     key = "poise",
     atlas = "ModdedProjectMoonEditions",
@@ -20,17 +30,13 @@ SMODS.Enhancement {
     config = { counter = 0, baseChance = 1, maxChance = 10, maxChanceShiomi = 2, extra = {xmult = 2}},
     loc_vars = function(self, info_queue, card)
         
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, card.ability.counter, card.ability.maxChance, 'poise')
+        local stack = shared(0)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, stack, card.ability.maxChance or 10, 'poise')
         local new_numeratorShiomi, new_denominatorShiomi = SMODS.get_probability_vars(card, card.ability.baseChance, card.ability.maxChanceShiomi, 'shiomi')
-        return {vars = { card.ability.extra.xmult, card.ability.counter, new_numerator, new_denominator, new_numeratorShiomi, new_denominatorShiomi } }
+        return {vars = { (card.ability.extra and card.ability.extra.xmult) or 2, stack, new_numerator, new_denominator, new_numeratorShiomi, new_denominatorShiomi } }
     end,
     calculate = function(self, card, context)
         ensure_ability(card)
-        if not card.pmcmod_poise_probe then
-            card.pmcmod_poise_probe = true
-            print("[pmcmod poise] calculate ran; counter=" .. tostring(card.ability.counter)
-                .. " maxChance=" .. tostring(card.ability.maxChance))
-        end
 
         local tremorCounting = 0
 
@@ -61,25 +67,23 @@ SMODS.Enhancement {
 
             if shiomiPresent then
                 if renPresent then
-                    card.ability.counter = card.ability.counter + (3 * (1 + tremorCounting))
+                    shared(3 * (1 + tremorCounting))
                 else
-                    card.ability.counter = card.ability.counter + (2 * (1 + tremorCounting))
+                    shared(2 * (1 + tremorCounting))
                 end
             else
-                card.ability.counter = card.ability.counter + (1 * (1 + tremorCounting))
+                shared(1 * (1 + tremorCounting))
             end
 
             ensure_ability(card)
-            if not card.pmcmod_poise_probe2 then
-                card.pmcmod_poise_probe2 = true
-                print("[pmcmod poise] main_scoring reached; counter=" .. tostring(card.ability.counter))
-            end
-            if SMODS.pseudorandom_probability(card, 'poise', card.ability.counter,
+            if SMODS.pseudorandom_probability(card, 'poise', shared(0),
                 card.ability.maxChance or 10, 'poise') then
                 ret.xmult = (card.ability.extra and card.ability.extra.xmult) or 2
                 card.poise_trigger = true
-                -- halve on a trigger rather than dropping back to 1
-                card.ability.counter = math.max(1, math.floor(card.ability.counter / 2))
+                -- halve the shared stack on a trigger rather than resetting it
+                if G.GAME then
+                    G.GAME.pmcmod_poise_stack = math.max(1, math.floor(shared(0) / 2))
+                end
 
                 G.E_MANAGER:add_event(Event {
                 func = function()
@@ -111,8 +115,8 @@ SMODS.Enhancement {
           text_colour = G.C.UI.TEXT_DARK,
           text_width = 15,
           text_height = 10,
-          ref_table = card.ability,
-          ref_value = "counter",
+          ref_table = G.GAME,
+          ref_value = "pmcmod_poise_stack",
           text = "?"
         }
         return true
