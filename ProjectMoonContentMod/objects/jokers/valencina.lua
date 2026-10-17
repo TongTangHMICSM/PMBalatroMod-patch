@@ -3,7 +3,8 @@ SMODS.Joker {
 	no_pool_flag = 'valencina_extinct',
 	name = "Valencina",
 	pronouns = "she_her",
-	config = { extra = { currentPosition = 1, lucioDeathCounter = 0, lucioPresent = false, lucioPos = nil } },
+	config = { extra = { currentPosition = 1, lucioPresent = false, lucioGone = false,
+		deathXmult = false, discardXchips = 0, bonesUsed = false } },
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,
@@ -22,42 +23,54 @@ SMODS.Joker {
         return {vars = { PMCMOD.pair_trigger_display(card) } }
 	end,
 	calculate = function(self, card, context)
+		local ex = card.ability.extra
+
 		-- the pairing is locked in at the start of the Scene and held for it
 		if context.setting_blind and not context.blueprint then
-			card.ability.extra.lucioPresent = PMCMOD.pair_linked(card)
+			ex.lucioPresent = PMCMOD.pair_linked(card)
+			ex.discardXchips = 0
 		end
-
-		if context.before then
+		if context.before and not context.blueprint then
 			for i = 1, #G.jokers.cards do
 				if G.jokers.cards[i] == card then
-					card.ability.extra.currentPosition = i
+					ex.currentPosition = i
 					break
 				end
 			end
-
-			-- only the partner exactly on the correct side counts
-			
 		end
 
-		if context.individual and context.cardarea == G.play and (context.other_card == context.scoring_hand[1]) and #context.scoring_hand >= 2 then
-			context.other_card:set_ability("m_pmcmod_tremor", nil, true)
-		end
+		-- she changes the LAST scored card; a hand of one has nothing to change
+		if context.individual and context.cardarea == G.play and #context.scoring_hand >= 2
+			and context.other_card == context.scoring_hand[#context.scoring_hand] then
+			context.other_card:set_ability('m_pmcmod_tremor', nil, true)
 
-		if context.individual and context.cardarea == G.play and (context.other_card == context.scoring_hand[#context.scoring_hand]) and #context.scoring_hand > 2 and card.ability.extra.lucioPresent then
-			context.other_card:set_ability("m_pmcmod_tremor", nil, true)
+			-- the bonus is the linked half: Lucio exactly to her right
+			if ex.lucioPresent and not context.blueprint then
+				PMCMOD.add_pair_trigger(card, 1)
 
-			if not context.blueprint then PMCMOD.add_pair_trigger(card, 1) end
-
-			if PMCMOD.pair_triggers(card) >= 5 then
-				G.GAME.banned_keys["j_pmcmod_lucio"] = true
-				local lucio = G.jokers.cards[card.ability.extra.lucioPos]
-				lucio.getting_sliced = true
-				G.E_MANAGER:add_event(Event({func = function()
-					card:juice_up(0.8, 0.8)
-					lucio:start_dissolve({G.C.RED}, nil, 1.6)
-				return true end }))
+				if PMCMOD.pair_triggers(card) >= 5 and not ex.lucioGone then
+					ex.lucioGone = true
+					ex.deathXmult = true
+					G.GAME.banned_keys['j_pmcmod_lucio'] = true
+					local lucio = nil
+					local jokers = G.jokers.cards or {}
+					for i = 1, #jokers do
+						if PMCMOD.bare_key(jokers[i].config.center.key) == 'lucio' then lucio = jokers[i] end
+					end
+					if lucio then
+						lucio.getting_sliced = true
+						G.E_MANAGER:add_event(Event({func = function()
+							card:juice_up(0.8, 0.8)
+							lucio:start_dissolve({G.C.RED}, nil, 1.6)
+							return true end }))
+					end
+				end
 			end
+		end
 
+		-- once he is gone she keeps a permanent x3 Mult
+		if context.joker_main and not context.blueprint and ex.deathXmult then
+			return { xmult = 3 }
 		end
     end,
 	add_to_deck = function(self, card, from_debuff)
