@@ -69,6 +69,22 @@ SMODS.Joker {
 		-- (joker_main, before, after) are dispatched by the base game straight over
 		-- G.jokers.cards - state_events.lua:905 - so a card in the dummy area never
 		-- sees them. Both timers below are hand-scoped markers instead.
+		-- Tremor passively amplifies the base game's enhancements. Their behaviour is engine-side,
+		-- so only the difference is added here; the vanilla part applies on its own.
+		if context.individual and context.cardarea == G.play and not context.blueprint then
+			local scored = context.other_card
+			local tremor = PMCMOD.tremor_count()
+			if tremor > 0 and scored and scored.config and scored.config.center then
+				local key = scored.config.center.key
+				local ret = {}
+				if key == 'm_bonus' then ret.chips = 5 * tremor end        -- Endurance
+				if key == 'm_mult' then ret.mult = tremor end              -- Strength
+				if key == 'm_stone' then ret.chips = 10 * tremor end        -- Stone
+				if key == 'm_steel' then ret.xmult = 0.1 * tremor end       -- Steel, above its own 1.5
+				if next(ret) then return ret end
+			end
+		end
+
 		if not context.blueprint and context.cardarea == G.play then
 			-- G.GAME.round is the per-blind counter (common_events.lua:236) and
 			-- hands_played resets each blind, so this key is unique per hand.
