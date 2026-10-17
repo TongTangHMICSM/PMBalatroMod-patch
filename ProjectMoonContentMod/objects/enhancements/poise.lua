@@ -26,6 +26,11 @@ SMODS.Enhancement {
     end,
     calculate = function(self, card, context)
         ensure_ability(card)
+        if not card.pmcmod_poise_probe then
+            card.pmcmod_poise_probe = true
+            print("[pmcmod poise] calculate ran; counter=" .. tostring(card.ability.counter)
+                .. " maxChance=" .. tostring(card.ability.maxChance))
+        end
 
         local tremorCounting = 0
 
@@ -65,6 +70,10 @@ SMODS.Enhancement {
             end
 
             ensure_ability(card)
+            if not card.pmcmod_poise_probe2 then
+                card.pmcmod_poise_probe2 = true
+                print("[pmcmod poise] main_scoring reached; counter=" .. tostring(card.ability.counter))
+            end
             if SMODS.pseudorandom_probability(card, 'poise', card.ability.counter,
                 card.ability.maxChance or 10, 'poise') then
                 ret.xmult = (card.ability.extra and card.ability.extra.xmult) or 2
