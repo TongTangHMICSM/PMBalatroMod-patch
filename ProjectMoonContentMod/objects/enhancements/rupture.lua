@@ -31,15 +31,15 @@ SMODS.Enhancement {
             if ziluPresent then
 
                 if card:is_face() then
-                    card.ability.counter = card.ability.counter + (4 * (1 + tremorCounting))
+                    card.ability.counter = card.ability.counter + (4 * (1 + 0.1 * tremorCounting))
                 else
-                    card.ability.counter = card.ability.counter + (8 * (1 + tremorCounting))
+                    card.ability.counter = card.ability.counter + (8 * (1 + 0.1 * tremorCounting))
                 end
             else
                 if card:is_face() then
-                    card.ability.counter = card.ability.counter + (2 * (1 + tremorCounting))
+                    card.ability.counter = card.ability.counter + (2 * (1 + 0.1 * tremorCounting))
                 else
-                    card.ability.counter = card.ability.counter + (4 * (1 + tremorCounting))
+                    card.ability.counter = card.ability.counter + (4 * (1 + 0.1 * tremorCounting))
                 end
             end
 

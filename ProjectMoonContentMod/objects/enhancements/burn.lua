@@ -12,7 +12,9 @@ SMODS.Enhancement {
         -- enhancements in this mod pay out on (bleed, poise, rupture, sinking); context.after was too
         -- late for a returned effect to reach the score, which is why this used ability.bonus.
         if context.main_scoring and context.cardarea == G.play then
-            return { chips = PMCMOD.burn_chips() }
+            -- Tremor multiplies what Burn pays; with none on the board it is unchanged
+            local tremor = math.max(1, PMCMOD.tremor_count())
+            return { chips = PMCMOD.burn_chips() * tremor }
         end
     end,
 }
