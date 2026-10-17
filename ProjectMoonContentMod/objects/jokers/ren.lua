@@ -40,7 +40,12 @@ SMODS.Joker {
 
 		if context.individual and context.cardarea == G.play then
 			local gavePoise = false
-			if card.ability.extra.shiomiPresent then
+			-- only plain cards are converted, never one that already carries an enhancement
+			local plain = context.other_card.config and context.other_card.config.center
+				and context.other_card.config.center.key == 'c_base'
+			if not plain then
+				-- already enhanced: nothing to give
+			elseif card.ability.extra.shiomiPresent then
 				context.other_card:set_ability("m_pmcmod_poise", nil, true)
 				gavePoise = true
 				if not context.blueprint then PMCMOD.add_pair_trigger(card, 1) end

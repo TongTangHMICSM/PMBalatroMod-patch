@@ -61,7 +61,7 @@ SMODS.Joker {
 		if context.end_of_round and not context.repetition and context.game_over == false
 			and context.main_eval and not context.blueprint then
 			local destroyed = (G.GAME.pmcmod_valencina_destroyed or 0)
-			ex.xmultGain = (ex.xmultGain or 1) + 0.1 * destroyed
+			ex.xmultGain = (ex.xmultGain or 1) + 0.2 * destroyed
 			if ex.xmultGain >= 3 then ex.chipBonus = true end
 			return {
 				message = localize('k_upgrade_ex'),

@@ -51,7 +51,8 @@ SMODS.Enhancement {
             if SMODS.pseudorandom_probability(card, 'poise', card.ability.counter, card.ability.maxChance, 'poise') then
                 ret.xmult = card.ability.extra.xmult
                 card.poise_trigger = true
-                card.ability.counter = 1
+                -- halve on a trigger rather than dropping back to 1
+                card.ability.counter = math.max(1, math.floor(card.ability.counter / 2))
 
                 G.E_MANAGER:add_event(Event {
                 func = function()

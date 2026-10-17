@@ -24,6 +24,26 @@ SMODS.Joker {
 		-- the pairing is locked in at the start of the Scene and held for it
 		if context.setting_blind and not context.blueprint then
 			card.ability.extra.renPresent = PMCMOD.pair_linked(card)
+			-- the bonus half, as Valencina's: one step per encounter while linked
+			if card.ability.extra.renPresent then
+				PMCMOD.add_pair_trigger(card, 1)
+				if PMCMOD.pair_triggers(card) >= 5 and not card.ability.extra.renGone then
+					card.ability.extra.renGone = true
+					G.GAME.banned_keys['j_pmcmod_ren'] = true
+					local ren = nil
+					local jokers = G.jokers.cards or {}
+					for i = 1, #jokers do
+						if PMCMOD.bare_key(jokers[i].config.center.key) == 'ren' then ren = jokers[i] end
+					end
+					if ren then
+						ren.getting_sliced = true
+						G.E_MANAGER:add_event(Event({func = function()
+							card:juice_up(0.8, 0.8)
+							ren:start_dissolve({G.C.RED}, nil, 1.6)
+							return true end }))
+					end
+				end
+			end
 		end
 
 		if context.before then
@@ -38,20 +58,7 @@ SMODS.Joker {
 			
 		end
 
-		if context.individual and context.cardarea == G.play and context.other_card.poise_trigger and card.ability.extra.renPresent then
-					
-			if not context.blueprint then PMCMOD.add_pair_trigger(card, 1) end
-		
-				if PMCMOD.pair_triggers(card) >= 5 then
-					G.GAME.banned_keys["j_pmcmod_ren"] = true
-					local ren = G.jokers.cards[card.ability.extra.renPos]
-                    ren.getting_sliced = true
-                    G.E_MANAGER:add_event(Event({func = function()
-                        card:juice_up(0.8, 0.8)
-                        ren:start_dissolve({G.C.RED}, nil, 1.6)
-                    return true end }))
-				end
-		end
+		-- the per-card raise and kill moved to the encounter start, matching Valencina
     end,
 	add_to_deck = function(self, card, from_debuff)
 		-- obtainable once, like the mod's other unique Keypages

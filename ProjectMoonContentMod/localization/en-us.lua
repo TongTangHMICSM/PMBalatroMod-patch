@@ -2063,7 +2063,7 @@ return {
                     {"Gives {C:gold}$#2#{} per scored {C:red}Tremor{} card"},
                     {"{C:attention}Valencina{} exactly to his left gives {C:gold}$#3#{} instead.",
                     "He dies and is banned once the count reaches {C:attention}3{}"},
-                    {"Winning an encounter: {X:mult,C:white}+0.1X{} Mult per card she has",
+                    {"Winning an encounter: {X:mult,C:white}+0.2X{} Mult per card she has",
                     "destroyed; at {X:mult,C:white}X3{} he also gives {C:chips}X2{} Chips"},
                     {"{C:inactive}(Count: {C:red}#1#{}  {C:inactive}XMult {X:mult,C:white}#4#{}{}  {C:inactive}X2 Chips {C:attention}#5#{}){}"},
                 },
