@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'matthias',
+	no_pool_flag = 'matthias_extinct',
 	name = "Matthias",
 	pronouns = "he_him",
 	config = { extra = { hands = 1, laevateinn = 3, price = 2, brokeHand = -1,
@@ -149,6 +150,8 @@ SMODS.Joker {
     end,
 	add_to_deck = function(self, card, from_debuff)
         G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands
+        -- obtainable once, like the mod's other unique Keypages
+        if G.GAME then G.GAME.pool_flags.matthias_extinct = true end
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands
