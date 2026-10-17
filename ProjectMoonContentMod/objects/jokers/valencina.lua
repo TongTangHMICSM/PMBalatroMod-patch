@@ -30,6 +30,11 @@ SMODS.Joker {
 			ex.lucioPresent = PMCMOD.pair_linked(card)
 			ex.discardXchips = 0
 			ex.destroyedHere = 0
+			ex.deathXmult = false       -- the X3 lasts one encounter
+			-- the counter rises here, once, and the bonus it grants holds for the encounter
+			if ex.lucioPresent and not context.blueprint then
+				PMCMOD.add_pair_trigger(card, 1)
+			end
 		end
 		if context.before and not context.blueprint then
 			for i = 1, #G.jokers.cards do
@@ -51,6 +56,12 @@ SMODS.Joker {
 			card_eval_status_text(card, 'extra', nil, nil, nil, {
 				message = localize('pmcmod_valencinaDestroyed'), colour = G.C.RED,
 			})
+		end
+
+		-- with Lucio to her right the FIRST scored card turns too
+		if ex.lucioPresent and context.individual and context.cardarea == G.play
+			and context.other_card == context.scoring_hand[1] then
+			context.other_card:set_ability('m_pmcmod_tremor', nil, true)
 		end
 
 		-- she changes the LAST scored card; a hand of one has nothing to change
@@ -78,8 +89,6 @@ SMODS.Joker {
 
 			-- the bonus is the linked half: Lucio exactly to her right
 			if ex.lucioPresent and not context.blueprint then
-				PMCMOD.add_pair_trigger(card, 1)
-
 				if PMCMOD.pair_triggers(card) >= 5 and not ex.lucioGone then
 					ex.lucioGone = true
 					ex.deathXmult = true
@@ -103,8 +112,10 @@ SMODS.Joker {
 		-- once he is gone she keeps a permanent x3 Mult
 		if context.joker_main and not context.blueprint then
 			local ret = {}
+			-- X3 for this encounter only, and X2 Chips for every card destroyed in it
 			if ex.deathXmult then ret.xmult = 3 end
-			if (ex.discardXchips or 0) > 0 then ret.xchips = ex.discardXchips end
+			local destroyed = ex.destroyedHere or 0
+			if destroyed > 0 then ret.xchips = 2 * destroyed end
 			if next(ret) then return ret end
 		end
     end,

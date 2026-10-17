@@ -31,6 +31,12 @@ SMODS.Joker {
 			if PMCMOD.pair_triggers(card) >= 3 and not card.ability.extra.banned then
 				card.ability.extra.banned = true
 				G.GAME.banned_keys['j_pmcmod_lucio'] = true
+				-- dying grants her the X3, the same as her own threshold does
+				local valencina = SMODS.find_card('j_pmcmod_valencina')
+				if valencina and #valencina > 0 then
+					local hers = valencina[1].ability and valencina[1].ability.extra
+					if type(hers) == 'table' then hers.deathXmult = true end
+				end
 				card.getting_sliced = true
 				G.E_MANAGER:add_event(Event({func = function()
 					card:start_dissolve({G.C.RED}, nil, 1.6)
