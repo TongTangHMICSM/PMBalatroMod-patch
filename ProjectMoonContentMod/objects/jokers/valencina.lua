@@ -21,7 +21,8 @@ SMODS.Joker {
 		["Thumb"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.destroyedHere or 0 } }
+        return {vars = { card.ability.extra.precognition or 0, card.ability.extra.overheat or 0,
+            PMCMOD.pair_trigger_display(card) } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra

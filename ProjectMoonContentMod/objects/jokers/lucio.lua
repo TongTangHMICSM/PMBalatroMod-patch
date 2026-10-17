@@ -19,7 +19,9 @@ SMODS.Joker {
 		["Thumb"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.dollars, card.ability.extra.bonusDollars, card.ability.extra.xmultGain or 1, card.ability.extra.chipBonus } }
+        local destroyed = (G.GAME and G.GAME.pmcmod_valencina_destroyed) or 0
+        return {vars = { PMCMOD.pair_trigger_display(card), card.ability.extra.dollars,
+            card.ability.extra.bonusDollars, 1 + 0.2 * destroyed } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
