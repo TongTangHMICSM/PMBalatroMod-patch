@@ -24,8 +24,6 @@ SMODS.Joker {
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
 
-		-- the pairing is locked in at the start of the Scene and held for it, and the counter's
-		-- threshold is read here too, so his effect lasts the whole encounter
 		if context.setting_blind and not context.blueprint then
 			ex.valencinaPresent = PMCMOD.pair_linked(card)
 			-- the apprentice's half: one step per encounter while linked
@@ -35,14 +33,13 @@ SMODS.Joker {
 			if PMCMOD.pair_triggers(card) >= 3 and not card.ability.extra.banned then
 				card.ability.extra.banned = true
 				G.GAME.banned_keys['j_pmcmod_lucio'] = true
-				-- dying grants her the X3, the same as her own threshold does
 				local valencina = SMODS.find_card('j_pmcmod_valencina')
 				if valencina and #valencina > 0 then
 					local hers = valencina[1].ability and valencina[1].ability.extra
 					if type(hers) == 'table' then hers.deathXmult = true end
 				end
 				card.getting_sliced = true
-				G.E_MANAGER:add_event(Event({func = function()
+				G.E_MANAGER:add_event(Event({ trigger = 'immediate', func = function()
 					card:start_dissolve({G.C.RED}, nil, 1.6)
 					return true end }))
 			end
@@ -61,22 +58,13 @@ SMODS.Joker {
 			return { dollars = ex.valencinaPresent and ex.bonusDollars or ex.dollars }
 		end
 
-		-- winning an encounter pays 0.1 XMult per card she has destroyed
-		if context.end_of_round and not context.repetition and context.game_over == false
-			and context.main_eval and not context.blueprint then
-			local destroyed = (G.GAME.pmcmod_valencina_destroyed or 0)
-			ex.xmultGain = (ex.xmultGain or 1) + 0.2 * destroyed
-			if ex.xmultGain >= 3 then ex.chipBonus = true end
-			return {
-				message = localize('k_upgrade_ex'),
-				colour = G.C.RED,
-			}
-		end
-
+		-- XMult grows with every card she has destroyed, for the rest of the run
 		if context.joker_main and not context.blueprint then
+			local destroyed = G.GAME.pmcmod_valencina_destroyed or 0
+			local xm = 1 + 0.2 * destroyed
 			local ret = {}
-			if (ex.xmultGain or 1) > 1 then ret.xmult = ex.xmultGain end
-			if ex.chipBonus then ret.xchips = 2 end
+			if xm > 1 then ret.xmult = xm end
+			if xm >= 3 then ret.xchips = 2 end
 			if next(ret) then return ret end
 		end
     end,
