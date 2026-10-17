@@ -76,8 +76,11 @@ SMODS.Enhancement {
             end
 
             ensure_ability(card)
+            -- Tremor narrows the denominator: X in (10 - 0.1 per Tremor card)
+            local denominator = math.max(1,
+                (card.ability.maxChance or 10) - 0.1 * PMCMOD.tremor_count())
             if SMODS.pseudorandom_probability(card, 'poise', shared(0),
-                card.ability.maxChance or 10, 'poise') then
+                denominator, 'poise') then
                 ret.xmult = (card.ability.extra and card.ability.extra.xmult) or 2
                 card.poise_trigger = true
                 -- halve the shared stack on a trigger rather than resetting it

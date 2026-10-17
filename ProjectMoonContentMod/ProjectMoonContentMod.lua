@@ -427,6 +427,16 @@ function PMCMOD.install_sell_reporter()
     end
 end
 
+-- How many Tremor cards are in the deck. Tremor passively amplifies the other enhancements, and
+-- several of them scale their effect by this count.
+function PMCMOD.tremor_count()
+    local n = 0
+    for _, c in ipairs(G.playing_cards or {}) do
+        if SMODS.has_enhancement(c, 'm_pmcmod_tremor') then n = n + 1 end
+    end
+    return n
+end
+
 -- A small Use button drawn on a Keypage, shown only while its Blade is charged. Created from the
 -- card's update, removed when the charge is spent, so there is never more than one.
 function PMCMOD.update_use_button(card, charged, handler)
