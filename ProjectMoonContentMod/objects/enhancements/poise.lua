@@ -1,3 +1,18 @@
+-- Cards made before this config existed carry an older ability table: no counter, no maxChance,
+-- and x_mult instead of extra.xmult. Arithmetic on the missing counter throws, and SMODS swallows it,
+-- so the whole enhancement silently did nothing.
+local function ensure_ability(card)
+    local a = card.ability
+    if type(a.counter) ~= 'number' then a.counter = 0 end
+    if type(a.maxChance) ~= 'number' then a.maxChance = 10 end
+    if type(a.baseChance) ~= 'number' then a.baseChance = 1 end
+    if type(a.maxChanceShiomi) ~= 'number' then a.maxChanceShiomi = 2 end
+    if type(a.extra) ~= 'table' then a.extra = { xmult = 2 } end
+    if type(a.extra.xmult) ~= 'number' then
+        a.extra.xmult = (type(a.x_mult) == 'number' and a.x_mult > 1) and a.x_mult or 2
+    end
+end
+
 SMODS.Enhancement {
     key = "poise",
     atlas = "ModdedProjectMoonEditions",
@@ -10,6 +25,7 @@ SMODS.Enhancement {
         return {vars = { card.ability.extra.xmult, card.ability.counter, new_numerator, new_denominator, new_numeratorShiomi, new_denominatorShiomi } }
     end,
     calculate = function(self, card, context)
+        ensure_ability(card)
 
         local tremorCounting = 0
 
@@ -71,6 +87,7 @@ SMODS.Enhancement {
         
     end,
     update = function(self, card, dt)
+        ensure_ability(card)
         
     end,
     set_sprites = function(self, card, front)
