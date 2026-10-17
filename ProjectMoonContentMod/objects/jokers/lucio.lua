@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'lucio',
+	no_pool_flag = 'lucio_extinct',
 	name = "Lucio",
 	pronouns = "he_him",
 	config = { extra = { currentPosition = 1, lucioDeathCounter = 0, dollars = 6, valencinaPresent = false, valencinaPos = nil } },
@@ -57,6 +58,10 @@ SMODS.Joker {
 			end
 		end
     end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once, like the mod's other unique Keypages
+		if G.GAME then G.GAME.pool_flags.lucio_extinct = true end
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,

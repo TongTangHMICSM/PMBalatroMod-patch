@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'ren',
+	no_pool_flag = 'ren_extinct',
 	name = "Ren",
 	pronouns = "he_him",
 	config = { extra = { shiomiPresent = false, shiomiPos = nil, renDeathCounter = 0, baseChance = 1, maxChance = 2} },
@@ -69,6 +70,10 @@ SMODS.Joker {
 
 		
     end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once, like the mod's other unique Keypages
+		if G.GAME then G.GAME.pool_flags.ren_extinct = true end
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,

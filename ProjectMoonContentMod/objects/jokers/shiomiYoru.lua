@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'shiomiYoru',
+	no_pool_flag = 'shiomiYoru_extinct',
 	name = "Shiomi Yoru",
 	pronouns = "she_her",
 	config = { extra = {renDeathCounter = 0, renPos = nil } },
@@ -52,6 +53,10 @@ SMODS.Joker {
 				end
 		end
     end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once, like the mod's other unique Keypages
+		if G.GAME then G.GAME.pool_flags.shiomiYoru_extinct = true end
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,

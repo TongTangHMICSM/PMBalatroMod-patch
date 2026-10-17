@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'albina',
+	no_pool_flag = 'albina_extinct',
 	name = "Albina",
 	pronouns = "she_her",
 	config = { extra = {callistoPresent = false, callistoPos = nil, albinaDeathCounter = 0, baseChance = 1, maxChance = 2, type = "Pair" } },
@@ -74,6 +75,10 @@ SMODS.Joker {
 			end
 		end
     end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once, like the mod's other unique Keypages
+		if G.GAME then G.GAME.pool_flags.albina_extinct = true end
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_spiders'), HEX('121212'), HEX('d90000'), 1.2 )
  	end,
