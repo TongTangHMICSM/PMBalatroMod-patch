@@ -427,6 +427,34 @@ function PMCMOD.install_sell_reporter()
     end
 end
 
+-- Mr. Bones' save, for Valencina: once per run she survives a lost encounter. The engine decides
+-- that in G.FUNCS.evaluate_round rather than in a joker's calculate, so the score is topped up to the
+-- requirement just before the original runs. Strictly stronger than Mr. Bones: the encounter is
+-- credited rather than merely survived.
+function PMCMOD.install_death_saver()
+    if PMCMOD._death_saver or not (G and G.FUNCS and G.FUNCS.evaluate_round) then return end
+    local original = G.FUNCS.evaluate_round
+    PMCMOD._death_saver = original
+    G.FUNCS.evaluate_round = function(...)
+        local blind = G.GAME and G.GAME.blind
+        if G.GAME and blind and blind.chips and G.GAME.chips
+            and to_big(G.GAME.chips) < to_big(blind.chips) then
+            local found = SMODS.find_card('j_pmcmod_valencina')
+            if found and #found > 0 then
+                local extra = found[1].ability and found[1].ability.extra
+                if type(extra) == 'table' and not extra.bonesUsed then
+                    extra.bonesUsed = true
+                    G.GAME.chips = blind.chips
+                    card_eval_status_text(found[1], 'extra', nil, nil, nil, {
+                        message = localize('pmcmod_valencinaSave'), colour = G.C.RED,
+                    })
+                end
+            end
+        end
+        return original(...)
+    end
+end
+
 -- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
 -- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
 function PMCMOD.install_discard_reporter()
@@ -591,6 +619,7 @@ end
 PMCMOD.install_trigger_reporter()
 PMCMOD.install_sell_reporter()
 PMCMOD.install_discard_reporter()
+PMCMOD.install_death_saver()
 
 SMODS.current_mod.optional_features = function()
     return {

@@ -1970,6 +1970,8 @@ return {
                 text = {
                     {"Changes the {C:attention}last{} scored card of a hand of 2 or more",
                     "into a {C:red}Tremor{} card"},
+                    {"{C:inactive}Once per run she can survive an encounter she would{}",
+                    "{C:inactive}otherwise lose, and is not destroyed by it{}"},
                     {"{C:attention}Lucio{} exactly to her right also turns the first card,",
                     "{C:inactive}and the count rises once per encounter. At {C:attention}5{} he",
                     "{C:inactive}dies and is banned; for that encounter she has{X:mult,C:white}X3{} Mult{}"},
@@ -3283,7 +3285,8 @@ pmcmod_laevateinnSpent="Laevateinn Spent",
 pmcmod_sinWrath_burn="Wrath: Burn",
 pmcmod_sinWrath_spread="Wrath: Spread",
 pmcmod_valencinaDestroyed="Destroyed",
-pmcmod_valencinaTremor="Tremor Bonus"
+pmcmod_valencinaTremor="Tremor Bonus",
+pmcmod_valencinaSave="Survived"
         },
         high_scores={},
         labels={
