@@ -496,7 +496,6 @@ end
 -- requirement just before the original runs. Strictly stronger than Mr. Bones: the encounter is
 -- credited rather than merely survived.
 function PMCMOD.install_death_saver()
-PMCMOD.install_lucky_tremor()
     if PMCMOD._death_saver or not (G and G.FUNCS and G.FUNCS.evaluate_round) then return end
     local original = G.FUNCS.evaluate_round
     PMCMOD._death_saver = original
@@ -522,6 +521,25 @@ end
 
 -- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
 -- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
+-- Tremor adds to a Gold Card's round-end money. The cash-out pass (state_events.lua:221) pays
+-- effects[ii].h_dollars, and those come from this per-card getter, so the getter is wrapped additively
+-- and the vanilla payout still happens exactly once. If the method is named differently in this build
+-- the installer does nothing.
+function PMCMOD.install_gold_tremor()
+    if PMCMOD._gold_tremor or not (Card and Card.get_end_of_round_effect) then return end
+    local original = Card.get_end_of_round_effect
+    PMCMOD._gold_tremor = original
+    function Card:get_end_of_round_effect(context)
+        local ret = original(self, context)
+        if type(ret) == 'table' and ret.h_dollars and self.ability
+            and self.ability.name == 'Gold Card' then
+            local tremor = PMCMOD.tremor_count()
+            if tremor > 0 then ret.h_dollars = ret.h_dollars + tremor end
+        end
+        return ret
+    end
+end
+
 -- Tremor raises a Lucky Card's odds. Card:get_chip_mult is a small pure getter (card.lua:984) and
 -- the whole Lucky roll is inside it, so it is replaced rather than patched around; every other card
 -- delegates to the original.
@@ -714,6 +732,8 @@ PMCMOD.install_trigger_reporter()
 PMCMOD.install_sell_reporter()
 PMCMOD.install_discard_reporter()
 PMCMOD.install_death_saver()
+PMCMOD.install_lucky_tremor()
+PMCMOD.install_gold_tremor()
 
 SMODS.current_mod.optional_features = function()
     return {
