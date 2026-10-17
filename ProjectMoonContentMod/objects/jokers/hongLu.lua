@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'hongLu',
+	no_pool_flag = 'hongLu_extinct',
 	name = "Hong Lu",
 	pronouns = "he_him",
 	config = { extra = {
@@ -330,6 +331,10 @@ SMODS.Joker {
 		end
             
     end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: the hand penalty applies per copy
+		if G.GAME then G.GAME.pool_flags.hongLu_extinct = true end
+	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_limbus'), HEX('63160e'), HEX('eba313'), 1.2 )
  	end,
