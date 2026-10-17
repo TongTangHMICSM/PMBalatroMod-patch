@@ -24,9 +24,8 @@ SMODS.Joker {
 		-- the pairing is locked in at the start of the Scene and held for it
 		if context.setting_blind and not context.blueprint then
 			card.ability.extra.renPresent = PMCMOD.pair_linked(card)
-			-- the bonus half, as Valencina's: one step per encounter while linked
+			-- Ren raises the counter; reading it here is the father's half
 			if card.ability.extra.renPresent then
-				PMCMOD.add_pair_trigger(card, 1)
 				if PMCMOD.pair_triggers(card) >= 5 and not card.ability.extra.renGone then
 					card.ability.extra.renGone = true
 					G.GAME.banned_keys['j_pmcmod_ren'] = true

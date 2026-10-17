@@ -28,6 +28,10 @@ SMODS.Joker {
 		-- threshold is read here too, so his effect lasts the whole encounter
 		if context.setting_blind and not context.blueprint then
 			ex.valencinaPresent = PMCMOD.pair_linked(card)
+			-- the apprentice's half: one step per encounter while linked
+			if ex.valencinaPresent then
+				PMCMOD.add_pair_trigger(card, 1)
+			end
 			if PMCMOD.pair_triggers(card) >= 3 and not card.ability.extra.banned then
 				card.ability.extra.banned = true
 				G.GAME.banned_keys['j_pmcmod_lucio'] = true

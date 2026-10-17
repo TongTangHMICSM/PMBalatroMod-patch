@@ -31,10 +31,7 @@ SMODS.Joker {
 			ex.discardXchips = 0
 			ex.destroyedHere = 0
 			ex.deathXmult = false       -- the X3 lasts one encounter
-			-- the counter rises here, once, and the bonus it grants holds for the encounter
-			if ex.lucioPresent and not context.blueprint then
-				PMCMOD.add_pair_trigger(card, 1)
-			end
+			-- Lucio raises the counter; the bonus it grants holds for the encounter
 		end
 		if context.before and not context.blueprint then
 			for i = 1, #G.jokers.cards do
