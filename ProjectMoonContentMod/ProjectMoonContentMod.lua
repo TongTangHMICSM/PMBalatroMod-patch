@@ -427,6 +427,20 @@ function PMCMOD.install_sell_reporter()
     end
 end
 
+-- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
+-- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
+function PMCMOD.install_discard_reporter()
+    if PMCMOD._discard_reporter or not (G and G.FUNCS and G.FUNCS.discard_cards_from_highlighted) then
+        return
+    end
+    local original = G.FUNCS.discard_cards_from_highlighted
+    PMCMOD._discard_reporter = original
+    G.FUNCS.discard_cards_from_highlighted = function(e, hook)
+        G.GAME.pmcmod_discardSize = #(((G.hand or {}).highlighted) or {})
+        return original(e, hook)
+    end
+end
+
 -- Shop weight helper for get_weight(). A rarity draws its members in proportion to their
 -- weight (10 by default), so a multiple makes a joker more likely to be offered. Every joker
 -- starts at x1 - equal with its rarity peers - and only rises when its condition is met.
@@ -576,6 +590,7 @@ function PMCMOD.install_trigger_reporter()
 end
 PMCMOD.install_trigger_reporter()
 PMCMOD.install_sell_reporter()
+PMCMOD.install_discard_reporter()
 
 SMODS.current_mod.optional_features = function()
     return {

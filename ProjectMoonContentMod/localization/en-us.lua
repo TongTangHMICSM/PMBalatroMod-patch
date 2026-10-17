@@ -1973,6 +1973,11 @@ return {
                     {"{C:attention}Lucio{} exactly to her right also counts each change;",
                     "at {C:attention}5{} he dies and is banned from the pool, and she",
                     "keeps {X:mult,C:white}X3{} Mult from then on"},
+                    {"{C:inactive}Discarding exactly one card destroys it and gives{}",
+                    "{C:inactive}her {C:chips}X2{} Chips for the encounter{}"},
+                    {"{C:inactive}Each change can also grant the new Tremor card{}",
+                    "{C:inactive}0.001% of the Encounter per Burn Card, at a{}",
+                    "{C:inactive}chance equal to this encounter's destroyed count in 10{}"},
                     {"{C:inactive}(Count: {C:red}#1#{C:inactive}){}"},
                 },
                 unlock = {
@@ -3275,7 +3280,9 @@ return {
             pmcmod_sinclairAgain="Triggered",
 pmcmod_laevateinnSpent="Laevateinn Spent",
 pmcmod_sinWrath_burn="Wrath: Burn",
-pmcmod_sinWrath_spread="Wrath: Spread"
+pmcmod_sinWrath_spread="Wrath: Spread",
+pmcmod_valencinaDestroyed="Destroyed",
+pmcmod_valencinaTremor="Tremor Bonus"
         },
         high_scores={},
         labels={

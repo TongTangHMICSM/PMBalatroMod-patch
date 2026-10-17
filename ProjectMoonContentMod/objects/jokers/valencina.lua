@@ -4,7 +4,7 @@ SMODS.Joker {
 	name = "Valencina",
 	pronouns = "she_her",
 	config = { extra = { currentPosition = 1, lucioPresent = false, lucioGone = false,
-		deathXmult = false, discardXchips = 0, bonesUsed = false } },
+		deathXmult = false, discardXchips = 0, destroyedHere = 0, bonesUsed = false } },
 	unlocked = true,
 	eternal_compat = true,
 	perishable_compat = true,
@@ -29,6 +29,7 @@ SMODS.Joker {
 		if context.setting_blind and not context.blueprint then
 			ex.lucioPresent = PMCMOD.pair_linked(card)
 			ex.discardXchips = 0
+			ex.destroyedHere = 0
 		end
 		if context.before and not context.blueprint then
 			for i = 1, #G.jokers.cards do
@@ -39,10 +40,41 @@ SMODS.Joker {
 			end
 		end
 
+		-- A discard of exactly one card destroys it: Trading Card's rule without the first-discard
+		-- limit. The size comes from PMCMOD.install_discard_reporter.
+		if context.discard and not context.blueprint and context.other_card
+			and (G.GAME.pmcmod_discardSize or 0) == 1 then
+			SMODS.destroy_cards(context.other_card)
+			ex.discardXchips = 2
+			ex.destroyedHere = (ex.destroyedHere or 0) + 1
+			G.GAME.pmcmod_valencina_destroyed = (G.GAME.pmcmod_valencina_destroyed or 0) + 1
+			card_eval_status_text(card, 'extra', nil, nil, nil, {
+				message = localize('pmcmod_valencinaDestroyed'), colour = G.C.RED,
+			})
+		end
+
 		-- she changes the LAST scored card; a hand of one has nothing to change
 		if context.individual and context.cardarea == G.play and #context.scoring_hand >= 2
 			and context.other_card == context.scoring_hand[#context.scoring_hand] then
 			context.other_card:set_ability('m_pmcmod_tremor', nil, true)
+
+			-- the new Tremor card can gain chips: a chance equal to this encounter's destroyed count
+			-- in 10, worth 0.001% of the Encounter per Burn Card in the deck
+			local destroyed = ex.destroyedHere or 0
+			if destroyed > 0 and SMODS.pseudorandom_probability(card, 'valencina_tremor_bonus',
+				destroyed, 10, 'valencina_tremor_bonus') then
+				local burn = 0
+				for _, pc in ipairs(G.playing_cards or {}) do
+					if SMODS.has_enhancement(pc, 'm_pmcmod_burn') then burn = burn + 1 end
+				end
+				if burn > 0 and G.GAME.blind then
+					local bonus = G.GAME.blind.chips * 0.001 * burn
+					context.other_card.ability.bonus = (context.other_card.ability.bonus or 0) + bonus
+					card_eval_status_text(context.other_card, 'extra', nil, nil, nil, {
+						message = localize('pmcmod_valencinaTremor'), colour = G.C.CHIPS,
+					})
+				end
+			end
 
 			-- the bonus is the linked half: Lucio exactly to her right
 			if ex.lucioPresent and not context.blueprint then
@@ -69,8 +101,11 @@ SMODS.Joker {
 		end
 
 		-- once he is gone she keeps a permanent x3 Mult
-		if context.joker_main and not context.blueprint and ex.deathXmult then
-			return { xmult = 3 }
+		if context.joker_main and not context.blueprint then
+			local ret = {}
+			if ex.deathXmult then ret.xmult = 3 end
+			if (ex.discardXchips or 0) > 0 then ret.xchips = ex.discardXchips end
+			if next(ret) then return ret end
 		end
     end,
 	add_to_deck = function(self, card, from_debuff)
