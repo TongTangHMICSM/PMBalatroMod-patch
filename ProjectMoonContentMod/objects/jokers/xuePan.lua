@@ -25,10 +25,14 @@ SMODS.Joker {
 			if coinFlip == 1 then
 				local editionless_jokers = SMODS.Edition:get_edition_cards(G.jokers, true)
 
-				local eligible_card = pseudorandom_element(editionless_jokers, 'xuePan')
-				local edition = SMODS.poll_edition { key = "xuePan", guaranteed = true, no_negative = false, options = { 'e_polychrome', 'e_holo', 'e_foil', 'e_negative', 'e_pmcmod_charge' } }
-				eligible_card:set_edition(edition, true)
-				check_for_unlock({ type = 'have_edition' })
+				-- nothing to edit if every Keypage already carries an Edition
+				local eligible_card = #editionless_jokers > 0
+					and pseudorandom_element(editionless_jokers, pseudoseed('xuePan')) or nil
+				if eligible_card then
+					local edition = SMODS.poll_edition { key = "xuePan", guaranteed = true, no_negative = false, options = { 'e_polychrome', 'e_holo', 'e_foil', 'e_negative', 'e_pmcmod_charge' } }
+					eligible_card:set_edition(edition, true)
+					check_for_unlock({ type = 'have_edition' })
+				end
 			else
 				local destructable_jokers = {}
                 for i = 1, #G.jokers.cards do
