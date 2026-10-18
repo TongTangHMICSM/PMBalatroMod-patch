@@ -41,11 +41,11 @@ SMODS.Joker {
 						message = localize('pmcmod_valencinaRead'), colour = G.C.BLUE,
 					})
 				elseif (ex.precognition or 0) > 0 then
-					-- not enough to read it outright: spend what is left, 5% off per stack
+					-- not enough to read it outright: spend what is left, 2% off per stack
 					local spend = math.min(10, ex.precognition)
 					ex.precognition = ex.precognition - spend
 					G.GAME.blind.chips = math.max(1,
-						math.floor(G.GAME.blind.chips * (1 - spend * 0.05)))
+						math.floor(G.GAME.blind.chips * (1 - spend * 0.02)))
 					card_eval_status_text(card, 'extra', nil, nil, nil, {
 						message = localize('pmcmod_valencinaRead'), colour = G.C.BLUE,
 					})
@@ -57,7 +57,7 @@ SMODS.Joker {
 				-- burn overheat to soften the boss
 				local spend = math.min(10, ex.overheat)
 				ex.overheat = ex.overheat - spend
-				G.GAME.blind.chips = math.max(1, math.floor(G.GAME.blind.chips * (1 - spend * 0.05)))
+				G.GAME.blind.chips = math.max(1, math.floor(G.GAME.blind.chips * (1 - spend * 0.02)))
 				card_eval_status_text(card, 'extra', nil, nil, nil, {
 					message = localize('pmcmod_valencinaHate'), colour = G.C.RED,
 				})
