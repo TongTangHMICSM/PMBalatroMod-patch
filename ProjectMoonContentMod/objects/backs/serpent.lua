@@ -10,7 +10,10 @@ SMODS.Back {
     end,
 	calculate = function(self, back, context)
 
-        if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
+        -- a Back receives the same contexts as a card; "context.context == 'eval'" never matched,
+        -- so none of these bonuses ever ran. The boss check limits this to once per ante.
+        if context.end_of_round and not context.repetition and context.game_over == false
+            and context.main_eval and G.GAME.last_blind and G.GAME.last_blind.boss then
 
 			--Gebura - 1 more discard
             if G.GAME.round_resets.ante == 2 then
@@ -36,15 +39,8 @@ SMODS.Back {
 
 			--Tiphereth - interest cap
 			if G.GAME.round_resets.ante == 6 then
-				if G.GAME.interest_cap < 50 then
-				   G.GAME.interest_cap = 50
-				end
-				if G.GAME.interest_cap == 50 then
-				   G.GAME.interest_cap = 100
-				end
-				if G.GAME.interest_cap == 100 then
-				   G.GAME.interest_cap = 150
-				end
+				-- one comparison: as three sequential ifs this ran 50 -> 100 -> 150 in a single pass
+				G.GAME.interest_cap = math.max(G.GAME.interest_cap or 0, 150)
 			end
 
 			--Hod - hand size
