@@ -521,6 +521,21 @@ end
 
 -- context.discard fires once per discarded card, so a card cannot tell how big the discard was.
 -- Recording the size here lets Valencina apply Trading Card's rule to a one-card discard.
+-- Spectral packs draw from the shop as often as Buffoon packs of the same tier. The mod defines no
+-- booster of its own, so these are the base game's: weight 0.3 against Buffoon's 0.6.
+function PMCMOD.match_spectral_weights()
+    if not (G and G.P_CENTERS) then return end
+    for _, tier in ipairs({ 'normal', 'jumbo', 'mega' }) do
+        for i = 1, 4 do
+            local spec = G.P_CENTERS['p_spectral_' .. tier .. '_' .. i]
+            local buff = G.P_CENTERS['p_buffoon_' .. tier .. '_' .. i]
+            if spec and buff and buff.weight then
+                spec.weight = buff.weight
+            end
+        end
+    end
+end
+
 -- Every destroyed playing card, counted once, whatever destroyed it. Lucio's XMult reads this; the
 -- counter Valencina used to keep herself was removed so her own destroys are not double counted.
 function PMCMOD.install_destroy_counter()
@@ -755,6 +770,7 @@ PMCMOD.install_discard_reporter()
 PMCMOD.install_death_saver()
 PMCMOD.install_lucky_tremor()
 PMCMOD.install_gold_tremor()
+PMCMOD.match_spectral_weights()
 
 SMODS.current_mod.optional_features = function()
     return {
