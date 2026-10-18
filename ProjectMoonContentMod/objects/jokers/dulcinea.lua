@@ -33,7 +33,11 @@ SMODS.Joker {
 
 			else
 				if card.ability.extra.mult >= 0 then
-					if not context.blueprint then card.ability.extra.mult = card.ability.extra.mult - card.ability.extra.mult_mod end
+					-- clamped here: this used to fall to -2 before the next card reset it
+					if not context.blueprint then
+						card.ability.extra.mult = math.max(0,
+							card.ability.extra.mult - card.ability.extra.mult_mod)
+					end
 					
 					return {
 						message = localize { type = 'variable', key = 'a_mult_minus', vars = { card.ability.extra.mult_mod } },
@@ -41,9 +45,6 @@ SMODS.Joker {
                 	}
 				end
 
-				if  card.ability.extra.mult < 0 then
-					card.ability.extra.mult = 0
-				end
 			end
         end
 

@@ -28,12 +28,17 @@ SMODS.Joker {
 
 			else
 				if card.ability.extra.chips >= 0 then
-					if not context.blueprint then card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chips_mod end
+					-- clamped here: this used to fall to -4 before the next card reset it
+					if not context.blueprint then
+						card.ability.extra.chips = math.max(0,
+							card.ability.extra.chips - card.ability.extra.chips_mod)
+					end
+					return {
+						message = localize { type = 'variable', key = 'a_chips_minus', vars = { card.ability.extra.chips_mod } },
+						colour = G.C.CHIPS
+					}
 				end
 
-				if  card.ability.extra.chips < 0 then
-					card.ability.extra.chips = 0
-				end
 			end
         end
 

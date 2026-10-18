@@ -79,9 +79,6 @@ SMODS.Joker {
 			}
 		end
 	end,
-	in_pool = function(self, args) 
-
-    end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_library'), HEX('998350'), HEX('0cf07e'), 1.2 )
  	end,
