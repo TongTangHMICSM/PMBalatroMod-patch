@@ -17,7 +17,36 @@ SMODS.Joker {
     	return {vars = { card.ability.extra.creates, card.ability.extra.chips, card.ability.extra.chips_mod}}
 	end,
 	update = function (self, card, dt)
+		-- Perished Keypages are collected when a shop opens, not when a blind starts: calculate only runs
+		-- on game events, so the earliest it fired was setting_blind, with the old shop still alive.
+		-- update runs every frame, and a per-shop key keeps this to one pass per shop.
+		if not (G.STATE == G.STATES.SHOP and G.shop) then return end
+		local key = tostring(G.GAME.round_resets.ante) .. '_' .. tostring(G.GAME.round)
+		if card.ability.extra.shopDone == key then return end
+		card.ability.extra.shopDone = key
 
+		local taken = 0
+		for i2 = 1, #G.jokers.cards do
+			local other = G.jokers.cards[i2]
+			if other ~= card and not other.getting_sliced
+				and not other.ability.eternal and other.ability.perish_tally == 0 then
+				taken = taken + 1
+				other.getting_sliced = true
+				G.E_MANAGER:add_event(Event({func = function()
+					card:juice_up(0.8, 0.8)
+					other:start_dissolve({G.C.RED}, nil, 1.6)
+					return true end }))
+			end
+		end
+
+		if taken > 0 then
+			local gain = taken * card.ability.extra.chips_mod
+			card.ability.extra.chips = card.ability.extra.chips + gain
+			card_eval_status_text(card, 'extra', nil, nil, nil, {
+				message = localize { type = 'variable', key = 'a_chips', vars = { gain } },
+				colour = G.C.CHIPS,
+			})
+		end
 	end,
 	calculate = function(self, card, context)
 		if context.setting_blind and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit and not context.blueprint then
@@ -43,35 +72,7 @@ SMODS.Joker {
                 colour = G.C.BLUE,
             }
         end
-		if G.shop and not card.getting_sliced then
---			print("Testing angela entering shop perished")
-			local destructable_jokers  = {}
-			for i=1, #G.jokers.cards do
---				print("Testing angela entered for loop 1")
-				if G.jokers.cards[i] ~= card and not G.jokers.cards[i].ability.eternal and not G.jokers.cards[i].getting_sliced then
---					print("Testing angela condition 1 for loop 1")
-					if G.jokers.cards[i].ability.perish_tally then
---						print("Testing angela condition 2 for loop 1")
-						if G.jokers.cards[i].ability.perish_tally == 0 then
-							destructable_jokers[#destructable_jokers+1] = G.jokers.cards[i]
---							print("Testing angela counting perished")
-						end
-					end
-				end
-			end
-			for i=1, #destructable_jokers do
---				print("Testing angela condition 2")
-				if destructable_jokers[i] and not (context.blueprint_card or self).getting_sliced then
-					card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
-                    destructable_jokers[i].getting_sliced = true
---					print("Testing angela destroying perished")
-                    G.E_MANAGER:add_event(Event({func = function()
-                        card:juice_up(0.8, 0.8)
-                        destructable_jokers[i]:start_dissolve({G.C.RED}, nil, 1.6)
-                    return true end }))
-                end
-			end
-		end
+		-- perished Keypages are collected in update, when a shop opens
 		if context.joker_main then
 			return
 			{
