@@ -17,6 +17,15 @@ SMODS.Joker {
 	{
 		["Index"] = true,
  	},
+	-- She only turns up while a Keypage is wearing an Edition, or while Rien is on the team.
+	in_pool = function(self, args)
+		if #SMODS.find_card('j_pmcmod_rien') > 0 then return true end
+		local jokers = (G.jokers and G.jokers.cards) or {}
+		for i = 1, #jokers do
+			if jokers[i].edition then return true end
+		end
+		return false
+	end,
 	loc_vars = function(self, info_queue, card)
 		
 		if card.edition then
