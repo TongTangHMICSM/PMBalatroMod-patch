@@ -36,7 +36,7 @@ SMODS.Joker {
     	return {vars = { card.ability.extra.mult, card.ability.extra.mult_mod, card.ability.extra.highlightedJokerStatus, card.ability.extra.rcorpXmult }}
 	end,
 	calculate = function(self, card, context)
-		
+
         -- aspects are not Keypages of the Index - they do not count towards the catalogue
         if context.buying_card and context.card.ability.set == "Joker" and not context.blueprint
             and not PMCMOD.is_aspect(context.card.config.center.key) then
@@ -50,7 +50,7 @@ SMODS.Joker {
                     break
                    else
                         cardAlreadySaved = false
-                   end
+                    end
                 end
             end
 
@@ -62,21 +62,28 @@ SMODS.Joker {
         end
 
 		if context.joker_main then
-			-- R Corp keypages give x1.5 Mult each while Nikolai is held. They compound:
-			-- three of them is 1.5^3 = x3.375.
-			local rcorp = 0
-			local jokers = (G.jokers and G.jokers.cards) or {}
-			for i = 1, #jokers do
-				local pools = jokers[i].config and jokers[i].config.center and jokers[i].config.center.pools
-				if pools and pools.RCorp then rcorp = rcorp + 1 end
-			end
-			local ret = { mult = card.ability.extra.mult }
-			if rcorp > 0 then
-				ret.xmult = card.ability.extra.rcorpXmult ^ rcorp
-			end
-			return ret
+			return { mult = card.ability.extra.mult }
 		end
-		
+
+		-- R Corp Keypages give x1.5 Mult each time they trigger, the way Baseball Card gives its
+		-- Uncommon Jokers the same multiplier: the payout lands per trigger, so retriggers compound
+		-- it, and Nikolai does not count himself.
+		if context.other_joker and context.other_joker ~= card then
+			local center = context.other_joker.config and context.other_joker.config.center
+			if center and center.pools and center.pools.RCorp then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						context.other_joker:juice_up(0.5, 0.5)
+						return true
+					end
+				}))
+				return {
+					message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.rcorpXmult}},
+					Xmult_mod = card.ability.extra.rcorpXmult,
+				}
+			end
+		end
+
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_RCorp'), HEX('2e2b2b'), HEX('c4560c'), 1.2 )

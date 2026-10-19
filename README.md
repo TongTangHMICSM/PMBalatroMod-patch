@@ -76,7 +76,7 @@ Charge
 - Charge edition weight 3 -> 17, and Maxim and Rudolph only enter the shop pool while a Keypage holding Charge is on the team.
 - Maxim reworked onto the shared pool: scored Face cards add 5 Charge, scored number cards spend 1 Charge to trigger twice, +2 Chips per dollar held, and $1 per 10 Charge at the end of the Scene.
 - Rudolph reworked (his calculate was empty, so he did nothing): Charge cards trigger once more, a Charge Keypage gains $1 sell value each time it triggers, he gains Mult equal to the other Keypages' total sell value, and selling anything feeds its sell value into the pool.
-- Nikolai: R Corp Keypages give x1.5 Mult each while he is held (compounding - three is x3.375), on top of his catalogue Mult, and he no longer catalogues aspects.
+- Nikolai: every R Corp Keypage gives X1.5 Mult each time it triggers, the way Baseball Card does its Uncommon Jokers - a retrigger compounds it again, and Nikolai does not count himself - on top of his catalogue Mult, and he no longer catalogues aspects.
 
 Index and Prescripts
 - Prescripts are driven by Index membership: one is issued at the start of a Scene whenever none is active, each lasts 3 Scenes, and resolving grants Grace of the City (fulfilled) or Karmic Consequence (failed) - two run-wide counters. The old $15 / wipe-money swing moved to Voice of the City, which only pays it out while it is held. Voice of the City alone is enough to keep the cycle going.
