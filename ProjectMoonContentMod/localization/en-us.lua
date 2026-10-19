@@ -156,7 +156,7 @@ return {
             m_pmcmod_bleed = {
                 name = "Bleed Card",
                 text = {
-                    "Gains {C:red}+1{} Perma Mult when it scores",
+                    "Gains {C:red}+#1#{} Perma Mult when it scores",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Lust Seal{} ({C:green}1 in 10{})"
                 },
@@ -203,6 +203,7 @@ return {
                     "{C:inactive}Rupture {C:attention}+0.1{}, Sinking {C:attention}+1%{},",
                     "{C:inactive}Burn {C:attention}x1{}, Poise and Lucky {C:green}+0.2{} odds,",
                     "{C:inactive}Gold {C:gold}+$1{}",
+                    "{C:inactive}(currently {C:attention}#1#{C:inactive} in the deck){}",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Sloth Seal{} ({C:green}1 in 10{})"
                 },
@@ -211,7 +212,7 @@ return {
                 name = "Sinking Card",
                 text = {
                     "Reduces the target score",
-                    "by {C:chips}5%{} when this",
+                    "by {C:chips}#1#%{} when this",
                     "card is scored",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Gloom Seal{} ({C:green}1 in 10{})"

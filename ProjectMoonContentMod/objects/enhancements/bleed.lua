@@ -5,7 +5,7 @@ SMODS.Enhancement {
     config = { },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {set = "Other", key = "effect_perma"}
-        return { vars = {}}
+        return { vars = { 1 + PMCMOD.tremor_count() }}
     end,
     calculate = function(self, card, context)
 

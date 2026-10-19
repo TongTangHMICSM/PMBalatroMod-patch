@@ -5,7 +5,7 @@ SMODS.Enhancement {
     config = { bonus = 0},
     loc_vars = function(self, info_queue, card)
 
-        return { vars = {}}
+        return { vars = { PMCMOD.tremor_count() } }
     end,
     update = function(self, card, dt)
 

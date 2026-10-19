@@ -31,7 +31,7 @@ SMODS.Enhancement {
     loc_vars = function(self, info_queue, card)
         
         local stack = shared(0)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, stack, card.ability.maxChance or 10, 'poise')
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, stack, math.max(1, (card.ability.maxChance or 10) - 0.1 * PMCMOD.tremor_count()), 'poise')
         local new_numeratorShiomi, new_denominatorShiomi = SMODS.get_probability_vars(card, card.ability.baseChance, card.ability.maxChanceShiomi, 'shiomi')
         return {vars = { (card.ability.extra and card.ability.extra.xmult) or 2, stack, new_numerator, new_denominator, new_numeratorShiomi, new_denominatorShiomi } }
     end,

@@ -4,7 +4,7 @@ SMODS.Enhancement {
     pos = { x = 0, y = 2},
     config = { },
     loc_vars = function(self, info_queue, card)
-        return { vars = { PMCMOD.burn_chips() } }
+        return { vars = { PMCMOD.burn_chips() * math.max(1, PMCMOD.tremor_count()) } }
     end,
     calculate = function(self, card, context)
         -- Paid as chips rather than folded into the card's own chip value through ability.bonus, and

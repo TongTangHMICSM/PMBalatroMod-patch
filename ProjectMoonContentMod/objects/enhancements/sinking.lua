@@ -4,7 +4,8 @@ SMODS.Enhancement {
     pos = { x = 3, y = 2},
     config = { reduction = 0.05},
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.triggersLeft}}
+        local pct = (card.ability.reduction + 0.01 * PMCMOD.tremor_count()) * 100
+        return { vars = { math.floor(pct + 0.5) } }
     end,
     calculate = function(self, card, context)
 

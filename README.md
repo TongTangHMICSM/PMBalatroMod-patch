@@ -55,6 +55,7 @@ Keypages and effects
 - Burn Cards paid 0.1% of the Encounter instead of the described 0.001%. At the Laevateinn's x1000 that is the whole blind, so every Burn card maxed out the 9999 chip cap. The payout multiplier is now a true 0.001% (1% of the Encounter at x1000).
 - Steel's Tremor bonus paid when the card was scored, where a Steel Card has no effect at all, instead of while it was held. The +0.1X per Tremor now comes from `Card:get_chip_h_x_mult`, on top of the vanilla 1.5 - a held Steel with one Tremor in the deck is x1.6.
 - Rudolph, Maxim and Nikolai could be bought twice, and every copy repeated its payout - two Rudolfs doubled his Mult and his extra trigger. All three now follow the mod's one-per-run convention (`no_pool_flag` + `pool_flags`), and Manifest refuses to turn a joker into a unique True Version that is already on the team.
+- Tremor card shows how many are in the deck, and Burn, Bleed, Sinking and Poise tooltips show their Tremor-amplified numbers instead of the base ones.
 - Tremor amplification ran on two different scopes. Burn, Gold, Lucky and the Poise chance counted the whole deck, while Bleed, Rupture, Sinking and the Poise stack counted only the Tremor cards in the played hand - so the card's "once for each Tremor card in the deck" was false for half its effects, and playing a Tremor card (which scores nothing) was the only way to get them. All of them read the deck now.
 
 Pairs
