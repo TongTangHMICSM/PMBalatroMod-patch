@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'maxim',
+	no_pool_flag = 'maxim_extinct',
 	name = "Maxim",
 	pronouns = "he_him",
 	config = { extra = { chargeGain = 5, chargeCost = 1, chipsPerDollar = 2, dollarsPerCharge = 10, repetitions = 1 } },
@@ -56,6 +57,10 @@ SMODS.Joker {
 	calc_dollar_bonus = function(self, card)
 		local due = math.floor(PMCMOD.get_charge() / card.ability.extra.dollarsPerCharge)
 		if due >= 1 then return due end
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: a second Maxim doubles the Charge he feeds and his Chips per dollar
+		if G.GAME then G.GAME.pool_flags.maxim_extinct = true end
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_RCorp'), HEX('2e2b2b'), HEX('c4560c'), 1.2 )

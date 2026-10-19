@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'nikolai',
+	no_pool_flag = 'nikolai_extinct',
 	name = "Nikolai",
 	pronouns = "she_her",
 	config = { extra = { mult = 0, mult_mod = 5, rcorpXmult = 1.5, savedJokers = {}, highlightedJokerStatus = "" } },	
@@ -84,6 +85,10 @@ SMODS.Joker {
 			end
 		end
 
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: a second Nikolai doubles every R Corp X Mult trigger
+		if G.GAME then G.GAME.pool_flags.nikolai_extinct = true end
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_RCorp'), HEX('2e2b2b'), HEX('c4560c'), 1.2 )

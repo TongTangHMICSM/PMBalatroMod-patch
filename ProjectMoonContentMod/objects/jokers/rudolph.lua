@@ -1,5 +1,6 @@
 SMODS.Joker {
 	key = 'rudolph',
+	no_pool_flag = 'rudolph_extinct',
 	name = "Rudolph",
 	pronouns = "he_him",
 	config = { extra = { repetitions = 1 } },
@@ -47,6 +48,10 @@ SMODS.Joker {
 				}
 			end
 		end
+	end,
+	add_to_deck = function(self, card, from_debuff)
+		-- obtainable once: a second Rudolph doubles his Mult and his bonus trigger
+		if G.GAME then G.GAME.pool_flags.rudolph_extinct = true end
 	end,
 	set_badges = function(self, card, badges)
  		badges[#badges+1] = create_badge(localize('pmcmod_badge_RCorp'), HEX('2e2b2b'), HEX('c4560c'), 1.2 )

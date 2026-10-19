@@ -67,6 +67,18 @@ SMODS.Consumable {
 			end
 		end
 
+		-- A True Version already on the team cannot be made a second time. The mod's unique
+		-- Keypages mark themselves in pool_flags; the pair is checked so a sold copy can be
+		-- made again, but a live one never doubles.
+		if validCard then
+			local target = G.P_CENTERS[trueCard]
+			local flag = target and target.no_pool_flag
+			if flag and G.GAME.pool_flags and G.GAME.pool_flags[flag]
+				and #SMODS.find_card(trueCard) > 0 then
+				validCard = false
+			end
+		end
+
 		if validCard then
 
 			-- Manifest is the reveal: a True Version that is still locked gets unlocked (and added
