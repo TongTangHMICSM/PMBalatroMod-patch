@@ -38,13 +38,8 @@ SMODS.Enhancement {
     calculate = function(self, card, context)
         ensure_ability(card)
 
-        local tremorCounting = 0
-
-        for i = 1, #G.play.cards do
-            if SMODS.has_enhancement(G.play.cards[i], 'm_pmcmod_tremor') then
-                tremorCounting = tremorCounting + 1
-            end
-        end
+        -- Tremor reads the deck, not the hand: it amplifies while simply sitting there
+        local tremorCounting = PMCMOD.tremor_count()
 
         if context.main_scoring and context.cardarea == G.play then
             local ret = {}
@@ -78,7 +73,7 @@ SMODS.Enhancement {
             ensure_ability(card)
             -- Tremor narrows the denominator: X in (10 - 0.1 per Tremor card)
             local denominator = math.max(1,
-                (card.ability.maxChance or 10) - 0.1 * PMCMOD.tremor_count())
+                (card.ability.maxChance or 10) - 0.1 * tremorCounting)
             if SMODS.pseudorandom_probability(card, 'poise', shared(0),
                 denominator, 'poise') then
                 ret.xmult = (card.ability.extra and card.ability.extra.xmult) or 2

@@ -21,6 +21,8 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Rework Matthias' unseal: when the price outruns the purse the buy is refused and the seal takes one counter per hand - the tolls are swappable now, so the seal takes the first it can collect (the scored hand for $20, then a random non-Eternal Keypage, then Kira, banning her), uncollectable tolls stay pending for later hands, and with none left it burns out
 - Fix Matthias overspending: Burn purchases are paid instantly now, so every card of the hand checks the real purse instead of the pre-hand total (the animated money was applying after the whole hand, letting it buy the purse past $0)
 - Fix Burn Card payout to be a true 0.001% of the Encounter (was 0.1%, so at the Laevateinn's x1000 every Burn card hit the 9999 cap on ordinary blinds)
+- Fix Tremor amplification to read the deck for every enhancement (Bleed, Rupture, Sinking and the Poise stack only counted the Tremor cards in the played hand)
+- Balance Tremor: Bleed pays +1 Mult for itself (+1 per Tremor), Sinking removes +1% per Tremor, and Burn Cards lose their 9999 chip cap
 
 # Fixes
 
@@ -50,6 +52,7 @@ Keypages and effects
 - Matthias: the long-first-hand penalty fired on every 4+ card hand regardless of the purse, and the broke penalty only destroyed the triggering card while the rest of the unburnt hand kept buying with the $20 it had just paid out. The buy is now refused outright whenever the price outruns the purse, the hand stops, and the seal takes one counter per hand in a swappable order: it takes the first toll it can collect - the scored hand, a random non-Eternal Keypage, then Kira, banning her - and a toll it cannot collect stays pending until it can. Once nothing is left to collect the seal burns out and the spreading seal takes over.
 - Matthias still overspent after the rework: the purchases used the animated money, which buffers the subtraction and only applies it after the whole scoring event, so every card of the hand checked the same pre-hand purse and the hand could buy itself below $0 without a Credit Card. Purchases are now paid instantly and the purse check compares big numbers, so the refuse-and-unseal path really triggers once the price outruns the purse.
 - Burn Cards paid 0.1% of the Encounter instead of the described 0.001%. At the Laevateinn's x1000 that is the whole blind, so every Burn card maxed out the 9999 chip cap. The payout multiplier is now a true 0.001% (1% of the Encounter at x1000).
+- Tremor amplification ran on two different scopes. Burn, Gold, Lucky and the Poise chance counted the whole deck, while Bleed, Rupture, Sinking and the Poise stack counted only the Tremor cards in the played hand - so the card's "once for each Tremor card in the deck" was false for half its effects, and playing a Tremor card (which scores nothing) was the only way to get them. All of them read the deck now.
 
 Pairs
 - Every pair lookup missed. `card.config.center.key` is `j_pmcmod_ren` while the pair table uses bare keys, so no apprentice ever found its father.
@@ -92,9 +95,16 @@ Matthias, Burn and the sin seals
 - Matthias carries 3 Laevateinn counters and -1 Hand. On the first hand of a Scene, each unburnt card gains Burn for the going price, which starts at $2 and rises by $1 per purchase. Nothing is spent while short - the buy only happens at or above the price, the purse never goes below $0 unless Credit Card is held, and Kira exactly to his right waives the price entirely and stops it climbing. Purchases are paid instantly, so each card of the hand checks the real purse.
 - Once the price outruns the purse, the buy is refused and the seal takes a counter instead, once per hand. The tolls are swappable: the seal takes the first it can collect - the scored hand for $20, then a random non-Eternal Keypage (Kira excluded), then Kira, banning her from the pool. A toll it cannot collect stays pending for a later hand, and once nothing is left to collect the seal burns out and the spreading seal takes over. Going broke stops the buying for the rest of the hand.
 - With no counters left nothing is bought: every scored card rolls 1 in 5 to gain Burn, and a hit on a card that already burns destroys it.
-- Burn Cards have no use limit and pay chips - 0.001% of the Encounter Score, multiplied by x10 for every Laevateinn counter spent, capped at 9999.
+- Burn Cards have no use limit and pay chips - 0.001% of the Encounter Score, multiplied by x10 for every Laevateinn counter spent. No chip cap: with Tremor behind it the payout is meant to run.
 - The Wrath seal is now purely Burn-driven: 1.2 per Sloth seal in 10 to become a Burn Card, and in 20 to spread Burn to a card that lacks it. Its old perma Chips, Mult and Money gains are gone.
 - Sloth passively enchants every other sin seal; its description says just that.
+
+Tremor
+- A Tremor card scores nothing by itself. It is a deck-wide multiplier: every enhancement it lists counts each Tremor card in the deck, whether that card was played, is in the draw pile, or was discarded.
+- Bleed pays for itself only: +1 Perma Mult per scoring Bleed card, +1 more per Tremor card in the deck. A hand of Bleed cards no longer multiplies by its own size.
+- Sinking removes 5% of the Encounter Score, plus 1% per Tremor card in the deck - one Tremor used to double it to 10%, now 6%.
+- Burn is multiplied by the Tremor count, and its payout is no longer clamped at 9999 Chips.
+- Poise narrows its denominator by 0.1 per Tremor card (a 1-in-10 becomes 1-in-9.9 at one), Rupture gains 10% more stacks, Lucky gains 0.2 odds, Gold pays $1 more, and Endurance, Strength, Stone and Steel get their listed Chips, Mult and X Mult.
 
 Other
 - Silent Deck gives +1 hand and +1 discard instead of +2/+2, and Kong Sihui pays $5 instead of $2.

@@ -11,27 +11,16 @@ SMODS.Enhancement {
 
         if context.main_scoring and context.cardarea == G.play then
 
-            local bleedCounting = 0
-            local tremorCounting = 0
-
-            for i = 1, #G.play.cards do
-                if SMODS.has_enhancement(G.play.cards[i], 'm_pmcmod_bleed') then
-                    bleedCounting = bleedCounting + 1
-                end
-            end
-
-            for i = 1, #G.play.cards do
-                if SMODS.has_enhancement(G.play.cards[i], 'm_pmcmod_tremor') then
-                    tremorCounting = tremorCounting + 1
-                end
-            end
+            -- Tremor reads the deck, not the hand: it amplifies while simply sitting there
+            local tremorCounting = PMCMOD.tremor_count()
 
         --if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_pmcmod_bleed') then
             -- ability.mult is what Card:get_chip_mult reads, so the gain actually scores.
             -- perma_mult is never applied to a playing card, but it is the counter other Keypages
             -- consume (donQuixote turns it into chips, araya/hongLu/wangDawei add to it), so Bleed
             -- feeds both.
-            local gain = bleedCounting * (1 + tremorCounting)
+            -- A Bleed card pays for itself only: +1 for its own score, +1 more per Tremor
+            local gain = 1 + tremorCounting
             card.ability.mult = (card.ability.mult or 0) + gain
             card.ability.perma_mult = (card.ability.perma_mult or 0) + gain
 

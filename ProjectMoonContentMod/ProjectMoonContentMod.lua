@@ -310,12 +310,10 @@ function PMCMOD.prescript_driver()
 end
 
 -- What a Burn Card pays: 0.001% of the Encounter (0.00001), grown by the Laevateinn's
--- remaining counters and bounded at 9999 the way it always was.
+-- remaining counters. No ceiling: Tremor is meant to be able to run away with it.
 function PMCMOD.burn_chips()
     local encounter = (G.GAME and G.GAME.blind and G.GAME.blind.chips) or 0
-    local value = encounter * 0.00001 * PMCMOD.laevateinn_scale()
-    if to_big(value) >= to_big(9999) then value = 9999 end
-    return value
+    return encounter * 0.00001 * PMCMOD.laevateinn_scale()
 end
 
 -- Credit Card is the one thing that lets the purse go negative, in vanilla and here.

@@ -156,9 +156,7 @@ return {
             m_pmcmod_bleed = {
                 name = "Bleed Card",
                 text = {
-                    "Gains {C:red}+1{} Perma Mult for",
-                    "every {C:red}Bleed{} card scored in the",
-                    "played hand",
+                    "Gains {C:red}+1{} Perma Mult when it scores",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Lust Seal{} ({C:green}1 in 10{})"
                 },

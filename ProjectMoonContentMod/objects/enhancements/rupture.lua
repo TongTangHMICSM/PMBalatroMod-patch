@@ -9,13 +9,8 @@ SMODS.Enhancement {
     end,
     calculate = function(self, card, context)
 
-        local tremorCounting = 0
-
-        for i = 1, #G.play.cards do
-            if SMODS.has_enhancement(G.play.cards[i], 'm_pmcmod_tremor') then
-                tremorCounting = tremorCounting + 1
-            end
-        end
+        -- Tremor reads the deck, not the hand: it amplifies while simply sitting there
+        local tremorCounting = PMCMOD.tremor_count()
 
         if context.main_scoring and context.cardarea == G.play then
 
