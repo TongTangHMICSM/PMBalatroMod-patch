@@ -2011,19 +2011,22 @@ return {
             j_pmcmod_matthias = {
                 name = 'Matthias',
                 text = {
-                    {"{C:blue}-#1#{} Hand.  {C:attention}Laevateinn: #2#{} counters left",
-                    "{C:inactive}(Burn Cards are {C:attention}x#4#{} stronger now){}"},
-                    {"First hand: unburnt cards gain {C:red}Burn{} for {C:gold}$#3#{}, the price",
-                    "rising {C:gold}$1{} each time. Nothing is spent while short - the buy only",
-                    "happens at or above the price, unless you hold {C:attention}Credit Card{}.",
-                    "{C:attention}Kira{} to {C:attention}his right{} waives the price and stops it climbing"},
-                    {"{C:inactive}Once the price outruns your purse,{} the buy is refused and the seal",
-                    "{C:inactive}takes a counter instead (once per hand), in this order and each",
-                    "{C:inactive}only once:{} the scored hand for {C:gold}$20{}, then a random",
-                    "{C:attention}non-Eternal{} Keypage, then {C:attention}Kira{}, banning her. A toll",
-                    "{C:inactive}that cannot be collected waits for a later hand{}"},
-                    {"{C:inactive}At no counters left, every scored card rolls {C:attention}1 in 5{} for",
-                    "{C:inactive}Burn, destroying it if it already burns{}"},
+                    {"{C:blue}-#1#{} Hand.  {C:diamonds}Laevateinn:{} {C:attention}#2#{} counters left",
+                    "{C:inactive}(each spent counter makes Burn x10 stronger, now x#4#{}){}"},
+
+                    {"{C:attention}First hand of the Scene:{} unburnt scored cards gain {C:red}Burn{}",
+                    "for {C:money}$#3#{}, the price rising {C:money}$1{} each time.",
+                    "{C:diamonds}Kira{} to {C:attention}his right{} waives the cost and stops it",
+                    "climbing; {C:attention}#5#{} lets you pay in debt."},
+
+                    {"{C:inactive}Once the price outruns your purse,{} the buy is refused and the",
+                    "{C:inactive}seal takes a counter instead, once per hand, in this order,",
+                    "{C:inactive}each only once:{} the scored hand for {C:money}$20{}, then a",
+                    "random {C:attention}non-Eternal{} Keypage, then {C:diamonds}Kira{}, banning",
+                    "her. {C:inactive}A toll that cannot be collected waits for a later hand{}"},
+
+                    {"{C:inactive}At no counters left,{} every scored card rolls {C:attention}1 in 5{}",
+                    "{C:inactive}for Burn, destroying it if it already burns{}"},
                 },
                 unlock = {
                     'Win a run with the {C:attention}Ryoshu Keypage{}',
@@ -2103,9 +2106,9 @@ return {
             j_pmcmod_kira = {
                 name = 'Kira',
                 text = {
-                    {"Burn Card gives {C:gold}$#2#{}"},
-                    {"Dies after {C:attention}3{} hands of Burn Cards, is banned",
-                    "{C:inactive}from the pool{}",
+                    {"{C:red}Burn{} Cards give {C:gold}$#2#{}"},
+                    {"Dies after Matthias burns {C:attention}3{} hands, is banned",
+                    "{C:inactive}from the pool{} and spends a {C:diamonds}Laevateinn{} counter",
                     "{C:inactive}(Total triggers: {C:red}#1#{C:inactive}){}"},
                 },
                 unlock = {

@@ -22,7 +22,8 @@ SMODS.Joker {
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.m_pmcmod_burn
         return {vars = { card.ability.extra.hands, card.ability.extra.laevateinn, card.ability.extra.price,
-			PMCMOD.laevateinn_scale() } }
+			PMCMOD.laevateinn_scale(),
+			localize({ type = 'name_text', set = 'Joker', key = 'j_credit_card' }) } }
 	end,
 	calculate = function(self, card, context)
 		local ex = card.ability.extra
