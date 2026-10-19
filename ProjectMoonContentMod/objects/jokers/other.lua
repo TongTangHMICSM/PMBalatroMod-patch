@@ -80,7 +80,7 @@ SMODS.Joker {
 				if key == 'm_bonus' then ret.chips = 5 * tremor end        -- Endurance
 				if key == 'm_mult' then ret.mult = tremor end              -- Strength
 				if key == 'm_stone' then ret.chips = 10 * tremor end        -- Stone
-				if key == 'm_steel' then ret.xmult = 0.1 * tremor end       -- Steel, above its own 1.5
+				-- Steel pays while it is held, not while it is played: see PMCMOD.install_steel_tremor
 				if next(ret) then return ret end
 			end
 		end

@@ -597,6 +597,23 @@ function PMCMOD.install_lucky_tremor()
     end
 end
 
+-- Tremor raises a Steel Card's X Mult. Steel pays while it is held, not while it is played:
+-- the hand pass (common_events.lua:630) reads this getter, so the difference has to be added
+-- here, on top of the vanilla 1.5, or it would only fire when the card was scored.
+function PMCMOD.install_steel_tremor()
+    if PMCMOD._steel_tremor or not (Card and Card.get_chip_h_x_mult) then return end
+    local original = Card.get_chip_h_x_mult
+    PMCMOD._steel_tremor = original
+    function Card:get_chip_h_x_mult()
+        local ret = original(self) or 0
+        if ret > 0 and self.config and self.config.center and self.config.center.key == 'm_steel' then
+            local tremor = PMCMOD.tremor_count()
+            if tremor > 0 then ret = ret + 0.1 * tremor end
+        end
+        return ret
+    end
+end
+
 function PMCMOD.install_discard_reporter()
     if PMCMOD._discard_reporter or not (G and G.FUNCS and G.FUNCS.discard_cards_from_highlighted) then
         return
@@ -768,6 +785,7 @@ PMCMOD.install_discard_reporter()
 PMCMOD.install_death_saver()
 PMCMOD.install_lucky_tremor()
 PMCMOD.install_gold_tremor()
+PMCMOD.install_steel_tremor()
 PMCMOD.match_spectral_weights()
 
 SMODS.current_mod.optional_features = function()
