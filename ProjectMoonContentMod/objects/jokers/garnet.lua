@@ -153,7 +153,7 @@ SMODS.Joker {
 				local made = SMODS.add_card({ key = copy.config.center.key })
 				if made then
 					if card.edition then made:set_edition(card.edition) end
-					if card.ability.rental then made:set_rental(true) end
+					made:set_rental(true)
 					PMCMOD.garnet_transfer(copy, made)
 				end
 				copy:start_dissolve({G.C.RED}, nil, 1.6)
