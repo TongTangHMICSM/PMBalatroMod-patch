@@ -1687,6 +1687,7 @@ return {
                     "{C:inactive}Sold: leaves the copy behind with his{} {C:attention}Edition{}",
                     "{C:inactive}and a{} {C:attention}Rental{}",
                     "{C:inactive}(Currently copying: {C:red}#1#)",
+                    "{C:inactive}(Accumulated: {C:attention}#2#{})",
                 },
                 unlock = {
                     'Discard a {C:attention}Flush House',

@@ -33,6 +33,9 @@ end
 
 local function garnet_apply(card, stats)
 	local a = card.ability
+	-- SMODS can hand out the centre's own extra table; copying it keeps the transfer
+	-- from permanently raising the base stats of every later copy of that Keypage
+	if type(a.extra) == 'table' then a.extra = copy_table(a.extra) end
 	for k, d in pairs(stats) do
 		local sub = k:match('^extra%.(.+)$')
 		if sub then
@@ -43,6 +46,32 @@ local function garnet_apply(card, stats)
 			a[k] = a[k] + d
 		end
 	end
+end
+
+local function garnet_num(v)
+	if v == math.floor(v) then return tostring(math.floor(v)) end
+	return tostring(v)
+end
+
+-- What the copy has accumulated since it appeared, for the tooltip.
+local function garnet_summary(card)
+	if not card then return 'nothing' end
+	local d = garnet_delta(card)
+	local parts = {}
+	if d.mult then parts[#parts + 1] = '+' .. garnet_num(d.mult) .. ' Mult' end
+	local xm = d.x_mult or d.xmult
+	if xm then parts[#parts + 1] = '+' .. garnet_num(xm) .. 'x' end
+	if d.chips then parts[#parts + 1] = '+' .. garnet_num(d.chips) .. ' Chips' end
+	if d.x_chips then parts[#parts + 1] = '+' .. garnet_num(d.x_chips) .. 'x Chips' end
+	if d.dollars then parts[#parts + 1] = '+$' .. garnet_num(d.dollars) end
+	if d.extra_value then parts[#parts + 1] = '+$' .. garnet_num(d.extra_value) end
+	for k, v in pairs(d) do
+		local sub = k:match('^extra%.(.+)$')
+		if sub and sub ~= 'mult' and sub ~= 'chips' and sub ~= 'x_mult' and sub ~= 'xmult' then
+			parts[#parts + 1] = '+' .. garnet_num(v) .. ' ' .. sub
+		end
+	end
+	return #parts > 0 and table.concat(parts, ', ') or 'nothing'
 end
 
 function PMCMOD.garnet_transfer(from, to)
@@ -131,7 +160,8 @@ SMODS.Joker {
 			card.children.center:set_sprite_pos(self.pos)
 		end
 
-		return { vars = { localize{type = "name_text", set = "Joker", key = keyToLocalize} } }
+		local copy = ProjectMoonMod.garnetJoker and ProjectMoonMod.garnetJoker.cards[#ProjectMoonMod.garnetJoker.cards]
+		return { vars = { localize{type = "name_text", set = "Joker", key = keyToLocalize}, garnet_summary(copy) } }
 	end,
 	calculate = function(self, card, context)
 		local area = ProjectMoonMod.garnetJoker
