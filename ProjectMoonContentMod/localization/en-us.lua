@@ -2890,8 +2890,8 @@ return {
                 text = {
                     "Has a {C:green}#1# in #2#{} chance to give this",
                     "page a random {C:attention}Edition{} when scored",
-                    "{C:inactive}(if already edited, spreads the{}",
-                    "{C:inactive}Envy seal to the scored hand){}",
+                    "{C:inactive}(if already edited, it spreads the{}",
+                    "{C:inactive}Envy seal to the scored hand instead){}",
                     "{C:inactive}(+1 in 4 per Sloth seal){}",
                     "1 in 60 on an unenhanced card while",
                     "an {C:attention}Edition{} is in play"
