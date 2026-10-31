@@ -5,31 +5,6 @@ this is just a fork due to some aspect i want to fix
 # Installing 
 Due to mod structure change a bit for convenient in development, you can git clone the mods or download the whole code as to put it into mods folder as PMBalatroMod-patch-master
 
-# Table of Change
-- Add sin seal (based on what the description in the code said and my interpretation)
-- Add sin texture in 2x (texture come from upscaling the 1x one with lazy and simple algorithm so it look a bit pixelated)
-- Fix/Add magical girl
-- Change Mod structure
-- Fix XiChun display
-- Fix Niko code
-- Fix Indigo Elder code
-- Improve Alan logic
-- Improve Garnet logic
-- Flowing time nerf *Questionable
-- Fix kongsihui
-- Fix Ahab's X Mult to match its description (gains X0.05 per scored Pallid card, no longer a static deck-count formula)
-- Rework Matthias' unseal: when the price outruns the purse the buy is refused and the seal takes one counter per hand - the tolls are swappable now, so the seal takes the first it can collect (the scored hand for $20, then a random non-Eternal Keypage, then Kira, banning her), uncollectable tolls stay pending for later hands, and with none left it burns out
-- Fix Matthias overspending: Burn purchases are paid instantly now, so every card of the hand checks the real purse instead of the pre-hand total (the animated money was applying after the whole hand, letting it buy the purse past $0)
-- Fix Burn Card payout to be a true 0.001% of the Encounter (was 0.1%, so at the Laevateinn's x1000 every Burn card hit the 9999 cap on ordinary blinds)
-- Fix Tremor amplification to read the deck for every enhancement (Bleed, Rupture, Sinking and the Poise stack only counted the Tremor cards in the played hand)
-- Balance Tremor: Bleed pays +1 Mult for itself (+1 per Tremor), Sinking removes +1% per Tremor, and Burn Cards lose their 9999 chip cap
-- Queen of Hatred is no longer unlocked by default: win with the Love Deck on The City Stake (gold) to earn it
-- Rework Garnet: copies any working Keypage (mod or vanilla), swaps at the end of the shop after the old copy's own shop-end effects resolve, carries the accumulated +Mult/X Mult/Chips/X Chips/$ into the new copy, and on sale leaves the copied Keypage behind with his Edition and Rental
-- R Corp Keypages (Rudolph, Maxim, Nikolai) are obtainable once again: copies used to stack their payouts, and Manifest could make a second copy of a True Version already on the team
-- Sin seals scale off Sloth: Envy x1.1 per Sloth, Wrath +0.1 per Sloth (Lust keeps its 1-in-2 plus Sloth)
-- Burn Cards pay per Burn card in the full deck instead of a flat share of the Encounter
-- Papa Bongy buff: each defeated Bongy now gives +30 Chips, +15 Mult or X0.25 Mult
-
 # Fixes
 
 Engine and framework
@@ -70,6 +45,10 @@ Pairs
 - Sora transformed after one Scene. Her counter was evaluated outside any context, and keying on the Scene number let a single Scene advance it more than once.
 - Rien's X-Chips was a flat amount rather than a multiplier, and Sinclair's popup asked the variable dictionary for a key that only holds vanilla entries, which returns the string "ERROR".
 - Kira dying to her own trigger count bans her from the pool. She no longer spends a Laevateinn counter: with the swappable tolls her ban just makes that toll uncollectable, so the seal takes something else.
+
+Earlier passes
+- Mod structure was split so one object lives in one file under `objects/<set>/`, which is what the loader actually reads.
+- Fixed XiChun's display, Niko's code and the Indigo Elder's code; the magical girls were fixed and completed.
 
 # Balanced Changes
 
@@ -121,3 +100,10 @@ Other
 - Alan's text is shorter and its edition handling is safer, and Jumsoon's flip was corrected.
 - Bongys and Prescripts are summoned without consuming a joker slot, and a Bongy always spawns one of each of the four.
 - Tooltips were compacted where they ran off screen: Matthias (15 lines to 8), Sloth (9 to 4), Rien and Sora.
+
+Content and earlier balance
+- Added the sin seals (interpreted from what the code's own comments described) and their 2x art, upscaled from the 1x set.
+- Flowing time nerf *Questionable.
+- Rework Garnet: copies any working Keypage (mod or vanilla), swaps at the end of the shop after the old copy's own shop-end effects resolve, carries the accumulated +Mult/X Mult/Chips/X Chips/$ (including custom X Mult counters like The Red Gaze's) into the new copy, and on sale leaves the copied Keypage behind with his Edition and Rental.
+- Queen of Hatred is no longer unlocked by default: win with the Love Deck on The City Stake (gold) to earn it.
+- Papa Bongy buff: each defeated Bongy now gives +30 Chips, +15 Mult or X0.25 Mult.
