@@ -2,7 +2,7 @@ SMODS.Joker {
 	key = 'papaBongy',
 	name = "Papa Bongy",
 	pronouns = "he_him",
-	config = { extra = { chips = 0, mult = 0, xmult = 1, dollars = 0, totalChickensSpawned = 0, chips_mod = 10, mult_mod = 5, xmult_mod = 0.1, dollars_mod = 1 } },
+	config = { extra = { chips = 0, mult = 0, xmult = 1, dollars = 0, totalChickensSpawned = 0, chips_mod = 30, mult_mod = 15, xmult_mod = 0.25, dollars_mod = 1 } },
 	unlocked = false,
 	eternal_compat = true,
 	perishable_compat = true,
