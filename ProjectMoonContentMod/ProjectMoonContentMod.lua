@@ -1943,6 +1943,21 @@ function Game:start_run(args)
     game_start_run_ref(self, args)
 end
 
+-- The copied Keypage sits in a hidden area, outside the game's update loop, so the tallies
+-- Card:update refreshes every frame (Steel Joker's steel_tally, Driver's License's driver_tally,
+-- Cloud 9's nine_tally) stayed stale and the copy looked broken.
+local game_update_ref = Game.update
+function Game:update(dt)
+    game_update_ref(self, dt)
+    local area = ProjectMoonMod.garnetJoker
+    if not area then return end
+    local ok, err = pcall(area.update, area, dt)
+    if not ok and not PMCMOD._garnet_update_warned then
+        PMCMOD._garnet_update_warned = true
+        print('PMCMOD: garnet copy update failed: ' .. tostring(err))
+    end
+end
+
 local card_set_cost_voucher = Card.set_cost
 function Card:set_cost()
     card_set_cost_voucher(self)
