@@ -2480,6 +2480,10 @@ return {
             },
             j_pmcmod_queenOfHatred = {
                 name = "Queen of Hatred",
+                unlock = {
+                    'Win a run with {C:attention}Love Deck{}',
+                    'on at least {C:attention}The City Stake{}',
+                },
                 text = {
                     {"Every card played and discarded is counted"},
                     {"Gains effects based on the difference between values:",

@@ -23,6 +23,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Fix Burn Card payout to be a true 0.001% of the Encounter (was 0.1%, so at the Laevateinn's x1000 every Burn card hit the 9999 cap on ordinary blinds)
 - Fix Tremor amplification to read the deck for every enhancement (Bleed, Rupture, Sinking and the Poise stack only counted the Tremor cards in the played hand)
 - Balance Tremor: Bleed pays +1 Mult for itself (+1 per Tremor), Sinking removes +1% per Tremor, and Burn Cards lose their 9999 chip cap
+- Queen of Hatred is no longer unlocked by default: win with the Love Deck on The City Stake (gold) to earn it
 - R Corp Keypages (Rudolph, Maxim, Nikolai) are obtainable once again: copies used to stack their payouts, and Manifest could make a second copy of a True Version already on the team
 
 # Fixes

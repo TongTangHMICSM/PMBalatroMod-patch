@@ -2,7 +2,7 @@ SMODS.Joker {
 	key = 'queenOfHatred',
 	name = "Queen of Hatred",
 	config = { extra = { cardsDiscarded = 0, cardsPlayed = 0, transformTime = 0, currentCount = 0, multScale = 0.5, bonusChips = 100} },
-	unlocked = true,
+	unlocked = false,
 	eternal_compat = true,
 	perishable_compat = true,
     blueprint_compat = false,
@@ -128,5 +128,9 @@ SMODS.Joker {
                 end
             end
         end
-	end
+	end,
+	check_for_unlock = function(self, args)
+		-- the deck's own Keypage: earned by winning with Love Deck on The City Stake (gold)
+		return args.type == 'win_deck' and get_deck_win_stake('b_pmcmod_hatredDeck') > 7
+	end,
 }
