@@ -32,8 +32,8 @@ SMODS.Joker {
                 target_x = 4
             end
             
-            if card.children.center and card.children.center.sprite_pos.x ~= target_x then
-                card.children.center:set_sprite_pos({x = target_x, y = 13})
+            if card.children and card.children.center and card.children.center.sprite_pos.x ~= target_x then
+                PMCMOD.set_card_pos(card, {x = target_x, y = 13})
             end
         end
     end,

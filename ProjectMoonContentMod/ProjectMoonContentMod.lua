@@ -427,6 +427,14 @@ end
 
 -- How many Tremor cards are in the deck. Tremor passively amplifies the other enhancements, and
 -- several of them scale their effect by this count.
+-- loc_vars also runs for the fake cards SMODS builds when one card's description embeds
+-- another's; those have no children yet, so sprite swaps have to be skipped there.
+function PMCMOD.set_card_pos(card, pos)
+	if card and card.children and card.children.center then
+		card.children.center:set_sprite_pos(pos)
+	end
+end
+
 function PMCMOD.tremor_count()
     local n = 0
     for _, c in ipairs(G.playing_cards or {}) do

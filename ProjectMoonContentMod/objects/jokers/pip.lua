@@ -27,10 +27,10 @@ SMODS.Joker {
 
 		if pallid_card_tally >= 5 then
 			tempKey = self.key..'_alt'
-			card.children.center:set_sprite_pos({x = 4 , y = 10})
+			PMCMOD.set_card_pos(card, {x = 4 , y = 10})
 		else 
 			tempKey = self.key
-			card.children.center:set_sprite_pos({x = 2 , y = 4})
+			PMCMOD.set_card_pos(card, {x = 2 , y = 4})
 		end
 		return { vars = { card.ability.extra.chips, key = tempKey  } }
 	end,

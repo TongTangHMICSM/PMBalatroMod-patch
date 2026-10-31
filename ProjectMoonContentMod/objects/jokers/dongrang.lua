@@ -21,14 +21,14 @@ SMODS.Joker {
 		if card.edition then
 			if card.edition.key == 'e_polychrome' then
 				tempKey = self.key..'_alt'
-				card.children.center:set_sprite_pos({x = 0 , y = 10})
+				PMCMOD.set_card_pos(card, {x = 0 , y = 10})
 			else 
 				tempKey = self.key
-				card.children.center:set_sprite_pos({x = 0 , y = 3})
+				PMCMOD.set_card_pos(card, {x = 0 , y = 3})
 			end
 		else
 			tempKey = self.key
-			card.children.center:set_sprite_pos({x = 0 , y = 3})
+			PMCMOD.set_card_pos(card, {x = 0 , y = 3})
 		end
 
 		return { vars = { card.ability.extra.xchips, card.ability.extra.xchips_gain },key = tempKey, }

@@ -29,11 +29,11 @@ SMODS.Joker {
 	loc_vars = function(self, info_queue, card)
 		
 		if card.edition then
-			card.children.center:set_sprite_pos({x = 0 , y = 11})
+			PMCMOD.set_card_pos(card, {x = 0 , y = 11})
 		end
 		
 		if card.ability.extra.locked then
-			card.children.center:set_sprite_pos({x = 1 , y = 11})
+			PMCMOD.set_card_pos(card, {x = 1 , y = 11})
 		end
 
 		-- she carries the Charge edition's rules once she has absorbed one

@@ -38,7 +38,7 @@ SMODS.Joker {
 						card.ability.extra.xmult = 0
 					end
 
-					card.children.center:set_sprite_pos({x = card.ability.extra.selectedFace , y = 15})
+					PMCMOD.set_card_pos(card, {x = card.ability.extra.selectedFace , y = 15})
 					card.ability.extra.timer = 0
 				end
 			end

@@ -151,13 +151,13 @@ SMODS.Joker {
 		and G.P_CENTERS[card.ability.selectedJoker] then
 			
 			keyToLocalize = card.ability.selectedJoker
-			card.children.center:set_sprite_pos({x = 0, y = 10})
+			PMCMOD.set_card_pos(card, {x = 0, y = 10})
 			
 			-- FIX: Pass the full Joker definition object so the UI generator has all the ability data
 			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.selectedJoker]
 		else
 			-- Fallback if the saved data is corrupted, empty, or missing
-			card.children.center:set_sprite_pos(self.pos)
+			PMCMOD.set_card_pos(card, self.pos)
 		end
 
 		local copy = ProjectMoonMod.garnetJoker and ProjectMoonMod.garnetJoker.cards[#ProjectMoonMod.garnetJoker.cards]

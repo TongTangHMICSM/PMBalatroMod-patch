@@ -46,15 +46,15 @@ SMODS.Joker {
 		if card.children and card.children.center then
 			local t = extra.current_timer
 			if t < 7 then
-				card.children.center:set_sprite_pos({x = 5, y = 15})
+				PMCMOD.set_card_pos(card, {x = 5, y = 15})
 			elseif t < 14 then
-				card.children.center:set_sprite_pos({x = 6, y = 15})
+				PMCMOD.set_card_pos(card, {x = 6, y = 15})
 			elseif t < 21 then
-				card.children.center:set_sprite_pos({x = 7, y = 15})
+				PMCMOD.set_card_pos(card, {x = 7, y = 15})
 			elseif t < 29 then
-				card.children.center:set_sprite_pos({x = 8, y = 15})
+				PMCMOD.set_card_pos(card, {x = 8, y = 15})
 			else
-				card.children.center:set_sprite_pos({x = 9, y = 15})
+				PMCMOD.set_card_pos(card, {x = 9, y = 15})
 			end
 		end
 

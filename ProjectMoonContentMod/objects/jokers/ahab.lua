@@ -26,10 +26,10 @@ SMODS.Joker {
 
 		if pallid_card_tally >= 5 then
 			tempKey = self.key..'_alt'
-			card.children.center:set_sprite_pos({x = 1 , y = 10})
+			PMCMOD.set_card_pos(card, {x = 1 , y = 10})
 		else 
 			tempKey = self.key
-			card.children.center:set_sprite_pos({x = 8 , y = 3})
+			PMCMOD.set_card_pos(card, {x = 8 , y = 3})
 		end
 		
 		info_queue[#info_queue + 1] = G.P_CENTERS.c_pmcmod_hunt

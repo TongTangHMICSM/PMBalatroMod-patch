@@ -19,10 +19,10 @@ SMODS.Joker {
 	loc_vars = function(self, info_queue, card)
 			if G.GAME.pool_flags.clearAllCathy then
 				tempKey = self.key..'_alt'
-				card.children.center:set_sprite_pos({x = 5 , y = 10})
+				PMCMOD.set_card_pos(card, {x = 5 , y = 10})
 			else 
 				tempKey = self.key
-				card.children.center:set_sprite_pos({x = 6 , y = 4})
+				PMCMOD.set_card_pos(card, {x = 6 , y = 4})
 			end
 		return { vars = { key = tempKey  } }
 	end,
