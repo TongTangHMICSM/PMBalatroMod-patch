@@ -2882,7 +2882,7 @@ return {
                     "Gains {C:gold}1 Perma Money{} when scored",
                     "and has a {C:green}1 in 2{} chance to spread",
                     "to the other cards in the scored hand",
-                    "{C:inactive}(x1.1 per Sloth seal){}",
+                    "{C:inactive}(1 Sloth seal: 2 in 3){}",
                     "1 in 10 on scored {C:attention}Bleed{} cards"
                 },
             },
