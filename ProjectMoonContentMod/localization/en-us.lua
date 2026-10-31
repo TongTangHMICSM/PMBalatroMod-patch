@@ -1681,8 +1681,11 @@ return {
             j_pmcmod_garnet = {
                 name = 'Garnet',
                 text = {
-                    "Copies the effect of any random unlocked Keypage",
-                    "Keypage changes every Scene",
+                    "Copies the effect of any random working Keypage,",
+                    "{C:attention}shops{} swap it once their end-of-shop effects resolve",
+                    "The new copy keeps what the old one accumulated",
+                    "{C:inactive}Sold: leaves the copy behind, with his{} {C:attention}Edition{}",
+                    "{C:inactive}and{} {C:attention}Rental{}",
                     "{C:inactive}(Currently copying: {C:red}#1#)",
                 },
                 unlock = {

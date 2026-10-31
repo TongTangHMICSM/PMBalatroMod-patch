@@ -24,6 +24,7 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Fix Tremor amplification to read the deck for every enhancement (Bleed, Rupture, Sinking and the Poise stack only counted the Tremor cards in the played hand)
 - Balance Tremor: Bleed pays +1 Mult for itself (+1 per Tremor), Sinking removes +1% per Tremor, and Burn Cards lose their 9999 chip cap
 - Queen of Hatred is no longer unlocked by default: win with the Love Deck on The City Stake (gold) to earn it
+- Rework Garnet: copies any working Keypage (mod or vanilla), swaps at the end of the shop after the old copy's own shop-end effects resolve, carries the accumulated +Mult/X Mult/Chips/X Chips/$ into the new copy, and on sale leaves the copied Keypage behind with his Edition and Rental
 - R Corp Keypages (Rudolph, Maxim, Nikolai) are obtainable once again: copies used to stack their payouts, and Manifest could make a second copy of a True Version already on the team
 
 # Fixes
