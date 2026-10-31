@@ -2,23 +2,31 @@
 -- not playable copies, so they are skipped.
 local GARNET_SKIP = { j_pmcmod_yuri = true, j_pmcmod_chargeManager = true }
 
--- Accumulated stats, measured against the card's own starting config: +Mult, X Mult, Chips,
--- X Chips, money and any numeric counter inside ability.extra.
+-- Numeric view of a card's ability: the usual stats plus every numeric counter in extra.
+-- Deltas are measured against the baseline saved when the copy was made, never against the
+-- centre config, so a static value like Driver's License's X3 never reads as accumulation.
 local GARNET_STATS = {'mult', 'x_mult', 'xmult', 'chips', 'x_chips', 'dollars', 'extra_value'}
 
-local function garnet_stats(card)
+local function garnet_snapshot(card)
 	local out, a = {}, card.ability
-	local base = card.config.center.config or {}
 	for _, k in ipairs(GARNET_STATS) do
-		local b = type(base[k]) == 'number' and base[k] or 0
-		if type(a[k]) == 'number' and a[k] ~= b then out[k] = a[k] - b end
+		if type(a[k]) == 'number' then out[k] = a[k] end
 	end
 	if type(a.extra) == 'table' then
-		local be = type(base.extra) == 'table' and base.extra or {}
 		for k, v in pairs(a.extra) do
-			local b = type(be[k]) == 'number' and be[k] or 0
-			if type(v) == 'number' and v ~= b then out['extra.' .. k] = v - b end
+			if type(v) == 'number' then out['extra.' .. k] = v end
 		end
+	end
+	return out
+end
+
+local function garnet_delta(card)
+	local out = {}
+	local base = card.ability.garnet_base
+	if type(base) ~= 'table' then return out end
+	for k, v in pairs(garnet_snapshot(card)) do
+		local b = base[k]
+		if type(b) == 'number' and v ~= b then out[k] = v - b end
 	end
 	return out
 end
@@ -59,7 +67,7 @@ function PMCMOD.garnet_reroll(card)
 
 	local key = pseudorandom_element(pool, pseudoseed('garnet'))
 	local old = area.cards[#area.cards]
-	local carried = old and garnet_stats(old) or {}
+	local carried = old and garnet_delta(old) or {}
 	card.ability.selectedJoker = key
 
 	if old then
@@ -73,7 +81,10 @@ function PMCMOD.garnet_reroll(card)
 	end
 
 	local new = SMODS.add_card({ key = key, area = area })
-	if new then garnet_apply(new, carried) end
+	if new then
+		garnet_apply(new, carried)
+		new.ability.garnet_base = garnet_snapshot(new)
+	end
 end
 
 SMODS.Joker {
