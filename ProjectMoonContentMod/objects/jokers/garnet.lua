@@ -177,7 +177,11 @@ SMODS.Joker {
 		local reroll = context.ending_shop and not context.blueprint
 
 		local current = area.cards[#area.cards]
-		local ret = current and SMODS.blueprint_effect(card, current, context) or nil
+		-- the copy behaves as if it were the real Keypage. blueprint_effect would raise
+		-- context.blueprint, and every "if not context.blueprint" scaler (Effie, Wolf, ...)
+		-- would stop growing - the copy has to accumulate on itself instead. When Garnet is
+		-- himself blueprinted the flag is already set, so a copy of a copy still mirrors.
+		local ret = current and current:calculate_joker(context) or nil
 
 		if reroll then PMCMOD.garnet_reroll(card) end
 
