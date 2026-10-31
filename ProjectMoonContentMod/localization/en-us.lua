@@ -2836,7 +2836,7 @@ return {
             pmcmod_sinwrath_seal = {
                 name = "Wrath",
                 text = {
-                    "When scored, {C:green}1.2 per Sloth seal in 10{} to",
+                    "When scored, {C:green}1 + 0.1 per Sloth seal in 10{} to",
                     "become a {C:red}Burn{} Card, and in {C:green}20{} to",
                     "spread {C:red}Burn{} to a card that lacks it",
                     "{C:inactive}(Sloth seals feed both rolls){}"
@@ -2882,7 +2882,7 @@ return {
                     "Gains {C:gold}1 Perma Money{} when scored",
                     "and has a {C:green}1 in 2{} chance to spread",
                     "to the other cards in the scored hand",
-                    "{C:inactive}(1 Sloth seal: 2 in 3){}",
+                    "{C:inactive}(x1.1 per Sloth seal){}",
                     "1 in 10 on scored {C:attention}Bleed{} cards"
                 },
             },

@@ -16,7 +16,8 @@ SMODS.Seal {
                 if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
             end
 
-            if context.scoring_hand and pseudorandom('lust') < (1 + slothCount) / (2 + slothCount) then
+            if context.scoring_hand and pseudorandom('lust')
+                < ((G.GAME.probabilities and G.GAME.probabilities.normal) or 1) * 1.1 ^ slothCount / 2 then
                 for _, other_card in ipairs(context.scoring_hand) do
                     if other_card ~= card and not other_card.seal then
                         other_card:set_seal("pmcmod_sinLust", nil, true)

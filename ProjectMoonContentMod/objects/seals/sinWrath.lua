@@ -14,9 +14,9 @@ SMODS.Seal {
             end
 
             local normal = (G.GAME.probabilities and G.GAME.probabilities.normal) or 1
-            local growth = 1.2 ^ slothCount
+            local growth = 1 + 0.1 * slothCount
 
-            -- 1.2 ^ Sloth in 10: the seal consumes the card and leaves Burn behind
+            -- 1 + 0.1 per Sloth in 10: the seal consumes the card and leaves Burn behind
             if not SMODS.has_enhancement(card, 'm_pmcmod_burn')
                 and pseudorandom('pmcmod_sinWrath_toBurn') < (normal * growth) / 10 then
                 card:set_ability(G.P_CENTERS.m_pmcmod_burn, nil, true)
