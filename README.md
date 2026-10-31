@@ -26,6 +26,9 @@ Due to mod structure change a bit for convenient in development, you can git clo
 - Queen of Hatred is no longer unlocked by default: win with the Love Deck on The City Stake (gold) to earn it
 - Rework Garnet: copies any working Keypage (mod or vanilla), swaps at the end of the shop after the old copy's own shop-end effects resolve, carries the accumulated +Mult/X Mult/Chips/X Chips/$ into the new copy, and on sale leaves the copied Keypage behind with his Edition and Rental
 - R Corp Keypages (Rudolph, Maxim, Nikolai) are obtainable once again: copies used to stack their payouts, and Manifest could make a second copy of a True Version already on the team
+- Sin seals scale off Sloth: Envy x1.1 per Sloth, Wrath +0.1 per Sloth (Lust keeps its 1-in-2 plus Sloth)
+- Burn Cards pay per Burn card in the full deck instead of a flat share of the Encounter
+- Papa Bongy buff: each defeated Bongy now gives +30 Chips, +15 Mult or X0.25 Mult
 
 # Fixes
 
@@ -101,8 +104,9 @@ Matthias, Burn and the sin seals
 - Matthias carries 3 Laevateinn counters and -1 Hand. On the first hand of a Scene, each unburnt card gains Burn for the going price, which starts at $2 and rises by $1 per purchase. Nothing is spent while short - the buy only happens at or above the price, the purse never goes below $0 unless Credit Card is held, and Kira exactly to his right waives the price entirely and stops it climbing. Purchases are paid instantly, so each card of the hand checks the real purse.
 - Once the price outruns the purse, the buy is refused and the seal takes a counter instead, once per hand. The tolls are swappable: the seal takes the first it can collect - the scored hand for $20, then a random non-Eternal Keypage (Kira excluded), then Kira, banning her from the pool. A toll it cannot collect stays pending for a later hand, and once nothing is left to collect the seal burns out and the spreading seal takes over. Going broke stops the buying for the rest of the hand.
 - With no counters left nothing is bought: every scored card rolls 1 in 5 to gain Burn, and a hit on a card that already burns destroys it.
-- Burn Cards have no use limit and pay chips - 0.001% of the Encounter Score, multiplied by x10 for every Laevateinn counter spent. No chip cap: with Tremor behind it the payout is meant to run.
-- The Wrath seal is now purely Burn-driven: 1.2 per Sloth seal in 10 to become a Burn Card, and in 20 to spread Burn to a card that lacks it. Its old perma Chips, Mult and Money gains are gone.
+- Burn Cards have no use limit and pay chips - 0.001% of the Encounter Score for every Burn Card in the full deck, multiplied by x10 for every Laevateinn counter spent. No chip cap: with Tremor behind it the payout is meant to run.
+- The Wrath seal is now purely Burn-driven: 1 + 0.1 per Sloth seal in 10 to become a Burn Card, and in 20 to spread Burn to a card that lacks it. Its old perma Chips, Mult and Money gains are gone.
+- The Envy seal rolls 1.1 per Sloth seal in 4 to hand its page an Edition, and a page that already has one spreads the seal across the scored hand instead of rolling again.
 - Sloth passively enchants every other sin seal; its description says just that.
 
 Tremor
