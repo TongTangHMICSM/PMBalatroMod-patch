@@ -17,6 +17,15 @@ local function garnet_snapshot(card)
 			if type(v) == 'number' then out['extra.' .. k] = v end
 		end
 	end
+	-- X Mult counters with their own name (Caino's caino_xmult and friends); the plain
+	-- x_mult/xmult fields are already in the list above
+	for k, v in pairs(a) do
+		local lk = k:lower()
+		if type(v) == 'number' and lk ~= 'x_mult' and lk ~= 'xmult'
+			and (lk:find('xmult', 1, true) or lk:find('x_mult', 1, true)) then
+			out['xmm.' .. k] = v
+		end
+	end
 	return out
 end
 
@@ -38,7 +47,16 @@ local function garnet_apply(card, stats)
 	if type(a.extra) == 'table' then a.extra = copy_table(a.extra) end
 	for k, d in pairs(stats) do
 		local sub = k:match('^extra%.(.+)$')
-		if sub then
+		local xmm = k:match('^xmm%.(.+)$')
+		if xmm then
+			if type(a[xmm]) == 'number' then
+				a[xmm] = a[xmm] + d
+			elseif type(a.x_mult) == 'number' then
+				a.x_mult = a.x_mult + d
+			elseif type(a.xmult) == 'number' then
+				a.xmult = a.xmult + d
+			end
+		elseif sub then
 			if type(a.extra) == 'table' and type(a.extra[sub]) == 'number' then
 				a.extra[sub] = a.extra[sub] + d
 			end
@@ -69,6 +87,8 @@ local function garnet_summary(card)
 		local sub = k:match('^extra%.(.+)$')
 		if sub and sub ~= 'mult' and sub ~= 'chips' and sub ~= 'x_mult' and sub ~= 'xmult' then
 			parts[#parts + 1] = '+' .. garnet_num(v) .. ' ' .. sub
+		elseif k:sub(1, 4) == 'xmm.' then
+			parts[#parts + 1] = '+' .. garnet_num(v) .. 'x'
 		end
 	end
 	return #parts > 0 and table.concat(parts, ', ') or 'nothing'
