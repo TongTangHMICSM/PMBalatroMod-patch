@@ -152,9 +152,22 @@ SMODS.Joker {
 			
 			keyToLocalize = card.ability.selectedJoker
 			PMCMOD.set_card_pos(card, {x = 0, y = 10})
-			
-			-- FIX: Pass the full Joker definition object so the UI generator has all the ability data
-			info_queue[#info_queue+1] = G.P_CENTERS[card.ability.selectedJoker]
+
+			-- The description is rendered from a fake card built out of the centre's config, so
+			-- every dynamic number showed its starting value. Hand the UI the live copy instead.
+			local base = G.P_CENTERS[card.ability.selectedJoker]
+			local live = ProjectMoonMod.garnetJoker
+				and ProjectMoonMod.garnetJoker.cards[#ProjectMoonMod.garnetJoker.cards]
+			if live and live.config.center == base then
+				local proxy = setmetatable({}, getmetatable(base))
+				for k, v in pairs(base) do proxy[k] = v end
+				proxy.create_fake_card = function(self)
+					return { ability = live.ability, fake_card = self.key }
+				end
+				info_queue[#info_queue+1] = proxy
+			else
+				info_queue[#info_queue+1] = base
+			end
 		else
 			-- Fallback if the saved data is corrupted, empty, or missing
 			PMCMOD.set_card_pos(card, self.pos)
