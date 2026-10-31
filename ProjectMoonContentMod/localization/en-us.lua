@@ -165,6 +165,7 @@ return {
                 name = "Burn Card",
                 text = {
                     "Gives {C:chips}#1#{} Chips, {C:inactive}0.001% of the Encounter{}",
+                    "{C:inactive}for every {C:red}Burn{} card in the deck{}",
                     "{C:inactive}Never burns out{}",
                     "When scored without a seal, it can gain",
                     "the {C:attention}Wrath Seal{} ({C:green}1 in 10{})"
@@ -2892,7 +2893,7 @@ return {
                     "page a random {C:attention}Edition{} when scored",
                     "{C:inactive}(if already edited, it spreads the{}",
                     "{C:inactive}Envy seal to the scored hand instead){}",
-                    "{C:inactive}(+1 in 4 per Sloth seal){}",
+                    "{C:inactive}(x1.1 chance per Sloth seal){}",
                     "1 in 60 on an unenhanced card while",
                     "an {C:attention}Edition{} is in play"
                 },

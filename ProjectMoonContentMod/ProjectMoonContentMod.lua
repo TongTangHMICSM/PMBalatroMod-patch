@@ -309,11 +309,15 @@ function PMCMOD.prescript_driver()
     PMCMOD.claim_slot(spawned)
 end
 
--- What a Burn Card pays: 0.001% of the Encounter (0.00001), grown by the Laevateinn's
--- remaining counters. No ceiling: Tremor is meant to be able to run away with it.
+-- What a Burn Card pays: 0.001% of the Encounter (0.00001) for every Burn Card in the full
+-- deck, grown by the Laevateinn's remaining counters. No ceiling: Tremor can run away with it.
 function PMCMOD.burn_chips()
     local encounter = (G.GAME and G.GAME.blind and G.GAME.blind.chips) or 0
-    return encounter * 0.00001 * PMCMOD.laevateinn_scale()
+    local burn = 0
+    for _, c in ipairs(G.playing_cards or {}) do
+        if SMODS.has_enhancement(c, 'm_pmcmod_burn') then burn = burn + 1 end
+    end
+    return encounter * 0.00001 * burn * PMCMOD.laevateinn_scale()
 end
 
 -- Credit Card is the one thing that lets the purse go negative, in vanilla and here.

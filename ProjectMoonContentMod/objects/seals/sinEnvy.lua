@@ -32,7 +32,7 @@ SMODS.Seal {
                 if playing_card.seal == "pmcmod_sinSloth" then slothCount = slothCount + 1 end
             end
 
-            if pseudorandom('envy') < (G.GAME.probabilities.normal + slothCount) / self.config.extra.odds then
+            if pseudorandom('envy') < (G.GAME.probabilities.normal * 1.1 ^ slothCount) / self.config.extra.odds then
                 -- Not edited yet: hand out a random Edition (never Negative)
                 local edition = SMODS.poll_edition {
                     key = 'sinEnvy',
