@@ -3,7 +3,7 @@ Please refer to the original https://github.com/CountKiro/PMBalatroMod
 this is just a fork due to some aspect i want to fix
 
 # Installing 
-Due to mod structure change a bit for convenient in development, you can git clone the mods or download the whole code as to put it into mods folder as PMBalatroMod-patch-master
+Due to mod structure change a bit for convenient in development, you can git clone the mods or download the whole code as to put it into mods folder as PMBalatroMod-patch-master and Don't forget to install [Malverk](https://github.com/Eremel/Malverk/releases)
 
 # Fixes
 
