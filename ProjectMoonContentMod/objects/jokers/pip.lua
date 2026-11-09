@@ -18,21 +18,8 @@ SMODS.Joker {
  	},
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = G.P_CENTERS.m_pmcmod_pallid
-		local pallid_card_tally = 0
-		if G.playing_cards then
-			for _, playing_card in ipairs(G.playing_cards) do
-				if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then pallid_card_tally = pallid_card_tally + 1 end
-			end
-		end
-
-		if pallid_card_tally >= 5 then
-			tempKey = self.key..'_alt'
-			PMCMOD.set_card_pos(card, {x = 4 , y = 10})
-		else 
-			tempKey = self.key
-			PMCMOD.set_card_pos(card, {x = 2 , y = 4})
-		end
-		return { vars = { card.ability.extra.chips, key = tempKey  } }
+		PMCMOD.set_card_pos(card, {x = 2 , y = 4})
+		return { vars = { card.ability.extra.chips } }
 	end,
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_pmcmod_pallid') then
@@ -42,6 +29,11 @@ SMODS.Joker {
         end
     end,
 	in_pool = function(self, args)
+		local jokers = (G and G.jokers and G.jokers.cards) or {}
+		for i = 1, #jokers do
+			local center = jokers[i].config and jokers[i].config.center
+			if center and center.key == 'j_pmcmod_pip_alt' then return false end
+		end
         for _, playing_card in ipairs(G.playing_cards or {}) do
             if SMODS.has_enhancement(playing_card, 'm_pmcmod_pallid') then
                 return true

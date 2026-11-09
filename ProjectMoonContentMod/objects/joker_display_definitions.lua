@@ -656,6 +656,17 @@ jd_def["j_pmcmod_ahab"] = {
         }
 }
 
+jd_def["j_pmcmod_ahab_alt"] = {
+    text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "xmult", retrigger_type = "exp" }
+                }
+            }
+        }
+}
+
 jd_def["j_pmcmod_queequeg"] = {
     text = {
             { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
@@ -681,7 +692,55 @@ jd_def["j_pmcmod_queequeg"] = {
     end
 }
 
+jd_def["j_pmcmod_queequeg_alt"] = {
+    text = {
+            { ref_table = "card.joker_display_values", ref_value = "count", retrigger_type = "mult" },
+            { text = "x",                              scale = 0.35 },
+            { ref_table = "card.ability.extra", ref_value = "dollars", colour = G.C.GOLD },
+        },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+        local count = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if SMODS.has_enhancement(scoring_card, 'm_pmcmod_pallid') then
+                    count = count + JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                end
+            end
+        end
+        card.joker_display_values.count = count
+        card.joker_display_values.localized_text = "(Pallid Cards)"
+    end
+}
+
 jd_def["j_pmcmod_starbuck"] = {
+    text = {
+        { text = " +",                             colour = G.C.MULT },
+        { ref_table = "card.joker_display_values", ref_value = "mult",  colour = G.C.MULT,  retrigger_type = "mult" }
+    },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+        local mult = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if SMODS.has_enhancement(scoring_card, 'm_pmcmod_pallid') then
+                    local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                    mult = mult + (card.ability.extra.mult) * retriggers
+                end
+            end
+        end
+        card.joker_display_values.mult = mult
+        card.joker_display_values.localized_text = "(Pallid Cards)"
+    end
+}
+
+jd_def["j_pmcmod_starbuck_alt"] = {
     text = {
         { text = " +",                             colour = G.C.MULT },
         { ref_table = "card.joker_display_values", ref_value = "mult",  colour = G.C.MULT,  retrigger_type = "mult" }
@@ -721,6 +780,30 @@ jd_def["j_pmcmod_stubb"] = {
 }
 
 jd_def["j_pmcmod_pip"] = {
+    text = {
+        { text = " +",                             colour = G.C.CHIPS },
+        { ref_table = "card.joker_display_values", ref_value = "chips",  colour = G.C.CHIPS,  retrigger_type = "mult" }
+    },
+    reminder_text = {
+        { ref_table = "card.joker_display_values", ref_value = "localized_text" },
+    },
+    calc_function = function(card)
+        local chips = 0
+        local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+        if text ~= 'Unknown' then
+            for _, scoring_card in pairs(scoring_hand) do
+                if SMODS.has_enhancement(scoring_card, 'm_pmcmod_pallid') then
+                    local retriggers = JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                    chips = chips + (card.ability.extra.chips) * retriggers
+                end
+            end
+        end
+        card.joker_display_values.chips = chips
+        card.joker_display_values.localized_text = "(Pallid Cards)"
+    end
+}
+
+jd_def["j_pmcmod_pip_alt"] = {
     text = {
         { text = " +",                             colour = G.C.CHIPS },
         { ref_table = "card.joker_display_values", ref_value = "chips",  colour = G.C.CHIPS,  retrigger_type = "mult" }

@@ -1125,6 +1125,9 @@ return {
                     {"Gains {X:mult,C:white}X#1#{} Mult every time a Pallid card is scored",
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"},
                 },
+                unlock = {
+                    'Win a run with the {C:attention}Ahab Keypage{}',
+                },
             },
             j_pmcmod_queequeg = {
                 name = 'Queequeg',
@@ -1141,7 +1144,7 @@ return {
                     "Pallid cards now give {C:gold}$#1#{}",
                 },
                 unlock = {
-                    'Win a run with the {C:attention}Ahab Keypage{}',
+                    'Win a run with the {C:attention}Queequeg Keypage{}',
                 },
             },
             j_pmcmod_starbuck = {
@@ -1159,7 +1162,7 @@ return {
                     "Pallid cards now give {C:mult}+#1#{} Mult",
                 },
                 unlock = {
-                    'Win a run with the {C:attention}Ahab Keypage{}',
+                    'Win a run with the {C:attention}Starbuck Keypage{}',
                 },
             },
             j_pmcmod_stubb = {
@@ -1186,7 +1189,7 @@ return {
                     "Pallid cards now give {C:chips}+#1#{} Chips",
                 },
                 unlock = {
-                    'Win a run with the {C:attention}Ahab Keypage{}',
+                    'Win a run with the {C:attention}Pip Keypage{}',
                 },
             },
             j_pmcmod_pilot = {
