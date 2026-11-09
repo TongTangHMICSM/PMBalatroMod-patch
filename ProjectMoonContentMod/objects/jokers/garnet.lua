@@ -95,7 +95,16 @@ local function garnet_summary(card)
 end
 
 function PMCMOD.garnet_transfer(from, to)
-	if from and to then garnet_apply(to, garnet_stats(from)) end
+	if not (from and to) then return end
+	-- Carry the copy's whole accumulation onto the fresh card: `from` includes everything the
+	-- rerolls built up, while `to` starts at the centre's base. The difference between the two
+	-- snapshots is the total to move, not just this copy's delta since its baseline.
+	local carried, base = {}, garnet_snapshot(to)
+	for k, v in pairs(garnet_snapshot(from)) do
+		local b = base[k] or 0
+		if v ~= b then carried[k] = v - b end
+	end
+	garnet_apply(to, carried)
 end
 
 -- Draw a new copy. The old copy's accumulated value is carried into the new one, so swapping
