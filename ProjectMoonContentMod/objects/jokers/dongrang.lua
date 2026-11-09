@@ -17,22 +17,16 @@ SMODS.Joker {
         ["KCorp"] = true,
  	},
 	loc_vars = function(self, info_queue, card)
-
-		if card.edition then
-			if card.edition.key == 'e_polychrome' then
-				tempKey = self.key..'_alt'
-				PMCMOD.set_card_pos(card, {x = 0 , y = 10})
-			else 
-				tempKey = self.key
-				PMCMOD.set_card_pos(card, {x = 0 , y = 3})
-			end
-		else
-			tempKey = self.key
-			PMCMOD.set_card_pos(card, {x = 0 , y = 3})
+		PMCMOD.set_card_pos(card, {x = 0 , y = 3})
+		return { vars = { card.ability.extra.xchips, card.ability.extra.xchips_gain } }
+	end,
+	in_pool = function(self, args)
+		if not (G and G.jokers and G.jokers.cards) then return true end
+		for i = 1, #G.jokers.cards do
+			local center = G.jokers.cards[i].config and G.jokers.cards[i].config.center
+			if center and center.key == 'j_pmcmod_dongrang_alt' then return false end
 		end
-
-		return { vars = { card.ability.extra.xchips, card.ability.extra.xchips_gain },key = tempKey, }
-		
+		return true
 	end,
 	calculate = function(self, card, context)
 
@@ -66,6 +60,13 @@ SMODS.Joker {
 		end
 
     end,
+	remove_from_deck = function(self, card, from_debuff)
+		if from_debuff then return end
+		if card.getting_sliced and G.GAME then
+			G.GAME.pmcmod_dongrang_destroyed = true
+			check_for_unlock({ type = 'pmcmod_dongrang_destroyed' })
+		end
+	end,
 	check_for_unlock = function(self, args)
         return args.type == 'win_deck' and get_deck_win_stake('b_plasma') > 4
     end,

@@ -569,6 +569,17 @@ jd_def["j_pmcmod_dongrang"] = {
         }
 }
 
+jd_def["j_pmcmod_dongrang_alt"] = {
+    text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "xmult", retrigger_type = "exp" }
+                }
+            }
+        }
+}
+
 jd_def["j_pmcmod_dongbaek"] = {
     text = {
             {

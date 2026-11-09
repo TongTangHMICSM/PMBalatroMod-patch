@@ -877,6 +877,7 @@ local organizedJokerList = {
     'guido',
     'papaBongy',
     'dongrang',
+    'dongrangAlt',
     'dongbaek',
     'samjo',
     'shrenne',

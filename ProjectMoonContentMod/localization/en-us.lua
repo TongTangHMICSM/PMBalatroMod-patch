@@ -1029,6 +1029,9 @@ return {
                     {"Gains {X:mult,C:white}X#2#{} Mult for every {C:dark_edition}Polychrome{} Keypage",
                     "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)"},
                 },
+                unlock = {
+                    'Destroy {C:attention}Dongrang{}',
+                },
             },
             j_pmcmod_dongbaek = {
                 name = 'Dongbaek',
